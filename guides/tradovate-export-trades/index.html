@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How to Export Your Trades from Tradovate (2026) — Complete CSV Guide | Aurafy</title>
+<meta name="description" content="Step-by-step guide to exporting your Tradovate trade history to CSV in 2026. Where to find the export option, what each column means, common pitfalls (timezone, partial fills, multi-leg), and how to clean the data for any trading journal." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/guides/tradovate-export-trades/" />
+<meta property="og:title" content="How to Export Your Trades from Tradovate (2026)" />
+<meta property="og:description" content="Full guide — export path, CSV column reference, timezone & partial-fill pitfalls, journal-ready clean-up steps." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:32px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  code{font-family:var(--mono);font-size:0.88em;background:var(--panel-2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:#d6dde6}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.92rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.col{font-family:var(--mono);font-weight:600;color:#fff;white-space:nowrap}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .step{display:flex;align-items:flex-start;gap:14px;margin:18px 0}
+  .step-num{flex-shrink:0;width:32px;height:32px;background:rgba(124,92,255,0.15);border:1px solid rgba(124,92,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a890ff;font-family:var(--mono);font-size:0.95rem}
+  .step-body{flex:1}
+  .step-body strong{color:#fff;display:block;margin-bottom:6px;font-size:1rem}
+  .step-body p{font-size:0.93rem;color:#c4ccd6;margin:0 0 6px}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .pitfall{background:rgba(255,92,124,0.05);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:12px 0;font-size:0.92rem;color:#f5d6db}
+  .pitfall strong{color:#ff8fa3}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Tradovate web client + mobile</span>
+  <h1>How to Export Your Trades from Tradovate (2026)</h1>
+  <p class="lede">Every Tradovate account ships with a CSV export of fills and account performance — but the menu path, the column layout, and three quiet pitfalls (timezone, partial fills, multi-leg orders) sit between you and a clean import into any trading journal. This guide walks the whole path.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent reference, not Tradovate documentation.</strong> Aurafy is not affiliated with Tradovate. Tradovate's UI is updated periodically — the exact menu labels and column names may shift between versions. Always verify against your current account before scripting against an export. We import Tradovate's standard CSV export and nothing more; no API credentials are required.
+</div>
+
+<div class="toc">
+  <a href="#why">Why export trades</a>
+  <a href="#web">Export from the web client</a>
+  <a href="#mobile">Export from mobile</a>
+  <a href="#columns">CSV column reference</a>
+  <a href="#pitfalls">3 common pitfalls</a>
+  <a href="#cleanup">Cleaning the CSV for any journal</a>
+  <a href="#import">Importing into Aurafy</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="why">Why you should export your trades (even if Tradovate already shows them)</h2>
+
+<p>Tradovate's built-in Performance and Orders views are designed for monitoring open positions and recent fills — not for analyzing your edge over time. A few things you only get from an exported CSV:</p>
+
+<ul>
+  <li><strong>Full history beyond the in-app window.</strong> The web client can be slow to scroll back through months of fills; a CSV is one file.</li>
+  <li><strong>Setup tagging.</strong> Tradovate has no way to label a trade with a setup or playbook name — you need an outside tool for that.</li>
+  <li><strong>R-multiples and slippage.</strong> Tradovate shows gross P&amp;L, not "how many R did this trade pay?" or "how far was the fill from my stop?".</li>
+  <li><strong>Prop-firm rule tracking.</strong> Trailing drawdown, consistency thresholds, daily-loss limits — all live outside Tradovate. A CSV lets you replay them.</li>
+  <li><strong>Backup before account changes.</strong> If you reset a Combine or switch accounts, the historic data in Tradovate's UI may or may not follow. A CSV is yours forever.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>Bottom line:</strong> Tradovate is an execution platform. The CSV is what makes the data a record you can actually learn from.
+</div>
+
+<h2 id="web">How to export trades from the Tradovate web client</h2>
+
+<p>Trader the web client (<code>trader.tradovate.com</code>) is the most reliable place to pull a full export. The exact menu labels may shift between Tradovate versions, but the pattern is consistent:</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Open the Performance or History panel.</strong>
+    <p>From the main navigation, look for the panel that lists your closed positions and fills. In recent versions it sits under a "Performance" or "Account" section; on older builds it's labeled "Orders" or "History".</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Select the account and date range.</strong>
+    <p>If you trade multiple accounts (Combine, XFA, sim, live), pick the one you want first — exports are per-account by default. Then set the date range. For prop-firm review, monthly is the safest cadence; for backtesting and journaling, the full account lifetime is fine.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Choose the export type: Fills, Orders, or Positions.</strong>
+    <p>These three views show very different data — choose carefully. Most journals (Aurafy included) want the <strong>Fills</strong> view, which is one row per executed price (so a 4-contract order that fills in two pieces shows as two rows). The Positions view is one row per round-trip — useful for high-level review, but you lose the entry/exit detail.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Click Export → CSV.</strong>
+    <p>The download button is usually in the top-right of the panel, sometimes hidden in a "⋯" overflow menu. The file lands in your browser's default Downloads folder.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <strong>Open the CSV and confirm row count.</strong>
+    <p>Open the file (Excel, Numbers, or any text editor) and compare the row count against the number of fills the web UI showed. If the totals don't match, you may have hit a date-range issue or a hidden pagination cap.</p>
+  </div>
+</div>
+
+<h2 id="mobile">Exporting from the Tradovate mobile app</h2>
+
+<p>The mobile app's export is more limited than the web client's. As of mid-2026:</p>
+
+<ul>
+  <li><strong>You can email a daily statement</strong> from the Account screen — useful for a quick end-of-day check but not for building a multi-month journal.</li>
+  <li><strong>You cannot download a multi-trade CSV directly on mobile.</strong> The expected flow is: tap the email-statement option, send to yourself, open the attachment on a desktop, and forward into your journal.</li>
+  <li><strong>If you trade primarily on mobile</strong>, log into <code>trader.tradovate.com</code> on a desktop once a week (or every Sunday) and pull the full week's CSV. That single weekly habit is the smallest workflow that keeps a journal complete.</li>
+</ul>
+
+<h2 id="columns">CSV column reference</h2>
+
+<p>Column names and order have varied slightly between Tradovate versions. These are the fields that consistently appear in the Fills export — verify yours and map them to whatever tool you import into.</p>
+
+<table>
+  <thead>
+    <tr><th>Column (typical name)</th><th>What it means</th><th>Why it matters</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="col">Timestamp</td><td>The fill time, usually in your account's configured timezone</td><td>Match this to the chart timezone in your journal or you'll see trades shift hours</td></tr>
+    <tr><td class="col">Symbol / Contract</td><td>The futures contract (ESZ5, NQU6, MES, etc.) — includes the contract month code</td><td>If you trade rollovers, the symbol changes — make sure your journal groups by root (ES) not contract month (ESZ5)</td></tr>
+    <tr><td class="col">Side / B/S</td><td>Buy or Sell — for the fill itself, not the position direction</td><td>A Sell after a Buy closes a long; a Sell on its own opens a short. The CSV usually doesn't label this — your journal has to infer it</td></tr>
+    <tr><td class="col">Qty / Quantity</td><td>Contracts executed at this price</td><td>If your single order filled in pieces, you'll see multiple rows summing to your order size</td></tr>
+    <tr><td class="col">Price</td><td>The execution price of this fill</td><td>For multi-leg fills, your effective average is qty-weighted across the rows</td></tr>
+    <tr><td class="col">Order ID</td><td>An identifier tying fills back to the original order</td><td>This is what lets a journal group partial fills into one "trade"</td></tr>
+    <tr><td class="col">Account</td><td>Account name — Combine, XFA, sim, live, etc.</td><td>If you export across multiple accounts in one CSV, this is how to filter</td></tr>
+    <tr><td class="col">P&amp;L / Realized</td><td>Realized profit for the round-trip — only populated on the closing fill of a position</td><td>Rows mid-trade often show blank or zero; total P&amp;L is the sum across closing fills only</td></tr>
+    <tr><td class="col">Commissions / Fees</td><td>Per-side commissions and exchange fees</td><td>Tradovate's plans split these differently — make sure your journal subtracts the right column</td></tr>
+  </tbody>
+</table>
+
+<div class="key-fact">
+  <strong>Quick test:</strong> open the CSV and sum the <code>Realized P&amp;L</code> column. It should equal the total P&amp;L shown in the Tradovate web UI for the same date range. If it doesn't, you're either missing rows, double-counting fills, or pulling the wrong export type.
+</div>
+
+<h2 id="pitfalls">The three quiet pitfalls</h2>
+
+<p>Most "my journal numbers don't match Tradovate" tickets trace back to one of these three.</p>
+
+<h3>1. Timezone</h3>
+
+<p>Tradovate timestamps export in your account's configured timezone, which may not be the timezone your chart software uses. A trade entered at 09:30 ET could appear in your journal as 14:30 UTC or 08:30 CT — same trade, different label, broken session-time analysis.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> in your journal's import step, explicitly tell the tool what timezone the CSV's timestamps are in. Aurafy and most journals support this on import. If your CSV has no timezone offset in the timestamps, default to <strong>your Tradovate account's profile timezone</strong>, not your local OS clock.
+</div>
+
+<h3>2. Partial fills</h3>
+
+<p>A market order for 4 contracts can fill in 1+3, 2+2, or 1+1+1+1 — the CSV records each piece as its own row, with the same Order ID. If your journal treats each row as an independent trade, your trade count balloons and your win rate breaks.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> import the CSV at the <strong>order level, not the fill level</strong> — group by Order ID, sum the quantities, qty-weight the price. Aurafy does this automatically. If you're using a journal that doesn't, you'll want to pre-aggregate in Excel or a script before upload.
+</div>
+
+<h3>3. Multi-leg / bracketed orders</h3>
+
+<p>If you use Tradovate's bracket orders (entry + stop + target submitted as one), each leg fires as a separate Order ID — but they're conceptually one trade. The CSV shows them as up to three orders + two-or-more fills, and naive aggregation will count them as two or three trades instead of one.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> import at the <strong>position level</strong> for analysis (one trade = entry to flat) and at the <strong>order level</strong> for execution review (how close the bracket targets came to filling). Aurafy stores both layers; if your tool only has one, position-level is the safer default.
+</div>
+
+<h2 id="cleanup">Cleaning the CSV before import</h2>
+
+<p>Most CSVs go in clean if you trust the journal's importer. But if you're scripting, exporting into Notion / Sheets, or moving between journals, these are the cleanup steps that pay off:</p>
+
+<ol>
+  <li><strong>Strip header/footer summary rows.</strong> Some Tradovate exports include a totals row at the top or bottom — kill it before parsing.</li>
+  <li><strong>Normalize the timestamp.</strong> Convert everything to ISO 8601 with an explicit timezone offset (<code>2026-06-02T14:30:00-05:00</code>). This is the format almost every downstream tool reads cleanly.</li>
+  <li><strong>Map symbol to root.</strong> Add a <code>root</code> column derived from the contract symbol (<code>ESZ5</code> → <code>ES</code>). Most analysis groups by root, not by contract month.</li>
+  <li><strong>Group fills into orders.</strong> Use Order ID as the grouping key; sum Qty; qty-weight the Price.</li>
+  <li><strong>Compute side at the position level.</strong> Track running quantity per symbol per account; flag the row that takes net quantity back to zero as the "closing fill" of that trade.</li>
+  <li><strong>Don't lose the raw rows.</strong> Keep the original fill-level data archived. You will eventually need it for a slippage analysis or a "which broker filled me better" comparison.</li>
+</ol>
+
+<div class="cta" id="import">
+  <h3>Or skip all of that — drop the CSV into Aurafy</h3>
+  <p>Aurafy's Tradovate importer handles fill aggregation, bracket grouping, timezone normalization, and root-symbol mapping automatically. Drag the CSV into your account, pick the timezone if asked, and your trades land grouped by order with R-multiples, prop-firm rule tracking, and chart context already overlaid. Free tier — 1 account, 30 days of history, no card required.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=tradovate-export-guide&amp;utm_content=primary-cta">Start importing free</a>
+  <a class="btn ghost" href="https://aurafy.dev/brokers/tradovate/?utm_source=tools&amp;utm_medium=tradovate-export-guide&amp;utm_content=tradovate-landing">More on Aurafy + Tradovate</a>
+</div>
+
+<h2>While you're cleaning up the data — track the rules too</h2>
+
+<p>Once your CSV is in a journal, a few free Aurafy tools layer prop-firm rule math on top of any trade history — no signup required:</p>
+
+<ul>
+  <li><a href="../../tools/trailing-drawdown-calculator/?utm_source=tools&amp;utm_medium=tradovate-export-guide">Trailing Drawdown Calculator</a> — model Topstep + Apex trail mechanics on a sequence of P&amp;L days.</li>
+  <li><a href="../../tools/consistency-rule-calculator/?utm_source=tools&amp;utm_medium=tradovate-export-guide">Consistency-Rule Calculator</a> — check Topstep 50% / Apex 30% / MFFU 40% against your actual P&amp;L distribution.</li>
+  <li><a href="../../tools/futures-pnl-calculator/?utm_source=tools&amp;utm_medium=tradovate-export-guide">Futures P&amp;L / Tick-Value Calculator</a> — exact tick-value math for any contract Tradovate routes.</li>
+</ul>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Does Tradovate have a built-in journal so I don't need an export?</summary>
+  <p>It has a Performance dashboard and order history, but neither tags setups, computes R-multiples, overlays trades on charts, or tracks prop-firm rules. For execution monitoring, it's enough. For learning your edge, you'll outgrow it within a few weeks.</p>
+</details>
+
+<details>
+  <summary>Can I export trades via API instead of the CSV?</summary>
+  <p>Tradovate offers a developer API, but for journaling purposes the CSV is simpler and doesn't require API credential management. Aurafy and most journals import the CSV, not the API.</p>
+</details>
+
+<details>
+  <summary>Why does my exported P&amp;L not match what TopstepX or another prop-firm dashboard shows?</summary>
+  <p>Prop-firm dashboards usually compute P&amp;L net of commissions and the firm's specific exchange-fee schedule. The Tradovate CSV may show pre-commission realized P&amp;L in one column and commissions separately. Subtract commissions explicitly before comparing.</p>
+</details>
+
+<details>
+  <summary>What about Combine vs XFA — do they export the same way?</summary>
+  <p>If your prop firm exposes both accounts inside Tradovate, the export is per-account. Pick the Combine account for eval data and the XFA account for funded-phase data. They're separate ledgers — never mix them in one journal view if you're analyzing rule-survival rates.</p>
+</details>
+
+<details>
+  <summary>Does the export include cancelled or rejected orders?</summary>
+  <p>The Fills view does not (only executed prices), but the Orders view does. If you want to audit how often your stops or limits got cancelled before filling, pull the Orders view too — and never mix the two CSVs.</p>
+</details>
+
+<details>
+  <summary>Can I automate the weekly export?</summary>
+  <p>Not via the web UI directly. Either schedule a weekly calendar reminder to pull it manually, or use the developer API for full automation. Aurafy's roadmap includes scheduled Tradovate imports — not yet in the current release.</p>
+</details>
+
+<details>
+  <summary>Will the CSV change if I'm on a TopstepX account routed through Tradovate?</summary>
+  <p>TopstepX uses Project X infrastructure, not Tradovate, for its core platform after August 2024 — so a TopstepX account doesn't necessarily export through Tradovate at all. If you're a Topstep trader on a NinjaTrader-via-Rithmic setup, your export path is different. See our <a href="../../brokers/ninjatrader/">NinjaTrader journal guide</a> for that flow.</p>
+</details>
+
+<details>
+  <summary>What if my CSV has columns I don't recognize?</summary>
+  <p>Tradovate occasionally adds fields (regulatory flags, routing venue, exchange order IDs). Most journals ignore unknown columns safely. If you're scripting, treat any unknown column as opaque metadata and don't fail the import on it.</p>
+</details>
+
+<div class="cta">
+  <h3>Free trading journal that actually reads Tradovate CSVs cleanly</h3>
+  <p>Aurafy imports the standard Tradovate export, groups fills into orders and orders into positions, normalizes timezones, computes R-multiples per trade, and overlays everything on the chart at the time of the fill. Topstep / Apex / MFFU / TPT / Tradeify / Bulenox / Earn2Trade rule tracking included. Free tier — 1 account, 30 days history, no card.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=tradovate-export-guide&amp;utm_content=final-cta">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing/?utm_source=tools&amp;utm_medium=tradovate-export-guide&amp;utm_content=pricing">See pricing</a>
+</div>
+
+<footer>
+  Independent guide by Aurafy — a futures trading journal for prop-firm traders.
+  Not affiliated with Tradovate or NinjaTrader Group. Tradovate's UI updates periodically;
+  verify menu labels and column names against your current account.
+  <br><br>
+  <a href="https://aurafy.dev/">Aurafy home</a> ·
+  <a href="../../prop-firms/">Prop-firm rules hub</a> ·
+  <a href="../../brokers/">Broker journal guides</a> ·
+  <a href="../../tools/trailing-drawdown-calculator/">Trail calculator</a>
+</footer>
+
+</div>
+</body>
+</html>
