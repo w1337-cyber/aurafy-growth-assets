@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The Best Trading Journal for Your Broker (2026) — Tradovate, NinjaTrader, Sierra Chart, Rithmic | Aurafy</title>
+<meta name="description" content="Your broker / charting platform handles execution. A journal handles review, prop-firm rule tracking, and screen recording. Here's how Aurafy plugs into Tradovate, NinjaTrader, Sierra Chart, and Rithmic / R|Trader Pro — and which page to read based on what's on your screen." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/brokers/" />
+<meta property="og:title" content="The Best Trading Journal for Your Broker (2026)" />
+<meta property="og:description" content="Broker-specific import guides for Tradovate, NinjaTrader, Sierra Chart, and Rithmic / R|Trader Pro, with prop-firm rule tracking built in." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .broker-grid{display:grid;gap:14px;margin:18px 0}
+  @media(min-width:640px){.broker-grid{grid-template-columns:1fr 1fr}}
+  .broker-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column}
+  .broker-card h3{margin:0 0 6px;font-size:1.05rem;color:#fff}
+  .broker-card .role{font-size:0.78rem;color:#a890ff;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
+  .broker-card p.summary{margin:0 0 10px;font-size:0.92rem;color:#c4ccd6;flex:1}
+  .broker-card .wedge{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:8px 10px;border-radius:4px;font-size:0.85rem;color:#d6dde6;margin-bottom:12px}
+  .broker-card .wedge strong{color:#fff}
+  .broker-card a.go{font-size:0.9rem;font-weight:600;color:#a890ff}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .decision{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.93rem;color:#d6dde6}
+  .decision strong{color:#fff;display:block;margin-bottom:4px}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Broker import guides + prop-firm tracking</span>
+  <h1>The Best Trading Journal for Your Futures Broker (2026)</h1>
+  <p class="lede">Your broker / charting platform is built to route orders and draw charts. A journal is the separate tool that pairs fills into round-turn trades, knows which prop-firm rule preset applies to each account, overlays trades on the chart you actually read, and records the session you took them in. Here's how Aurafy plugs into the four execution stacks that cover ~95% of futures prop-firm flow — and which page to read based on what's on your screen right now.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent guide.</strong> Aurafy is not affiliated with Tradovate, NinjaTrader Group, Safe Harbor Trading Technologies (Sierra Chart), Rithmic, Trading Technologies, or any prop firm. All trademarks belong to their respective owners. Every import path below uses your own statement / CSV export — no broker credentials shared, no API keys required, nothing installed in the broker.
+</div>
+
+<div class="toc">
+  <a href="#which-page">Which page do I read?</a>
+  <a href="#brokers">The four broker pages</a>
+  <a href="#routing">Broker vs charting platform vs data feed</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="which-page">Which broker page do I read?</h2>
+<p>Pick the page that matches what you actually <em>execute</em> through, not what you watch the chart in. If you trade through TradingView or MotiveWave but the order routes via Tradovate, the Tradovate page is yours. If your fills clear through Rithmic but you click them in NinjaTrader 8, the NinjaTrader page is yours. The journal cares about where the fills come from — the import file is the source of truth.</p>
+
+<div class="decision"><strong>I trade Topstep on TopstepX, NT8, or Tradovate</strong>You're on the <a href="/brokers/tradovate/">Tradovate page</a> if you execute through Tradovate (most Topstep users), or the <a href="/brokers/ninjatrader/">NinjaTrader page</a> if you execute through NT8. Topstep is not on Rithmic — don't read the Rithmic page for Topstep workflows.</div>
+
+<div class="decision"><strong>I trade Apex / MFFU / TPT / Tradeify / Bulenox via Rithmic R|Trader Pro</strong>You're on the <a href="/brokers/rithmic/">Rithmic page</a> — especially if you have multiple firm accounts under one R|Trader Pro login.</div>
+
+<div class="decision"><strong>I click orders in NinjaTrader 8 (NT8) but the data feed is Rithmic</strong>You're on the <a href="/brokers/ninjatrader/">NinjaTrader page</a>. The NT8 Trade Performance CSV is the cleanest import path. The Rithmic statement is a fallback if you trade multiple firms on one login.</div>
+
+<div class="decision"><strong>I trade orderflow / footprint in Sierra Chart</strong>You're on the <a href="/brokers/sierra-chart/">Sierra Chart page</a>. The Trade Activity Log CSV is the import path; the Rithmic statement is the alternative if you front-end SC over a Rithmic-routed firm.</div>
+
+<div class="decision"><strong>I'm on a firm-skinned platform (TopstepX, ApexTrader, MFFU dashboards)</strong>The firm-skinned platform is a wrapper. Underneath, your fills clear through Tradovate, NT8, or Rithmic depending on the firm + platform combo. Check the firm: TopstepX uses Tradovate-style fills → Tradovate page. Apex / MFFU dashboards usually surface a Rithmic statement → Rithmic page.</div>
+
+<h2 id="brokers">The four broker pages</h2>
+<p>Four pages, four audience profiles. Each one covers the import flow for that broker + the prop-firm landmines specific to that execution stack.</p>
+
+<div class="broker-grid">
+
+  <div class="broker-card">
+    <div class="role">Default prop-firm execution</div>
+    <h3>Tradovate</h3>
+    <p class="summary">The default execution platform for Topstep, Apex, and MFFU funded traders. Web + mobile, no install. The built-in journal is a fill list — chart context, R-multiples, prop-firm rule tracking, and screen recording all live elsewhere.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> 85% of Tradovate's retail volume is prop-firm accounts — the page is built for that audience, not generic retail.</div>
+    <a class="go" href="/brokers/tradovate/">Read the Tradovate guide →</a>
+  </div>
+
+  <div class="broker-card">
+    <div class="role">Most popular charting + execution platform</div>
+    <h3>NinjaTrader 8 (NT8)</h3>
+    <p class="summary">The default for Apex 4.0 + MFFU funded traders and still hosts the majority of Topstep accounts not on TopstepX. NT8 Trade Performance gives you per-trade rows but no setup tags, no prop-firm rule headroom, and no recording of the screen you decided on.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> The 2026 DLL landmine — Topstep still enforces DLL on NinjaTrader, TopstepX removed it Aug 2024. Same Topstep account, different DLL behavior based on platform.</div>
+    <a class="go" href="/brokers/ninjatrader/">Read the NinjaTrader guide →</a>
+  </div>
+
+  <div class="broker-card">
+    <div class="role">Orderflow / footprint platform</div>
+    <h3>Sierra Chart</h3>
+    <p class="summary">The serious-tier platform for orderflow, footprint, and numbers-bars traders. The Trade Activity Log + Spreadsheet System gives you a fill list with footprint context that doesn't persist into the log. No prop-firm rule tracking. No screen recording.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> Topstep doesn't officially support Sierra Chart. SC users on Topstep are on unofficial Rithmic routes — your import path is the Rithmic statement, not the Topstep dashboard.</div>
+    <a class="go" href="/brokers/sierra-chart/">Read the Sierra Chart guide →</a>
+  </div>
+
+  <div class="broker-card">
+    <div class="role">Data feed + order route under most firms</div>
+    <h3>Rithmic / R|Trader Pro</h3>
+    <p class="summary">Not a charting platform — Rithmic is the data feed and clearing route that Apex, MFFU, TPT, Tradeify, and Bulenox all run on. R|Trader Pro is the no-frills execution UI bundled with it. Lightning-fast for orders, paper-thin for journaling.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> Multi-firm-on-one-login — most prop-firm traders have 2-3 funded/eval accounts across different firms sharing one R|Trader Pro login. The journal treats each as a separate account with its own rule preset.</div>
+    <a class="go" href="/brokers/rithmic/">Read the Rithmic guide →</a>
+  </div>
+
+</div>
+
+<h2 id="routing">Broker vs charting platform vs data feed</h2>
+<p>The thing prop-firm traders confuse the most is which layer of the execution stack their import file comes from. Three layers, three different jobs:</p>
+
+<ul>
+  <li><strong>Data feed / clearing route (Rithmic, CQG, Tradovate's own feed):</strong> Where the fills actually clear. The Rithmic statement is the authoritative fill record for any Rithmic-routed firm.</li>
+  <li><strong>Charting + execution platform (NinjaTrader, Sierra Chart, Quantower, MotiveWave, TradingView):</strong> Where you read the chart and click the order. Each one has its own CSV export from its own internal trade-tracking module.</li>
+  <li><strong>Firm-skinned platform (TopstepX, ApexTrader dashboards, MFFU portals):</strong> A web wrapper around the underlying broker/route. Useful for account management, rarely the cleanest import file.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>The rule of thumb:</strong> use the platform CSV (NT8 Trade Performance, Sierra Chart Trade Activity Log) if you trade through one platform only. Use the Rithmic statement (R|Trader Pro export) if you have multiple firm accounts on one Rithmic login and need a single source of truth across them. Tradovate users export from Tradovate directly.
+</div>
+
+<h2 id="tools">Free calculators — use before you read the broker page</h2>
+<p>Each page below also links to these. They run in your browser, no login, no card:</p>
+
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Topstep + Apex 4.0 presets. Intraday + EOD trail. See your exact drawdown line, headroom, and lock threshold.</p>
+    <a href="/tools/trailing-drawdown-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency Rule Calculator</h4>
+    <p>Topstep 50% + Apex 30% + MFFU 40% presets. Drop in your daily P&amp;L; see payout eligibility and extra profit needed.</p>
+    <a href="/tools/consistency-rule-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L / Tick-Value Calculator</h4>
+    <p>30+ contracts preloaded. Entry / exit / stop → ticks, points, gross + net P&amp;L, $ risk, R-multiple.</p>
+    <a href="/tools/futures-pnl-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator (Prop-Firm Aware)</h4>
+    <p>Topstep / Apex 4.0 / MFFU presets + 22 instruments. Stop in ticks → max contracts, % of trail-DD buffer used, N losses to floor.</p>
+    <a href="/tools/position-size-calculator/">Open the calculator →</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>The journal under all four of these</h3>
+  <p>Aurafy reads your broker's CSV (or your Rithmic statement), pairs fills into round-turn trades with R-multiples, overlays them on the chart you traded, tracks the prop-firm rule headroom for each account, and screen-records the session — one tool for what TradeZella + Loom + FX Replay would charge ~$103/mo for. Free tier never expires (last 30 days, 1 account, 3 playbooks, no card). First 50 founders: $19/mo locked for life — Pro features, no upgrade pressure.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&utm_medium=brokers-hub&utm_campaign=broker-pages">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing?utm_source=tools&utm_medium=brokers-hub&utm_campaign=broker-pages">See $19 founder seat</a>
+</div>
+
+<h2 id="faq">FAQ — broker integration + import</h2>
+
+<details>
+  <summary>Does Aurafy auto-sync via API to my broker?</summary>
+  <p>No. Aurafy imports your account statement / CSV — your file, your choice when to import. No broker credentials shared, no API key required, nothing installed in your broker or charting platform. For prop-firm accounts where credentials matter (an exposed API key can be a rules violation on some firms), this is a feature, not a limitation. Refresh imports daily, weekly, or after each session.</p>
+</details>
+
+<details>
+  <summary>I trade multiple firms / accounts. Do I need separate journal logins?</summary>
+  <p>No. One Aurafy login holds multiple accounts. Each account gets its own prop-firm rule preset (Topstep 100K Combine intraday, Apex 4.0 100K EOD, MFFU Core 50K, etc.) so the trail-DD floor, DLL, and consistency math each applies correctly. This is the core use case for traders with 2-3 firm accounts under one Rithmic login.</p>
+</details>
+
+<details>
+  <summary>What if I trade through TradingView, Quantower, or MotiveWave?</summary>
+  <p>These are charting front-ends on top of one of the four broker / route layers covered here. TradingView → Tradovate (most common) or one of the other supported brokers — use that broker's import page. Quantower / MotiveWave with a Rithmic data feed → Rithmic statement. The platform CSV from each of these front-ends is sometimes the cleanest source; check the broker page that matches your actual order route.</p>
+</details>
+
+<details>
+  <summary>Why is screen recording specific to a broker page?</summary>
+  <p>It isn't — Aurafy's screen recording runs in your browser tab regardless of platform. The reason each broker page covers it is that the gap is real on every one of them: NinjaTrader's Market Replay replays the chart, R|Trader Pro replays nothing, Sierra Chart's Chart Replay replays the chart, Tradovate has no replay at all — none of them record what you saw on your screen, hesitated on, or moved with your hand. That's a separate problem and a separate tool.</p>
+</details>
+
+<details>
+  <summary>I'm on a firm-skinned platform like TopstepX or an Apex dashboard. Which page?</summary>
+  <p>Look at where the fills actually clear, not the wrapper. TopstepX is Topstep's platform — fills behave like Tradovate-style fills → use the <a href="/brokers/tradovate/">Tradovate page</a>. Apex / MFFU dashboards usually surface a Rithmic statement → use the <a href="/brokers/rithmic/">Rithmic page</a>. Tradeify and TPT also route via Rithmic. If your firm exports a custom CSV that doesn't match any of these patterns, the Rithmic statement (if you can pull it directly from R|Trader Pro) is usually still cleaner than the firm-skinned export.</p>
+</details>
+
+<details>
+  <summary>Do I have to commit to one broker / charting platform?</summary>
+  <p>No. Aurafy imports CSVs and statements from any combination — most prop-firm traders run NT8 for execution, Sierra Chart for orderflow context, and occasionally Tradovate mobile for managing exits away from desk. All three import paths can target the same journal account, or separate accounts if you want clean stats per platform. The journal is platform-agnostic by design.</p>
+</details>
+
+<details>
+  <summary>Is there a Topstep page?</summary>
+  <p>Not a broker page — Topstep is the firm, not the execution platform. The firm rules + plans live on the <a href="/prop-firms/topstep/">Topstep rules page</a>. The broker page you want depends on which platform you click orders in: TopstepX or Tradovate → Tradovate page; NinjaTrader 8 → NinjaTrader page. Topstep doesn't run on Rithmic — Topstep moved off Rithmic in 2024 — so the Rithmic page does <em>not</em> apply to Topstep accounts.</p>
+</details>
+
+<details>
+  <summary>What about CQG, dxFeed, Interactive Brokers futures?</summary>
+  <p>Not covered yet in dedicated pages — they sit far behind the four covered here in prop-firm flow. Aurafy can still import IB-format CSVs and most CQG-routed statements, but the specific quirks (futures spread handling, give-up trades, multi-currency accounts) get more attention in a future page. If you're on one of these and need a specific import handled, mention it on the free tier and we'll surface it.</p>
+</details>
+
+<footer>
+  <p><strong>Aurafy</strong> — Futures trading journal + screen recording + bar-replay backtester for prop-firm traders.</p>
+  <p>Independent guide. Tradovate, NinjaTrader, Sierra Chart, Rithmic, R|Trader, TopstepX, and all firm names are trademarks of their respective owners. Aurafy is not affiliated with any of them. Verify current export formats and prop-firm rules with your platform and firm before relying on any third-party journal.</p>
+  <p><a href="https://aurafy.dev?utm_source=tools&utm_medium=brokers-hub&utm_campaign=broker-pages">aurafy.dev</a></p>
+</footer>
+
+</div>
+</body>
+</html>
