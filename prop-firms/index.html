@@ -156,10 +156,18 @@
   </div>
 
   <div class="firm-card">
-    <div class="role">Coming soon · the rest of the field</div>
-    <h3>Tradeify, Bulenox</h3>
-    <p class="summary">Both Rithmic-routed. Tradeify runs trailing-drawdown variants similar to TPT/Apex; Bulenox runs a static-drawdown model that's the closest thing to a non-trailing alternative in this market. Dedicated pages in progress — rule presets being verified against current rulebooks before publishing.</p>
-    <div class="wedge"><strong>Unique angle:</strong> If you're considering either, the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow today — the firm-specific rule pages will follow once the data is independently verified.</div>
+    <div class="role">Inverse consistency · 3 programs · no NT8</div>
+    <h3>Tradeify</h3>
+    <p class="summary">Three programs (Growth 1-step / Select 1-step / Lightning instant). EOD trail uniform across all programs. Lock at SB + $100 (same archetype as Apex / MFFU). $0 activation fee. 90/10 split after first $15K. 5-account / $1M cap. Tradesea / Tradovate / WealthCharts only — no NinjaTrader, no TradingView, no MetaTrader.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> Consistency rule INVERTS between programs — Growth has no consistency on eval but 35% on funded; Select has 40% on eval but none on funded; Lightning has progressive 20→25→30% across payouts. The only firm where picking the wrong program for your trading style trips a different rule than the one you prepared for.</div>
+    <a class="go" href="/prop-firms/tradeify/">Read the Tradeify guide →</a>
+  </div>
+
+  <div class="firm-card">
+    <div class="role">Coming soon · static-DD outlier</div>
+    <h3>Bulenox</h3>
+    <p class="summary">Rithmic-routed. Bulenox runs a static-drawdown model — the closest thing to a non-trailing alternative in this market. Dedicated page in progress — rule presets being verified against the current Bulenox rulebook before publishing.</p>
+    <div class="wedge"><strong>Unique angle:</strong> If you're considering Bulenox, the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow today — the firm-specific rule page will follow once the data is independently verified.</div>
     <a class="go" href="#faq">See FAQ on firms not covered yet →</a>
   </div>
 
@@ -170,7 +178,7 @@
 
 <table>
   <thead>
-    <tr><th>Rule axis</th><th>Topstep</th><th>Apex 4.0</th><th>MFFU</th><th>TPT</th></tr>
+    <tr><th>Rule axis</th><th>Topstep</th><th>Apex 4.0</th><th>MFFU</th><th>TPT</th><th>Tradeify</th></tr>
   </thead>
   <tbody>
     <tr>
@@ -179,6 +187,7 @@
       <td>Chosen at purchase: EOD or intraday</td>
       <td>Core = EOD<br>Rapid = intraday<br>Pro = EOD</td>
       <td>Test = EOD<br>PRO = intraday<br>PRO+ = EOD</td>
+      <td>EOD uniform across<br>Growth / Select / Lightning</td>
     </tr>
     <tr>
       <td><strong>Lock point</strong></td>
@@ -186,6 +195,7 @@
       <td>SB + $100 ($100 buffer)</td>
       <td>SB + $100 ($100 buffer)</td>
       <td>Starting Balance ($0 buffer)</td>
+      <td>SB + $100 ($100 buffer)</td>
     </tr>
     <tr>
       <td><strong>Consistency rule</strong></td>
@@ -193,6 +203,7 @@
       <td>30% on funded payouts</td>
       <td>Core: 40% on eval AND funded<br>Rapid: none<br>Pro: TBD</td>
       <td>50% on Test only<br>None on PRO / PRO+</td>
+      <td>Growth: none eval / 35% funded<br>Select: 40% eval / none funded<br>Lightning: 20→25→30% progressive</td>
     </tr>
     <tr>
       <td><strong>Daily loss limit</strong></td>
@@ -200,6 +211,7 @@
       <td>EOD accounts only<br>None on intraday</td>
       <td>None on any plan</td>
       <td>None — removed firmwide Jan 2025</td>
+      <td>Growth eval only<br>Lightning 50K+ only<br>+6% bump rule on funded</td>
     </tr>
   </tbody>
 </table>
@@ -264,8 +276,8 @@
 </details>
 
 <details>
-  <summary>What about Tradeify, Bulenox, Earn2Trade?</summary>
-  <p>All real firms with real users, but we haven't shipped dedicated pages for them yet because the rule presets need to be independently verified against current rulebooks — and rule pages are only useful if they're correct. The work is queued. In the meantime, all three route through Rithmic, so the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow for any of them today. Take Profit Trader was the most recent firm we verified — its <a href="/prop-firms/take-profit-trader/">dedicated page is now live</a> with the same independent-rulebook standard we apply to the others.</p>
+  <summary>What about Bulenox and Earn2Trade?</summary>
+  <p>Both real firms with real users, but we haven't shipped dedicated pages for them yet because the rule presets need to be independently verified against current rulebooks — and rule pages are only useful if they're correct. The work is queued. Both route through Rithmic, so the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow today. Tradeify was the most recent firm we verified — its <a href="/prop-firms/tradeify/">dedicated page is now live</a> with all three programs (Growth, Select, Lightning) preset to the same independent-rulebook standard we apply to the others.</p>
 </details>
 
 <details>
