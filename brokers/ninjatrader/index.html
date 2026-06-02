@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Best Trading Journal for NinjaTrader Users (2026) — Import + Track Prop-Firm Rules | Aurafy</title>
+<meta name="description" content="NinjaTrader 8's Trade Performance tab is a stats panel, not a journal. Aurafy imports your NT8 trades, overlays them on charts, tracks Topstep/Apex/MFFU rules, and screen-records every session. Free tier — no card." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/brokers/ninjatrader/" />
+<meta property="og:title" content="Best Trading Journal for NinjaTrader Users (2026)" />
+<meta property="og:description" content="Import NinjaTrader 8 trades, track prop-firm rules, screen-record sessions. The journal NinjaScript doesn't ship." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .gap-list{list-style:none;padding:0;margin:14px 0}
+  .gap-list li{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;font-size:0.93rem;color:#d6dde6}
+  .gap-list li strong{display:block;color:#fff;margin-bottom:4px;font-size:0.95rem}
+  .step{display:flex;align-items:flex-start;gap:14px;margin:14px 0}
+  .step-num{flex-shrink:0;width:32px;height:32px;background:rgba(124,92,255,0.15);border:1px solid rgba(124,92,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a890ff;font-family:var(--mono);font-size:0.95rem}
+  .step-body{flex:1}
+  .step-body strong{color:#fff;display:block;margin-bottom:3px;font-size:0.97rem}
+  .step-body p{font-size:0.91rem;color:var(--muted);margin:0}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+  .alert{background:rgba(255,92,124,0.05);border:1px solid rgba(255,92,124,0.25);border-radius:8px;padding:12px 14px;color:#ffb8c5;font-size:0.91rem;margin:10px 0}
+  .alert strong{color:#ffd0d8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · NT8 import + prop-firm tracking</span>
+  <h1>The Best Trading Journal for NinjaTrader Users (2026)</h1>
+  <p class="lede">NinjaTrader 8's Trade Performance tab is a stats panel — gross P&amp;L, win rate, expectancy. It is not a journal. Here's how to import NT8 trades into a journal that shows you the chart context, the prop-firm rule headroom, and what you were actually doing on screen when you took the trade.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent guide.</strong> Aurafy is not affiliated with NinjaTrader Group, LLC. NinjaTrader is a trademark of NinjaTrader Group. We import NinjaTrader 8's standard Trade Performance CSV export — no NinjaScript add-on, no API credentials, nothing installed in your NT instance. Verify the current NT8 export format in your account before relying on any third-party journal.
+</div>
+
+<div class="toc">
+  <a href="#what-nt-misses">What NT8 Trade Performance misses</a>
+  <a href="#import">Import to Aurafy</a>
+  <a href="#prop-firm">Prop-firm rule tracking</a>
+  <a href="#playback">Playback vs screen recording</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="what-nt-misses">What NinjaTrader 8's built-in journal misses</h2>
+<p>NinjaTrader 8 is one of the most powerful retail platforms — full chart engine, ATM strategies, SuperDOM, Market Replay, NinjaScript add-ons, native Rithmic / Continuum / CQG / NTB connections. It's the default execution platform for a large share of Apex 4.0 and MyFundedFutures funded traders, and runs almost every Topstep account that isn't on TopstepX. But the Trade Performance tab — the closest thing NT ships to a journal — is a stats panel, not a review tool:</p>
+<ul class="gap-list">
+  <li><strong>No chart context per trade.</strong> Trade Performance shows fill list + a few P&amp;L charts. It does not pin entry / stop / exit arrows back onto the 5-minute or 1-minute the way you saw it at the time. Reviewing a fill list does not teach you what setup you took.</li>
+  <li><strong>No setup tagging or playbook analytics.</strong> NT8 has no concept of "VWAP reclaim" or "ICT NY breakout" as a tag. You cannot pull a stats table for one named strategy across all your trades.</li>
+  <li><strong>No prop-firm rule tracking.</strong> NT8 does not know whether the account is a Topstep XFA, an Apex 4.0 funded, or a personal sim. It does not track distance to the trail-DD floor, daily loss limit, or the 50% / 30% / 40% consistency rule that decides whether your next payout gets blocked.</li>
+  <li><strong>No screen recording.</strong> NT8's Market Replay replays the <em>market</em>. It does not record <em>you</em> — the news pop you ignored, the hesitation before entry, the revenge add that flipped a -1R into -3R. For prop-firm traders, where most blowups are behavioral, that's the missing layer.</li>
+  <li><strong>ATM strategies are invisible after the fact.</strong> NT8 lets you fire 1-click stops + targets via ATM templates. After the trade closes, the journal does not show which ATM template fired, whether the stop got moved manually, or how the trade differed from the ATM's plan.</li>
+</ul>
+<div class="key-fact">
+  <strong>The honest framing:</strong> NinjaTrader 8 is an execution platform with a strong charting engine and a thin reporting layer. A journal is a separate tool — it's the part that turns last week's fills into a stats table you can actually act on next week.
+</div>
+
+<h2 id="import">How to import NinjaTrader trades into Aurafy</h2>
+<p>Aurafy reads the standard NT8 Trade Performance CSV export — no NinjaScript install, no API integration, no connection credentials shared. Roughly two minutes:</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Export from NinjaTrader 8</strong>
+    <p>Open <em>Control Center → Account Performance → Trades</em> (or <em>Strategy Analyzer → Trades</em> for backtested strategies). Right-click the grid → <strong>Export → CSV</strong>. Pick the date range. The export includes account, instrument, side, qty, entry/exit price, time, commission, and net P&amp;L per round-turn.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Drop the CSV into Aurafy</strong>
+    <p>Open <a href="https://app.aurafy.dev">app.aurafy.dev</a>, go to <em>Imports → NinjaTrader</em>, drag the file. Aurafy auto-pairs the entry / exit fills into round-turn trades, applies the correct tick value per contract (ES, NQ, MES, MNQ, CL, MCL, GC, MGC, ZB, 6E, MBT — 30+ presets), and computes net P&amp;L after commissions + exchange + clearing fees pulled directly from the export.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Trades land on the chart</strong>
+    <p>Every NT8 fill plots on the chart with entry / stop / exit arrows. R-multiples compute automatically from the stop you set. The first time you see a week of fills overlaid on the 5-minute, you'll see patterns the Trade Performance grid silently hid.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>(Optional) Multiple accounts in one import</strong>
+    <p>Most NT8 users run several account connections — Sim101, a live Apex eval, a funded Topstep, maybe an MFFU Rapid. Export the Trades grid filtered per account; Aurafy keeps them separate and applies the correct prop-firm preset per account.</p>
+  </div>
+</div>
+
+<h2 id="prop-firm">Prop-firm rule tracking — for the audience NT8 actually serves</h2>
+<p>The majority of active NT8 retail accounts in 2026 are prop-firm funded or eval accounts. NinjaTrader is the default platform for Apex 4.0 and MyFundedFutures, and remains the dominant execution platform for Topstep customers who haven't migrated to TopstepX. That's who this journal layer is built for. Aurafy tracks:</p>
+<ul>
+  <li><strong>Trailing drawdown.</strong> Live distance from your account balance to the trail-DD floor. Topstep Combine intraday vs Topstep XFA EOD (locks at Starting Balance); Apex 4.0 intraday + EOD (locks at SB + $100 safety net); MFFU Core / Rapid / Pro presets (locks at SB + $100). Modeled correctly for the rule in force on the account you imported.</li>
+  <li><strong>Daily loss limit.</strong> Topstep DLLs ($1,000 / $2,000 / $3,000 on 50K / 100K / 150K) — <em>still enforced on NinjaTrader.</em> See the alert below if you assumed otherwise. Apex DLL varies by plan; MFFU has none on any plan.</li>
+  <li><strong>Consistency rule.</strong> Topstep 50% on Combine, Apex 4.0 30% on eval + funded, MFFU Core 40% on eval + funded. Aurafy computes max-allowed best day, extra profit needed to come into compliance, and max-safe-next-day P&amp;L on the same formula the consistency calculator uses (threshold × total / (1 − threshold)).</li>
+  <li><strong>Stop-trading triggers.</strong> Optional alerts when the account is within X ticks of the trail-DD floor, has hit Y% of the DLL, or is on track to break the consistency ratio after today's session. The kind of guardrail NT8's Trade Performance never tries to provide.</li>
+</ul>
+
+<div class="alert">
+  <strong>The DLL landmine, 2026.</strong> In August 2024 Topstep removed the daily loss limit on TopstepX accounts <em>only</em>. <strong>Topstep accounts running on NinjaTrader still have the DLL.</strong> If you migrated from TopstepX back to NT (or run both side-by-side), the DLL is on again the moment you trade on the NT side. Aurafy applies the correct per-platform rule based on the account preset you pick — it does not assume one rule across both platforms.
+</div>
+
+<div class="cta">
+  <h3>The honest pitch</h3>
+  <p>NinjaTrader is the execution platform. Aurafy is the journal that knows you're trading NT8 on Rithmic, on a $100K Apex 4.0 funded account, with a 30% consistency rule that decides your next payout. Free tier covers the last 30 days of trades — no card, no trial-with-charge. Pro is <strong>$49/mo</strong>, or <strong>$19/mo locked for life</strong> as one of the first 50 founders.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&utm_medium=ninjatrader-landing&utm_campaign=broker-pages">Try Aurafy free →</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing?utm_source=tools&utm_medium=ninjatrader-landing&utm_campaign=broker-pages">See pricing</a>
+</div>
+
+<h2 id="playback">NinjaTrader Playback vs screen recording — these are different tools</h2>
+<p>NT8 has Market Replay — it downloads tick data and replays the market exactly as it printed, so you can "re-trade" a past session bar-for-bar. That's a great tool for chart-reading practice. It is <em>not</em> a session review for the trades you actually took.</p>
+<p>Aurafy's screen recorder captures <em>you</em> — DOM, chart, news ticker, Discord, all of it — and attaches the recording to the trades that fired during the window. When you review the day you don't just see the fills; you see the news pop you ignored, the hesitation before entry, the moment you moved the stop. Market Replay and screen recording solve different problems: <a href="../../blog/trade-replay-vs-screen-recording/">full breakdown here →</a></p>
+<p>Every futures journal on the market — TradeZella, TraderSync, Tradervue, TradesViz, EdgeWonk — can show you the fills. None of them record the session. For prop-firm traders, where most blowups are behavioral (oversizing, revenge trades, freeze on news), that's the missing review layer.</p>
+
+<h2 id="tools">Free calculators for NinjaTrader prop-firm traders</h2>
+<p>These work with or without an Aurafy account — single-page, no login, mobile-friendly. Preloaded with the exact tick values for the contracts you actually trade on NT8 (ES, NQ, MES, MNQ, CL, MCL, GC, MGC, ZB, 6E, MBT, MET, and 18 more):</p>
+
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Topstep + Apex 4.0 + MFFU presets. Intraday + EOD trail modeled separately. See your exact floor and headroom.</p>
+    <a href="../../tools/trailing-drawdown-calculator/">Open →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L Calculator</h4>
+    <p>Drop in entry / exit / stop on any of 30+ futures contracts. Get ticks, points, gross + net P&amp;L (after NT commissions), $ risk, R-multiple.</p>
+    <a href="../../tools/futures-pnl-calculator/">Open →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator</h4>
+    <p>Prop-firm-aware sizing — checks both your risk-per-trade and the trail-DD floor. Tells you how many losses in a row to blow the account.</p>
+    <a href="../../tools/position-size-calculator/">Open →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Topstep 50%, Apex 4.0 30%, MFFU 40%. Drop in your daily P&amp;L list — get max-allowed-best-day and the extra profit needed to qualify for payout.</p>
+    <a href="../../tools/consistency-rule-calculator/">Open →</a>
+  </div>
+</div>
+
+<h2 id="faq">FAQ — NinjaTrader + journal questions</h2>
+
+<details>
+  <summary>Does Aurafy connect to my NinjaTrader 8 instance directly?</summary>
+  <p>No. Aurafy reads the standard NT8 Trade Performance CSV export. No NinjaScript add-on installed in your NT instance, no API connection, no Rithmic / NTB credentials shared. The CSV-only model is intentional — it's the lowest-risk import path and works identically across every NT8 connection type (NTB, Rithmic, Continuum, CQG, IQFeed, sim).</p>
+</details>
+
+<details>
+  <summary>Will it work for a Topstep / Apex / MFFU account running on NT8?</summary>
+  <p>Yes — that's the primary use case. The majority of NT8 retail accounts in 2026 are prop-firm accounts running through Rithmic or NTB. Aurafy's prop-firm rule tracking (trail-DD, DLL, consistency) is preset for the major firms. Note: if you run the same Topstep account on both NinjaTrader and TopstepX, the DLL rule differs by platform — on NT8 the DLL is still enforced, on TopstepX it was removed Aug 2024. Aurafy applies the right rule per account preset.</p>
+</details>
+
+<details>
+  <summary>What about NinjaTrader's Strategy Analyzer for backtests?</summary>
+  <p>Same export, different source. You can export backtested trades from Strategy Analyzer the same way (right-click → Export → CSV) and Aurafy will treat them as a separate "account" you can review independently from live fills. R-multiples and chart overlays work identically. The prop-firm rule layer only applies to accounts you tag as live prop-firm accounts.</p>
+</details>
+
+<details>
+  <summary>Do ATM strategies, attached stops, and manual stop moves show up in the journal?</summary>
+  <p>Partially — the NT8 CSV export records the final entry / exit prices, not the intermediate ATM events (initial stop, stop moves, target hits). The screen recorder fills that gap: if you've got the session recorded, you can see exactly when the ATM fired and whether you manually moved the stop. NT8's own grid doesn't show this either, so the recording is the only honest source.</p>
+</details>
+
+<details>
+  <summary>What if I use Tradovate, Sierra Chart, or Rithmic R|Trader Pro too?</summary>
+  <p>Same flow, different export. Aurafy imports CSVs from Tradovate (<a href="../tradovate/">see Tradovate guide</a>), Sierra Chart, and Rithmic R|Trader Pro statements. The rule tracking, chart overlay, and screen recording work identically — only the export button changes. Each platform's accounts stay separate in the journal.</p>
+</details>
+
+<details>
+  <summary>Does the free tier actually work for prop-firm traders, or is it gated?</summary>
+  <p>Real free tier — last 30 days of trades, 1 account, 3 playbooks, no card. For a single Apex 4.0 evaluation or Topstep funded you're actively running, 30 days of history is enough to see whether rule tracking + chart overlay + screen recording is useful before you pay anything. No trial-with-charge — if you don't upgrade, nothing happens.</p>
+</details>
+
+<details>
+  <summary>What's the catch on the $19 founder price?</summary>
+  <p>First 50 paying customers get $19/mo locked for life instead of $49/mo. After 50, the price goes to $49 for new signups, but existing $19 seats stay $19 forever. No upsell, no trial, no rate-rise clause. If you cancel and come back, the founder price is gone.</p>
+</details>
+
+<details>
+  <summary>Is there a screen recording size limit on free?</summary>
+  <p>Screen recording is a Pro-tier feature. Free covers the journal, imports, and chart overlays but not the recorder. The next-closest stack (TradeZella + Loom or OBS) runs $49 + $15 = $64/mo and still doesn't link recordings to specific trades. The $19 founder seat is the cheapest path to the recording layer.</p>
+</details>
+
+<footer>
+  Independent guide — not affiliated with NinjaTrader Group, LLC, Topstep, Apex Trader Funding, MyFundedFutures, Rithmic, or CQG. Trademarks belong to their respective owners. Always verify broker commission schedules and prop-firm rules against the live rulebook before trading. Aurafy is a futures trading journal built by traders. <a href="https://aurafy.dev">aurafy.dev</a>
+</footer>
+
+</div>
+</body>
+</html>
