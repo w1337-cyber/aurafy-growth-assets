@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How to Export Your Trades from NinjaTrader 8 (2026) — Complete CSV Guide | Aurafy</title>
+<meta name="description" content="Step-by-step guide to exporting your NinjaTrader 8 trade history to CSV in 2026. Where to find the Trade Performance grid, what each column means, common pitfalls (rollover symbols, sim vs live, NT8 timestamps), and how to clean the data for any trading journal." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/guides/ninjatrader-export-trades/" />
+<meta property="og:title" content="How to Export Your Trades from NinjaTrader 8 (2026)" />
+<meta property="og:description" content="Full guide — export path, CSV column reference, rollover & sim-account pitfalls, journal-ready clean-up steps." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:32px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  code{font-family:var(--mono);font-size:0.88em;background:var(--panel-2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:#d6dde6}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.92rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.col{font-family:var(--mono);font-weight:600;color:#fff;white-space:nowrap}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .step{display:flex;align-items:flex-start;gap:14px;margin:18px 0}
+  .step-num{flex-shrink:0;width:32px;height:32px;background:rgba(124,92,255,0.15);border:1px solid rgba(124,92,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a890ff;font-family:var(--mono);font-size:0.95rem}
+  .step-body{flex:1}
+  .step-body strong{color:#fff;display:block;margin-bottom:6px;font-size:1rem}
+  .step-body p{font-size:0.93rem;color:#c4ccd6;margin:0 0 6px}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .pitfall{background:rgba(255,92,124,0.05);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:12px 0;font-size:0.92rem;color:#f5d6db}
+  .pitfall strong{color:#ff8fa3}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · NinjaTrader 8 desktop</span>
+  <h1>How to Export Your Trades from NinjaTrader 8 (2026)</h1>
+  <p class="lede">NinjaTrader 8 ships with the most flexible export grid of any retail futures platform — almost every panel can right-click → Excel or CSV. That power is also the trap: there are at least three different "trade history" grids that export different rows, two columns that look identical but mean different things, and a rollover-symbol quirk that silently splits your ES history into a dozen pieces. This guide walks the clean path.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent reference, not NinjaTrader documentation.</strong> Aurafy is not affiliated with NinjaTrader Group. NinjaTrader 8's UI varies by data-feed connection (Continuum, Rithmic, CQG, Kinetick) and by prop-firm DLL — the exact column set and menu wording may differ on your build. Always verify against your current install before scripting against an export. We import the standard NT8 CSV export and nothing more; no API or NinjaScript access is required.
+</div>
+
+<div class="toc">
+  <a href="#why">Why export trades</a>
+  <a href="#desktop">Export from NT8 desktop</a>
+  <a href="#views">Trades vs Orders vs Executions</a>
+  <a href="#columns">CSV column reference</a>
+  <a href="#pitfalls">3 common pitfalls</a>
+  <a href="#cleanup">Cleaning the CSV for any journal</a>
+  <a href="#import">Importing into Aurafy</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="why">Why you should export your trades (even though NT8 shows them)</h2>
+
+<p>NinjaTrader 8 has more built-in performance views than any other retail futures platform — Account Performance, Trade Performance, Strategy Analyzer, the Control Center's grids, even Market Replay's own log. But none of them give you a record you can take with you, version, or analyze against rule mechanics. The CSV does:</p>
+
+<ul>
+  <li><strong>Full history beyond the current connection.</strong> If you switch data feeds, reinstall NT8, or restore a fresh workspace, the in-app history can disappear without warning. A CSV is yours forever.</li>
+  <li><strong>Setup tagging.</strong> NT8 has no way to label a trade with a setup name or a playbook — its "Notes" column is per-account, not per-trade.</li>
+  <li><strong>R-multiples and bracket-distance analysis.</strong> NT8 reports gross P&amp;L, MAE, and MFE — but not "how many R did this pay" or "how far did the bracket stop run from the entry."</li>
+  <li><strong>Prop-firm rule tracking.</strong> Trailing drawdown, consistency thresholds, daily-loss limits — all live outside NT8. A CSV lets you replay them across whatever rules your firm uses.</li>
+  <li><strong>Cross-account comparison.</strong> Topstep XFA, Apex eval, MFFU funded, a personal sim — all four can run under one NT8 install. A single CSV per account makes "which environment do I actually trade best in" a question you can answer.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>Bottom line:</strong> NT8 is an execution + charting platform with a basic performance dashboard. The CSV is what makes the data a record you can actually learn from across months and across firms.
+</div>
+
+<h2 id="desktop">How to export trades from NinjaTrader 8 desktop</h2>
+
+<p>NinjaTrader 8 is desktop-only (Windows; Mac users run it under Parallels or a Windows VM). Every grid in NT8 supports a right-click export, but the right grid to start with for journaling is Account Performance → Trades:</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Open the Control Center.</strong>
+    <p>If it's not already visible, NT8's main menu bar has a "Control Center" entry. Account Performance, Orders, Executions, and Positions all live under the Control Center's tabs.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Switch to the Account Performance tab.</strong>
+    <p>Inside Account Performance you'll see sub-tabs — Summary, Trades, Orders, Executions, and an equity chart. The "Trades" sub-tab is the closest thing NT8 has to a round-trip ledger and is the right starting point for almost every journal.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Filter the account and date range.</strong>
+    <p>At the top of the Trades grid, pick the account (or "All Accounts" if you're auditing across the whole NT8 install) and a date range. For prop-firm review, set the range to match your evaluation or payout cycle. The grid updates live as you change filters.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Right-click anywhere in the grid → Export.</strong>
+    <p>NinjaTrader's export menu is hidden in the right-click context menu of every grid, not in the toolbar. Right-click any row → "Excel" exports to a working .xlsx; "CSV" writes a comma-separated file. CSV is what almost every journal expects.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <strong>Open the CSV and confirm row count.</strong>
+    <p>Open the file (Excel, LibreOffice, or any text editor) and compare the row count against the Trades grid's total. If they don't match, your grid filters are different from what you exported (a common gotcha — filters live on the grid, not the export dialog).</p>
+  </div>
+</div>
+
+<h2 id="views">Trades vs Orders vs Executions — which to export</h2>
+
+<p>NT8 splits the same trading day across three different grids, and the difference matters for your journal:</p>
+
+<ul>
+  <li><strong>Trades</strong> — one row per round-trip (entry + exit grouped). Cleanest starting point. P&amp;L, commissions, MAE, MFE all on the row.</li>
+  <li><strong>Orders</strong> — one row per order placed, including cancelled and rejected ones. Use this if you want to audit how often your stops or limits got cancelled without filling.</li>
+  <li><strong>Executions</strong> — one row per fill (so a 4-contract order that fills in two pieces = two rows). Use this if you need to inspect partial fills or slippage.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>Rule of thumb:</strong> export Trades for your journal; export Executions for slippage analysis; export Orders for fill-rate audits. Never mix the three CSVs in one analysis.
+</div>
+
+<h2 id="columns">CSV column reference (Trades grid)</h2>
+
+<p>Column names and order vary slightly by NT8 build and by data-feed connection. These are the fields that consistently appear in the Trades export — verify yours and map them to whatever tool you import into.</p>
+
+<table>
+  <thead>
+    <tr><th>Column (typical name)</th><th>What it means</th><th>Why it matters</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="col">Instrument</td><td>The futures contract with rollover suffix (<code>ES 03-26</code>, <code>NQ 06-26</code>, <code>MES 09-26</code>)</td><td>If you trade rollovers, the instrument string changes every quarter — group by root in your journal, not by the full instrument label</td></tr>
+    <tr><td class="col">Account</td><td>The NT8 account name (Sim101, your Topstep XFA, Apex eval, etc.)</td><td>NT8 will happily mix sim + live accounts in a single export — filter on this column before any P&amp;L math</td></tr>
+    <tr><td class="col">Strategy</td><td>The strategy that opened the trade ("Manual" for hand-clicks, the strategy name for automated)</td><td>If you run an ATM + manual hybrid, this column is how you separate the two for honest performance review</td></tr>
+    <tr><td class="col">Market pos.</td><td>Long or Short — for the round-trip</td><td>Cleaner than fill-level Buy/Sell because it reflects the actual trade direction</td></tr>
+    <tr><td class="col">Quantity</td><td>Contracts in the round-trip</td><td>For a 4-contract entry exited as 2+2, this is still 4 — NT8 aggregates at the trade level</td></tr>
+    <tr><td class="col">Entry price / Exit price</td><td>Qty-weighted average prices for the open and close legs</td><td>Already aggregated across partial fills — saves you the math the Tradovate CSV makes you do</td></tr>
+    <tr><td class="col">Entry time / Exit time</td><td>Round-trip start and end timestamps, in NT8's configured timezone</td><td>NT8 timezone usually matches your data feed's session timezone (CT for CME), not your local PC clock — verify before importing</td></tr>
+    <tr><td class="col">Profit / Cum. profit</td><td>Net P&amp;L for the trade and the running total</td><td>Profit is per-trade; Cum. profit is the column to use for an equity curve</td></tr>
+    <tr><td class="col">Commission</td><td>Per-trade commission as configured in NT8's commission template</td><td>If your commission template is wrong or missing, this column lies — verify against your broker's monthly statement before trusting cumulative net P&amp;L</td></tr>
+    <tr><td class="col">MAE / MFE</td><td>Max adverse excursion + max favorable excursion (in points or currency, per your settings)</td><td>The single most under-used pair of columns in any NT8 export — perfect for "how much did I leave on the table" + "how close did I come to my stop" analysis</td></tr>
+  </tbody>
+</table>
+
+<div class="key-fact">
+  <strong>Quick test:</strong> open the CSV and sum the <code>Profit</code> column. It should equal the total P&amp;L shown in the Account Performance Summary for the same date range and account filter. If it doesn't, you're either missing rows, double-counting (sim + live mixed in), or your commission template changed mid-period.
+</div>
+
+<h2 id="pitfalls">The three quiet pitfalls</h2>
+
+<p>Most "my NT8 numbers don't match my journal" tickets trace back to one of these three.</p>
+
+<h3>1. Rollover instrument codes</h3>
+
+<p>NT8 uses contract-specific instrument labels (<code>ES 03-26</code>, <code>ES 06-26</code>, <code>ES 09-26</code>) rather than a continuous symbol. Every quarter your ES trading splits into a new row of the instrument list, and if your journal groups by full instrument label rather than root, your equity curve looks like four small histories instead of one continuous one.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> in your journal's import step, map every <code>ES NN-NN</code> instrument to the root <code>ES</code>. Same for <code>NQ</code>, <code>MES</code>, <code>MNQ</code>, <code>RTY</code>, etc. Aurafy does this automatically. If you're scripting in Excel, a simple split-on-space → take first token does it.
+</div>
+
+<h3>2. Sim vs live accounts mixed in one export</h3>
+
+<p>NT8 lets you "Export All Accounts" in one click, which silently merges your Sim101 practice account with your funded XFA. Sim P&amp;L isn't real, but the export doesn't flag it as fake — every row looks the same. A journal that imports an "all accounts" CSV with no filter shows you an inflated equity curve that includes thousands of sim-money trades.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> export <strong>one account at a time</strong>, name the file with the account ("topstep-xfa-2026Q2.csv"), and never use "All Accounts" for performance review. If you must use a combined export, filter the <code>Account</code> column ruthlessly before any P&amp;L math.
+</div>
+
+<h3>3. NT8 timestamps live in the data-feed timezone, not your PC clock</h3>
+
+<p>NT8 displays and exports timestamps in the timezone configured under <em>Tools → Options → General → Time zone</em> — which for most CME-focused data feeds defaults to America/Chicago, not your local time. A 9:30 AM ET trade exports as 8:30 AM CT. If your journal assumes the CSV is in UTC or local time, every session-time analysis will be off by an hour or more.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> in your journal's import step, explicitly tell the tool what timezone the CSV's timestamps are in. Check NT8's <em>Tools → Options → General</em> for the configured zone first. Aurafy and most journals support explicit timezone selection on import.
+</div>
+
+<h2 id="cleanup">Cleaning the CSV before import</h2>
+
+<p>NT8 exports go in cleaner than Tradovate's because the Trades grid already aggregates fills into round-trips. But these cleanup steps still pay off if you're scripting, exporting into Notion / Sheets, or moving between journals:</p>
+
+<ol>
+  <li><strong>Strip the "Total" footer row.</strong> NT8 sometimes appends a summary total at the bottom of the grid — kill it before parsing or it'll double-count your P&amp;L.</li>
+  <li><strong>Normalize the timestamp.</strong> Convert both <code>Entry time</code> and <code>Exit time</code> to ISO 8601 with an explicit timezone offset (<code>2026-06-02T08:30:00-05:00</code>). Most downstream tools read this cleanly.</li>
+  <li><strong>Map instrument to root.</strong> Add a <code>root</code> column derived from the instrument (<code>ES 03-26</code> → <code>ES</code>). All cross-quarter analysis groups by root.</li>
+  <li><strong>Filter to one account.</strong> If you exported "All Accounts," split the CSV into per-account files before importing anywhere.</li>
+  <li><strong>Verify the commission column.</strong> Open NT8's commission template (<em>Tools → Options → General → Commission rate</em>) and confirm the per-side rate matches your broker statement. If the template was empty when you traded, the Commission column is zero and your "net P&amp;L" is actually gross.</li>
+  <li><strong>Don't lose the raw rows.</strong> Keep the original Trades + Executions exports archived together. You will eventually need the Executions data for a slippage audit.</li>
+</ol>
+
+<div class="cta" id="import">
+  <h3>Or skip all of that — drop the CSV into Aurafy</h3>
+  <p>Aurafy's NinjaTrader 8 importer maps rollover instruments to roots, filters out sim accounts when asked, normalizes the data-feed timezone, and overlays MAE/MFE on the chart at the time of the trade. Drag the CSV into your account, pick the timezone if asked, and your trades land grouped by round-trip with R-multiples, prop-firm rule tracking, and chart context already overlaid. Free tier — 1 account, 30 days of history, no card required.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide&amp;utm_content=primary-cta">Start importing free</a>
+  <a class="btn ghost" href="https://aurafy.dev/brokers/ninjatrader/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide&amp;utm_content=ninjatrader-landing">More on Aurafy + NinjaTrader</a>
+</div>
+
+<h2>While you're cleaning up the data — track the rules too</h2>
+
+<p>Once your CSV is in a journal, a few free Aurafy tools layer prop-firm rule math on top of any NT8 trade history — no signup required:</p>
+
+<ul>
+  <li><a href="../../tools/trailing-drawdown-calculator/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide">Trailing Drawdown Calculator</a> — model Topstep + Apex trail mechanics on a sequence of P&amp;L days from your NT8 export.</li>
+  <li><a href="../../tools/consistency-rule-calculator/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide">Consistency-Rule Calculator</a> — check Topstep 50% / Apex 30% / MFFU 40% against your actual P&amp;L distribution.</li>
+  <li><a href="../../tools/futures-pnl-calculator/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide">Futures P&amp;L / Tick-Value Calculator</a> — exact tick-value math for any contract your NT8 install routes.</li>
+</ul>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Does NinjaTrader 8 have a built-in journal so I don't need an export?</summary>
+  <p>Account Performance is closer to a journal than Tradovate's Performance view — you get MAE/MFE, an equity curve, and trade-level commission. But it tags nothing (no setup labels, no playbook column, no chart screenshots tied to trades), and it doesn't compute R-multiples or track prop-firm rules. For execution monitoring it's enough; for learning your edge across months, you'll outgrow it.</p>
+</details>
+
+<details>
+  <summary>Can I export trades programmatically via NinjaScript?</summary>
+  <p>Yes — NinjaScript can read SystemPerformance.AllTrades and write a CSV with any column layout you want. For one-off journal exports this is overkill; the right-click → CSV path takes ten seconds. For automated nightly exports into a long-term database, NinjaScript is the right path. Aurafy and most journals import the right-click CSV, not the NinjaScript output, so the two flows don't compete.</p>
+</details>
+
+<details>
+  <summary>Why does my exported P&amp;L not match what TopstepX or another prop-firm dashboard shows?</summary>
+  <p>Two reasons usually. First: prop-firm dashboards compute P&amp;L net of the firm's commissions + exchange-fee schedule, which may differ from NT8's commission template. Second: post-August-2024, Topstep accounts on NinjaTrader 8 require the TopstepX DLL — and TopstepX's dashboard is the canonical P&amp;L source, with NT8's local Profit column potentially trailing it by minutes. When the two disagree, the firm's dashboard wins for funded-account rule tracking.</p>
+</details>
+
+<details>
+  <summary>What about Combine vs XFA exports — same flow?</summary>
+  <p>Same flow, separate accounts. If your prop firm exposes both inside NT8, the Trades grid shows them as separate Account entries and you export them one at a time. Never combine eval and funded data in a single journal view if you're analyzing rule-survival rates — they have different rule sets and different psychological pressures.</p>
+</details>
+
+<details>
+  <summary>Does the export include cancelled or rejected orders?</summary>
+  <p>The Trades view does not (only round-trips that actually filled). The Orders view does. If you want to audit how often your stops or limits got cancelled before filling — a useful execution-quality metric — pull the Orders view separately, and never mix the two CSVs.</p>
+</details>
+
+<details>
+  <summary>Can I include trade comments / chart screenshots in the export?</summary>
+  <p>No. NT8's CSV export is grid columns only — no screenshots, no Chart Trader notes, no NinjaScript variables. If you need screenshots tied to trades, capture them outside NT8 (Aurafy's recorder is one path) and key them by entry timestamp in your journal.</p>
+</details>
+
+<details>
+  <summary>What if I'm on NinjaTrader 8 routed through Rithmic instead of Continuum?</summary>
+  <p>The export path is identical — the data feed only changes the live ticks, not how the Trades grid records them. Where it does matter: with Rithmic-routed accounts, the multi-firm-on-one-Rithmic-login workflow lets you trade Apex + Bulenox + MFFU under one NT8 install, and each will show up as its own Account row in the export. See our <a href="../../brokers/rithmic/">Rithmic journal guide</a> for the multi-firm workflow.</p>
+</details>
+
+<details>
+  <summary>Will the CSV work the same way on the NinjaTrader desktop trial / sim build?</summary>
+  <p>Yes — the Trades grid and right-click export work identically on the free sim build. This means you can practice the journal workflow on Sim101 before your first funded day. The only difference: sim trades have <code>Sim101</code> in the Account column, which makes filtering them out trivial later.</p>
+</details>
+
+<div class="cta">
+  <h3>Free trading journal that actually reads NinjaTrader 8 CSVs cleanly</h3>
+  <p>Aurafy imports the standard NT8 Trades export, maps rollover instruments to roots, filters sim from live, normalizes the data-feed timezone, computes R-multiples per trade, and overlays everything on the chart at the time of the round-trip. Topstep / Apex / MFFU / TPT / Tradeify / Bulenox / Earn2Trade rule tracking included. Free tier — 1 account, 30 days history, no card.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide&amp;utm_content=final-cta">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing/?utm_source=tools&amp;utm_medium=ninjatrader-export-guide&amp;utm_content=pricing">See pricing</a>
+</div>
+
+<footer>
+  Independent guide by Aurafy — a futures trading journal for prop-firm traders.
+  Not affiliated with NinjaTrader Group LLC. NinjaTrader 8's UI varies by data-feed connection and DLL version;
+  verify menu labels and column names against your current install.
+  <br><br>
+  <a href="https://aurafy.dev/">Aurafy home</a> ·
+  <a href="../tradovate-export-trades/">Tradovate export guide</a> ·
+  <a href="../../prop-firms/">Prop-firm rules hub</a> ·
+  <a href="../../brokers/">Broker journal guides</a> ·
+  <a href="../../tools/trailing-drawdown-calculator/">Trail calculator</a>
+</footer>
+
+</div>
+</body>
+</html>
