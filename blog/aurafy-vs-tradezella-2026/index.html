@@ -42,6 +42,20 @@
   .related{background:#0e1216;border:1px solid #1f252d;border-radius:8px;padding:14px 16px;margin:18px 0}
   .related h3{margin-top:0}
   .related ul{padding-left:18px}
+  .related-grid{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.related-grid{grid-template-columns:1fr 1fr}}
+  @media(min-width:900px){.related-grid{grid-template-columns:1fr 1fr 1fr}}
+  .related-card{background:#0e1216;border:1px solid #1f252d;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;transition:border-color 0.15s}
+  .related-card:hover{border-color:rgba(91,141,239,0.45)}
+  .related-card .axis{font-size:0.72rem;color:#8a94a3;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+  .related-card h4{margin:0 0 6px;font-size:0.96rem;color:#fff}
+  .related-card p{margin:0 0 10px;color:#c4ccd6;font-size:0.86rem;line-height:1.5}
+  .related-card a.go{margin-top:auto;font-size:0.86rem;font-weight:600;color:#5b8def;text-decoration:none}
+  .further{background:#0e1216;border:1px solid #1f252d;border-radius:10px;padding:16px 18px;margin:18px 0}
+  .further h4{margin:0 0 8px;font-size:0.94rem;color:#fff}
+  .further ul{margin:0;padding-left:18px;font-size:0.9rem}
+  .further li{margin-bottom:5px;color:#c4ccd6}
+  .further li a{color:#5b8def}
   footer{margin-top:40px;padding-top:18px;border-top:1px solid #1f252d;color:#8a94a3;font-size:0.85rem;text-align:center}
 </style>
 </head>
@@ -177,15 +191,55 @@
 <p>No — TradeZella has years of head start on analytics breadth and broker coverage. Aurafy is newer, more focused, and faster to ship features in our niche. If you need a battle-tested all-rounder, TradeZella is the safer bet.</p>
 </div>
 
-<div class="related">
-<h3>Related on Aurafy</h3>
-<ul>
-  <li><a href="https://aurafy.dev/blog/trade-replay-vs-screen-recording/">Trade Replay vs Screen Recording (2026)</a> — the pillar explainer on the two approaches.</li>
-  <li><a href="https://aurafy.dev/blog/best-prop-firms-2026/">Best Prop Firms for Futures Traders (2026)</a> — honest ranking.</li>
-  <li><a href="https://aurafy.dev/tools/trailing-drawdown-calculator/">Free Trailing Drawdown Calculator</a> — Topstep + Apex 4.0 presets.</li>
-  <li><a href="https://aurafy.dev/tools/consistency-rule-calculator/">Free Consistency Rule Calculator</a> — Topstep 50% / Apex 30% / MFFU 40%.</li>
-  <li><a href="https://aurafy.dev/tools/futures-pnl-calculator/">Free Futures P&amp;L Calculator</a> — 30+ contracts preloaded.</li>
-</ul>
+<h2>Related comparisons &amp; deeper dives</h2>
+<p>If you're still cross-shopping journals, the two posts below cover the other two competitors most futures traders weigh against Aurafy. If you've already picked the tool and now need to pick a firm, the head-term hub + the Apex-vs-Topstep head-to-head are the next reads.</p>
+<div class="related-grid">
+  <div class="related-card">
+    <div class="axis">Sibling — journal vs journal</div>
+    <h4>Aurafy vs Tradervue (2026)</h4>
+    <p>Tradervue is the original journaling tool — broad asset coverage, decade-old feature surface. Honest read on where Aurafy's futures focus beats it and where it doesn't.</p>
+    <a class="go" href="https://aurafy.dev/blog/aurafy-vs-tradervue-2026/">Read the comparison &rarr;</a>
+  </div>
+  <div class="related-card">
+    <div class="axis">Sibling — journal vs journal</div>
+    <h4>Aurafy vs TraderSync (2026)</h4>
+    <p>TraderSync's auto-playbook detection is one of the most-cited features in the niche. Where it wins, where Aurafy's prop-firm rule tracking matters more.</p>
+    <a class="go" href="https://aurafy.dev/blog/aurafy-vs-tradersync-2026/">Read the comparison &rarr;</a>
+  </div>
+  <div class="related-card">
+    <div class="axis">Wedge — review-method</div>
+    <h4>Trade Replay vs Screen Recording</h4>
+    <p>The pillar explainer on the two review approaches. The reason "Aurafy has screen recording" matters — and the honest limits of tick-replay.</p>
+    <a class="go" href="https://aurafy.dev/blog/trade-replay-vs-screen-recording/">Read the pillar &rarr;</a>
+  </div>
+  <div class="related-card">
+    <div class="axis">Next decision — pick a firm</div>
+    <h4>Best Prop Firms for Futures (2026)</h4>
+    <p>Once you've picked a journal, the next question is which prop firm. Topstep, Apex 4.0, MFFU ranked on rule mechanics, not affiliate payouts.</p>
+    <a class="go" href="https://aurafy.dev/blog/best-prop-firms-2026/">Read the ranking &rarr;</a>
+  </div>
+  <div class="related-card">
+    <div class="axis">Head-to-head — firm vs firm</div>
+    <h4>Apex 4.0 vs Topstep (2026)</h4>
+    <p>The two biggest names side-by-side. Different lock points, different consistency thresholds, different trail choices &mdash; which fits which trader.</p>
+    <a class="go" href="https://aurafy.dev/blog/apex-vs-topstep-2026/">Read the comparison &rarr;</a>
+  </div>
+  <div class="related-card">
+    <div class="axis">Free tool</div>
+    <h4>Trailing-Drawdown Calculator</h4>
+    <p>No login. Topstep + Apex 4.0 presets, intraday vs EOD modeling. Try the math behind the screen-recording-plus-rule-tracking pitch.</p>
+    <a class="go" href="https://aurafy.dev/tools/trailing-drawdown-calculator/">Open the calculator &rarr;</a>
+  </div>
+</div>
+<div class="further">
+  <h4>Hub pages for ongoing coverage</h4>
+  <ul>
+    <li><a href="https://aurafy.dev/prop-firms/">All 7 prop-firm rule cheat-sheets</a> &mdash; Apex 4.0, Topstep, MFFU, TPT, Tradeify, Bulenox, Earn2Trade. Each landing leads with the structural quirk competitor sites bury.</li>
+    <li><a href="https://aurafy.dev/brokers/">Broker &amp; platform guides</a> &mdash; Tradovate, NinjaTrader, Sierra Chart, Rithmic. Which platform your firm actually clears through (it's not always what you think).</li>
+    <li><a href="https://aurafy.dev/guides/">How-to export-trades guides</a> &mdash; clean CSV exports per platform so journal numbers match the firm's numbers, not your chart's.</li>
+    <li><a href="https://aurafy.dev/tools/consistency-rule-calculator/">Free Consistency Rule Calculator</a> &mdash; Topstep 50% / Apex 30% / MFFU 40% presets, max-safe-next-day math.</li>
+    <li><a href="https://aurafy.dev/tools/futures-pnl-calculator/">Free Futures P&amp;L Calculator</a> &mdash; 30+ contracts preloaded (ES, NQ, MES, MNQ, CL, GC, ZB, ZN&hellip;).</li>
+  </ul>
 </div>
 
 <div class="cta">
