@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CRO #001 Preview — Founder Seat Counter (Aurafy growth proposal)</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#1a1f2e; --muted:#5a6478; --line:#e5e9f0;
+          --brand:#2d7df0; --brand-dark:#1a5dc7; --brand-tint:#eaf2ff;
+          --urgent:#c0392b; --good:#1e8a52; --warn:#c08c00; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+  header .kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                 color:var(--muted);margin:0 0 6px}
+  header h1{margin:0 0 6px;font-size:1.65rem;line-height:1.25}
+  header p{margin:0;color:var(--muted);font-size:0.95rem}
+  .note{background:#fff8e1;border:1px solid #f0d97c;border-radius:8px;padding:12px 14px;
+        font-size:0.9rem;color:#6b5a1a;margin:0 0 28px}
+  h2{font-size:1.15rem;margin:36px 0 12px;border-left:3px solid var(--brand);padding-left:10px}
+  .demo-shell{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;
+              margin-bottom:18px}
+  .demo-shell__label{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                     color:var(--muted);margin-bottom:14px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 22px}
+  .controls button{background:#fff;border:1px solid var(--line);border-radius:8px;
+                   padding:8px 14px;font-size:0.85rem;cursor:pointer;color:var(--ink);
+                   font-family:inherit;transition:border-color .15s,background .15s}
+  .controls button:hover{border-color:var(--brand);background:var(--brand-tint)}
+  .controls button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+  /* === The actual proposed block (copy/paste-able to aurafy.dev) === */
+  .founder-seat{border:1px solid var(--brand);border-radius:12px;padding:20px;
+                background:linear-gradient(135deg,#f4f8ff 0%,#eaf2ff 100%);
+                max-width:480px;margin:0 auto}
+  .founder-seat__head{display:flex;justify-content:space-between;align-items:center;
+                      margin-bottom:8px;font-size:0.9rem;gap:10px;flex-wrap:wrap}
+  .founder-seat__badge{background:var(--brand);color:#fff;padding:3px 10px;
+                       border-radius:999px;font-weight:600;font-size:0.78rem;
+                       letter-spacing:0.02em}
+  .founder-seat__count{color:#1a4ba8;font-weight:500}
+  .founder-seat__count.is-urgent{color:var(--urgent);font-weight:700}
+  .founder-seat__pitch{font-size:1.05rem;margin:8px 0 14px;line-height:1.4}
+  .founder-seat__cta{display:block;background:var(--brand);color:#fff;text-align:center;
+                     padding:14px 18px;border-radius:8px;font-weight:600;text-decoration:none;
+                     transition:background .15s}
+  .founder-seat__cta:hover{background:var(--brand-dark)}
+  .founder-seat__fine{font-size:0.8rem;color:#5a6478;margin-top:10px;line-height:1.45}
+  .founder-seat.is-sold-out .founder-seat__cta{background:#999;pointer-events:none}
+  .founder-seat.is-sold-out .founder-seat__cta::after{content:" — sold out"}
+  /* === End proposed block === */
+
+  /* Nav-link preview */
+  .nav-preview{background:#fff;border:1px solid var(--line);border-radius:10px;
+               display:flex;align-items:center;gap:24px;padding:14px 18px;font-size:0.92rem}
+  .nav-preview__brand{font-weight:700;color:var(--ink)}
+  .nav-preview__links{display:flex;gap:20px;color:var(--muted)}
+  .nav-preview__links a{color:var(--muted);text-decoration:none}
+  .nav-preview__right{margin-left:auto}
+  .nav-founder{display:inline-flex;align-items:center;gap:8px;background:var(--brand-tint);
+               border:1px solid #c5d8f5;color:var(--brand-dark);padding:7px 12px;
+               border-radius:999px;font-size:0.85rem;text-decoration:none}
+  .nav-founder__dot{display:inline-block;width:8px;height:8px;border-radius:50%;
+                    background:var(--good);box-shadow:0 0 0 0 rgba(30,138,82,0.6);
+                    animation:pulse 2s infinite}
+  .nav-founder.is-urgent .nav-founder__dot{background:var(--urgent);
+                    box-shadow:0 0 0 0 rgba(192,57,43,0.6)}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(30,138,82,0.55)}
+    70%{box-shadow:0 0 0 8px rgba(30,138,82,0)}
+    100%{box-shadow:0 0 0 0 rgba(30,138,82,0)}
+  }
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0 30px}
+  @media(max-width:640px){.compare{grid-template-columns:1fr}}
+  .compare__card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+  .compare__card h3{margin:0 0 8px;font-size:0.95rem;color:var(--muted)}
+  .compare__card .before{color:var(--muted)}
+  .compare__card .before strong{color:var(--ink)}
+
+  ul.checklist{padding-left:18px}
+  ul.checklist li{margin:6px 0}
+
+  .footnote{font-size:0.85rem;color:var(--muted);border-top:1px solid var(--line);
+            padding-top:18px;margin-top:36px;line-height:1.5}
+  .footnote a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Aurafy growth · CRO proposal preview</p>
+    <h1>CRO #001 — Founder Seat Counter + Clickable CTA</h1>
+    <p>Visual preview of the proposed pricing block. <strong>Not a live page</strong> — operator review only.</p>
+  </header>
+
+  <p class="note">
+    <strong>Why this preview exists:</strong> the markdown spec is in
+    <code>outbox/cro-001-founder-seat-counter.md</code>. This page renders the
+    proposed HTML/CSS so you can see + click the block before deciding whether to
+    deploy it to aurafy.dev. Nothing here writes to any real billing endpoint.
+  </p>
+
+  <h2>The proposed block (interactive demo)</h2>
+
+  <div class="demo-shell">
+    <div class="demo-shell__label">Simulated seat-count state — click to change</div>
+    <div class="controls">
+      <button data-left="37" class="active">37 left (normal)</button>
+      <button data-left="12">12 left (yellow)</button>
+      <button data-left="6">6 left (urgent — red)</button>
+      <button data-left="1">1 left (final)</button>
+      <button data-left="0">0 left (sold out)</button>
+    </div>
+
+    <div class="founder-seat" id="founder-seat">
+      <div class="founder-seat__head">
+        <span class="founder-seat__badge">Founder pricing</span>
+        <span class="founder-seat__count" id="founder-seat-count">
+          <strong id="founder-seats-left">37</strong> of 50 seats left
+        </span>
+      </div>
+      <p class="founder-seat__pitch">
+        Lock <strong>$19/mo for life</strong> — the same Aurafy Pro that's $49/mo
+        once these seats are gone. Cancel anytime.
+      </p>
+      <a class="founder-seat__cta" id="founder-seat-cta"
+         href="https://app.aurafy.dev/upgrade?plan=founder&amp;utm_source=site&amp;utm_medium=founder-cta">
+        Claim founder seat — $19/mo
+      </a>
+      <p class="founder-seat__fine">
+        First-50 customers, locked for the lifetime of your account.
+        No card to start the free tier first.
+      </p>
+    </div>
+  </div>
+
+  <h2>Same data — global nav variant</h2>
+  <div class="nav-preview">
+    <span class="nav-preview__brand">Aurafy</span>
+    <div class="nav-preview__links">
+      <a href="#">Product</a><a href="#">Pricing</a><a href="#">Blog</a><a href="#">Tools</a>
+    </div>
+    <div class="nav-preview__right">
+      <a class="nav-founder" id="nav-founder" href="#founder-seat">
+        <span class="nav-founder__dot"></span>
+        <span><strong id="nav-seats-left">37</strong>/50 founder seats</span>
+      </a>
+    </div>
+  </div>
+
+  <h2>Before / after (the user-visible difference)</h2>
+  <div class="compare">
+    <div class="compare__card">
+      <h3>BEFORE — current aurafy.dev</h3>
+      <p class="before">
+        "First 50 customers get founder pricing of <strong>$19/mo locked for life.</strong>"
+      </p>
+      <p class="before" style="margin-top:10px">
+        <em>(plain text — not a link, no counter, no "claim seat" action)</em>
+      </p>
+    </div>
+    <div class="compare__card">
+      <h3>AFTER — proposed</h3>
+      <p class="before">
+        Interactive block (above): live seat counter, single primary CTA,
+        graceful sold-out state, UTM-tagged for attribution.
+      </p>
+    </div>
+  </div>
+
+  <h2>What's needed to ship this</h2>
+  <ul class="checklist">
+    <li><strong>Phase 1 (HTML only — ships today):</strong> drop the block into
+      /pricing + homepage + in-app upgrade modal. Counter falls back to "&lt;50"
+      until the endpoint exists. Already 80% of the lift.</li>
+    <li><strong>Phase 2 (5-line endpoint):</strong>
+      <code>GET /api/founder-seats → {"left": N}</code>, cached 60s. Counts active
+      $19 subscriptions in the existing billing layer.</li>
+    <li><strong>Phase 3 (telemetry):</strong>
+      <code>data-track="founder-cta"</code> hook for future analytics; UTM
+      attribution to count converted visitors in Stripe.</li>
+  </ul>
+
+  <p class="footnote">
+    Full spec, copy choices, and rationale:
+    <code>outbox/cro-001-founder-seat-counter.md</code>.
+    This preview is unindexed (noindex,nofollow) and lives at
+    /cro/founder-seat/ on the growth-assets mirror — it is not part of
+    Aurafy's customer-facing site.
+  </p>
+
+</div>
+
+<script>
+  // Simulate the seat-count states so operator can click through them.
+  const seat     = document.getElementById('founder-seat');
+  const seatCnt  = document.getElementById('founder-seat-count');
+  const seatNum  = document.getElementById('founder-seats-left');
+  const seatCta  = document.getElementById('founder-seat-cta');
+  const navWrap  = document.getElementById('nav-founder');
+  const navNum   = document.getElementById('nav-seats-left');
+
+  function render(n) {
+    seatNum.textContent = n;
+    navNum.textContent = n;
+    seat.classList.remove('is-sold-out');
+    seatCnt.classList.remove('is-urgent');
+    navWrap.classList.remove('is-urgent');
+    if (n <= 0) {
+      seat.classList.add('is-sold-out');
+      seatCta.textContent = 'Founder seats sold out';
+      seatCta.removeAttribute('href');
+      navWrap.classList.add('is-urgent');
+    } else {
+      seatCta.textContent = 'Claim founder seat — $19/mo';
+      seatCta.setAttribute('href',
+        'https://app.aurafy.dev/upgrade?plan=founder&utm_source=site&utm_medium=founder-cta');
+      if (n <= 10) {
+        seatCnt.classList.add('is-urgent');
+        navWrap.classList.add('is-urgent');
+      }
+    }
+  }
+
+  document.querySelectorAll('.controls button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(parseInt(btn.dataset.left, 10));
+    });
+  });
+</script>
+</body>
+</html>
