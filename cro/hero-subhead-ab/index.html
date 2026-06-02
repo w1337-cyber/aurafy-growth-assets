@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CRO #004 Preview — Hero Subhead A/B/C Test (Aurafy growth proposal)</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#1a1f2e; --muted:#5a6478; --line:#e5e9f0;
+          --brand:#2d7df0; --brand-dark:#1a5dc7; --brand-tint:#eaf2ff;
+          --urgent:#c0392b; --good:#1e8a52; --warn:#c08c00;
+          --hero-bg:#0e1626; --hero-ink:#f4f6fb; --hero-muted:#8a98b3; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+  header .kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                 color:var(--muted);margin:0 0 6px}
+  header h1{margin:0 0 6px;font-size:1.65rem;line-height:1.25}
+  header p{margin:0;color:var(--muted);font-size:0.95rem}
+  .note{background:#fff8e1;border:1px solid #f0d97c;border-radius:8px;padding:12px 14px;
+        font-size:0.9rem;color:#6b5a1a;margin:0 0 28px}
+  h2{font-size:1.15rem;margin:36px 0 12px;border-left:3px solid var(--brand);padding-left:10px}
+
+  .toggle{display:flex;gap:0;background:#fff;border:1px solid var(--line);border-radius:999px;
+          padding:4px;width:fit-content;margin:0 0 22px;flex-wrap:wrap}
+  .toggle button{background:transparent;border:0;padding:8px 16px;font-size:0.88rem;
+                 border-radius:999px;cursor:pointer;color:var(--muted);font-family:inherit;
+                 font-weight:500;transition:background .15s,color .15s}
+  .toggle button.active{background:var(--brand);color:#fff}
+
+  /* ====== Mocked Aurafy hero (shared frame, swappable subhead) ====== */
+  .hero{background:linear-gradient(135deg,#0e1626 0%,#1a2a45 100%);color:var(--hero-ink);
+        border-radius:16px;padding:48px 36px;position:relative;overflow:hidden;
+        border:1px solid #1f2e4a;min-height:380px}
+  .hero::before{content:"";position:absolute;top:-40%;right:-10%;width:55%;height:180%;
+                background:radial-gradient(circle at center,rgba(45,125,240,0.18) 0%,transparent 60%);
+                pointer-events:none}
+  .hero__nav{display:flex;align-items:center;gap:24px;margin-bottom:54px;font-size:0.92rem;
+             position:relative;z-index:1}
+  .hero__brand{font-weight:700;font-size:1.05rem}
+  .hero__links{display:flex;gap:18px;color:var(--hero-muted)}
+  .hero__links a{color:var(--hero-muted);text-decoration:none}
+  .hero__nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .hero__nav-right .login{color:var(--hero-muted);text-decoration:none;font-size:0.9rem}
+
+  .hero__kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;
+                color:#7aa6ed;margin:0 0 14px;position:relative;z-index:1}
+  .hero__title{font-size:2.3rem;line-height:1.15;margin:0 0 14px;font-weight:700;
+               position:relative;z-index:1;max-width:680px}
+  .hero__sub{font-size:1.05rem;color:#b8c5dd;margin:0 0 26px;max-width:600px;
+             position:relative;z-index:1;line-height:1.5;min-height:80px}
+  .hero__sub strong{color:#dde6f5;font-weight:600}
+
+  .hero__cta{position:relative;z-index:1}
+  .cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .cta-primary{background:#2d7df0;color:#fff;padding:14px 26px;border-radius:8px;
+               font-weight:600;font-size:1rem;text-decoration:none;display:inline-block;
+               box-shadow:0 4px 20px rgba(45,125,240,0.28)}
+  .cta-secondary{color:#b8c5dd;font-weight:500;font-size:0.95rem;padding:8px 4px;
+                 text-decoration:none}
+  .cta-fine{font-size:0.82rem;color:#8a98b3;margin:10px 0 0;width:100%}
+
+  /* Variant chip in the corner of the hero — shows which variant a visitor sees */
+  .variant-chip{position:absolute;top:18px;right:18px;background:rgba(45,125,240,0.18);
+                color:#a8c5f5;border:1px solid rgba(45,125,240,0.4);padding:4px 10px;
+                border-radius:999px;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;
+                z-index:2}
+
+  /* Variant card grid */
+  .variants{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 26px}
+  @media(max-width:760px){.variants{grid-template-columns:1fr}}
+  .vcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px}
+  .vcard h3{margin:0 0 4px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+            color:var(--muted)}
+  .vcard h4{margin:0 0 10px;font-size:1rem;color:var(--ink);line-height:1.3}
+  .vcard p.audience{margin:0 0 8px;font-size:0.85rem;color:var(--muted)}
+  .vcard p.risk{margin:8px 0 0;font-size:0.82rem;color:var(--warn);font-style:italic}
+  .vcard.is-active{border-color:var(--brand);background:linear-gradient(180deg,#fff 0%,#f4f9ff 100%);
+                   box-shadow:0 2px 12px rgba(45,125,240,0.12)}
+
+  table.metrics{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+                border-radius:10px;overflow:hidden;font-size:0.92rem;margin:8px 0 24px}
+  table.metrics th,table.metrics td{padding:11px 14px;border-bottom:1px solid var(--line);
+                                     text-align:left;vertical-align:top}
+  table.metrics tr:last-child td{border-bottom:0}
+  table.metrics th{background:#f4f7fc;font-weight:600;color:var(--muted);font-size:0.82rem;
+                   text-transform:uppercase;letter-spacing:0.05em}
+
+  ul.checklist{padding-left:18px}
+  ul.checklist li{margin:8px 0}
+
+  /* Random-pick demo block */
+  .demo{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;
+        margin:6px 0 26px}
+  .demo h4{margin:0 0 8px;font-size:0.95rem}
+  .demo p{margin:0 0 12px;font-size:0.9rem;color:var(--muted)}
+  .demo__btn{background:var(--brand);color:#fff;padding:8px 16px;border-radius:6px;border:0;
+             font-family:inherit;font-size:0.9rem;font-weight:500;cursor:pointer}
+  .demo__btn:hover{background:var(--brand-dark)}
+  .demo__log{font-family:ui-monospace,Menlo,Monaco,Consolas,monospace;font-size:0.78rem;
+             background:#1a1f2e;color:#a8c5f5;padding:10px 12px;border-radius:6px;
+             margin-top:12px;max-height:140px;overflow-y:auto;line-height:1.5}
+  .demo__log .ts{color:#677d9a}
+
+  .footnote{font-size:0.85rem;color:var(--muted);border-top:1px solid var(--line);
+            padding-top:18px;margin-top:36px;line-height:1.5}
+  .footnote code{background:#f0f3f8;padding:1px 6px;border-radius:4px;font-size:0.85em}
+  .footnote a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Aurafy growth · CRO proposal preview</p>
+    <h1>CRO #004 — Hero subhead A/B/C test</h1>
+    <p>Three honest subheads, randomly served, attribution baked in. <strong>Not a live page</strong> — operator review only.</p>
+  </header>
+
+  <p class="note">
+    <strong>How to read this:</strong> tap a variant button below to see what each visitor would see.
+    The hero CTA and title stay constant — only the subhead changes. The <em>Random pick</em> demo at
+    the bottom shows the actual cookie-based assignment that would run in production.
+    Full markdown spec lives at <code>outbox/cro-004-hero-subhead-ab.md</code>.
+  </p>
+
+  <h2>The hero — toggle through the 3 variants</h2>
+
+  <div class="toggle" role="tablist">
+    <button id="show-A" class="active">Variant A — Stack compression</button>
+    <button id="show-B">Variant B — Rule survival</button>
+    <button id="show-C">Variant C — Screen recording</button>
+  </div>
+
+  <div class="hero">
+    <span class="variant-chip" id="variant-chip">Variant A</span>
+    <div class="hero__nav">
+      <span class="hero__brand">Aurafy</span>
+      <div class="hero__links">
+        <a href="#">Product</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">Blog</a>
+      </div>
+      <div class="hero__nav-right">
+        <a href="#" class="login">Log in</a>
+      </div>
+    </div>
+
+    <p class="hero__kicker">Futures trading journal · screen recording · bar-replay</p>
+    <h2 class="hero__title" style="border:0;padding:0;margin:0 0 14px">
+      Journal every futures trade. See why you lost.
+    </h2>
+    <p class="hero__sub" id="sub" data-variant>
+      <!-- text injected by JS -->
+    </p>
+
+    <div class="hero__cta">
+      <div class="cta-row">
+        <a href="#" class="cta-primary" data-track="hero-start-free" id="cta-primary">
+          Start free — no card required
+        </a>
+        <a href="#" class="cta-secondary" data-track="hero-see-pricing">See pricing →</a>
+      </div>
+      <p class="cta-fine">Last 30 days of trades, 1 account, 3 playbooks. Upgrade only when you want more.</p>
+    </div>
+  </div>
+
+  <h2>The three variants side-by-side</h2>
+  <div class="variants">
+    <div class="vcard is-active" id="card-A">
+      <h3>Variant A</h3>
+      <h4>Stack compression</h4>
+      <p class="audience">Speaks to: visitors already paying for journal + recording + replay tools.</p>
+      <p class="risk">Risk: price-anchors before establishing what Aurafy is.</p>
+    </div>
+    <div class="vcard" id="card-B">
+      <h3>Variant B</h3>
+      <h4>Rule-violation survival</h4>
+      <p class="audience">Speaks to: funded prop-firm traders who just got close to a violation.</p>
+      <p class="risk">Risk: narrows to funded traders; challenge-takers may not feel urgency.</p>
+    </div>
+    <div class="vcard" id="card-C">
+      <h3>Variant C</h3>
+      <h4>Screen-recording wedge</h4>
+      <p class="audience">Speaks to: traders who feel their P&L numbers don't explain their losses.</p>
+      <p class="risk">Risk: screen-recording may sound heavy/creepy to uninitiated visitors.</p>
+    </div>
+  </div>
+
+  <h2>Live demo — what a real visitor would get</h2>
+  <div class="demo">
+    <h4>Cookie-based sticky assignment</h4>
+    <p>
+      A first-time visitor gets randomly assigned to A/B/C with equal probability. The choice is
+      stored in a 30-day cookie so the same visitor sees the same subhead across return visits.
+      Click below to simulate three different "fresh visitors" hitting the page — each gets its
+      own random pick logged + a UTM tag appended to the CTA URL.
+    </p>
+    <button class="demo__btn" id="demo-btn">Simulate a new visitor →</button>
+    <div class="demo__log" id="demo-log">
+      <div><span class="ts">[ready]</span> click the button to see how variants get assigned.</div>
+    </div>
+  </div>
+
+  <h2>What we'd measure (decision matrix)</h2>
+  <table class="metrics">
+    <tr><th>Metric</th><th>What it tells us</th></tr>
+    <tr>
+      <td>Hero CTA click rate (per variant)</td>
+      <td>Did the subhead make them want to start free? Immediate but noisy.</td>
+    </tr>
+    <tr>
+      <td><strong>Hero → free signup (per variant)</strong></td>
+      <td><strong>The real number.</strong> Did clicks turn into actual accounts?</td>
+    </tr>
+    <tr>
+      <td><strong>Free signup → paid (per variant)</strong></td>
+      <td><strong>The most important number.</strong> A subhead that pulls in visitors who never pay = wasted lift.</td>
+    </tr>
+    <tr>
+      <td>Bounce rate on / (per variant)</td>
+      <td>Did the subhead push undecideds away? (Variant A may do this.)</td>
+    </tr>
+    <tr>
+      <td>Variant × traffic source</td>
+      <td>Reddit vs tools vs organic — which variant wins for which channel?</td>
+    </tr>
+  </table>
+
+  <h2>What's needed to ship this</h2>
+  <ul class="checklist">
+    <li><strong>Pre-req:</strong> CRO #002 (hero CTA flip) should ship first or simultaneously — Variant A and B both assume the CTA is "Start free — no card." If still "See pricing," only Variant A reads coherently.</li>
+    <li><strong>Snippet (~30 lines):</strong> drop into the hero — assigns a variant, sets a 30-day cookie, swaps the subhead text, appends <code>utm_content=subhead-A|B|C</code> to every hero CTA.</li>
+    <li><strong>Impression event:</strong> if aurafy.dev has analytics (PostHog / GA4 / Plausible), the snippet fires one <code>hero_subhead_shown</code> event per session so denominators are clean.</li>
+    <li><strong>Decision:</strong> after 2–4 weeks or ~500 visitors/variant, pick the winner based on free→paid (not CTR). Roll out winner to 100%. Variant copy can be reused in retargeting + email subject lines.</li>
+    <li><strong>Reversible:</strong> remove the script block; the subhead element shows whatever default is in the HTML. 60-second rollback.</li>
+  </ul>
+
+  <h2>What stays inside the hard rules</h2>
+  <ul class="checklist">
+    <li><strong>No fake claims.</strong> All three subheads are factually verified — TradeZella $49 + Loom $15 + FX Replay $39 = $103 is real; rule violations are the #1 prop-firm churn cause; Aurafy genuinely is the only major futures journal with native screen recording (verified in our competitor cluster).</li>
+    <li><strong>No dark patterns.</strong> No fake urgency, no fake testimonials, no popups, no exit-intent. Just three legitimate value props, randomly served.</li>
+    <li><strong>No identity manipulation.</strong> No fake user reviews tied to a variant, no manipulated social proof.</li>
+    <li><strong>Honest random.</strong> 1/3 each, no weighting — we're not pre-judging the winner, that defeats the test.</li>
+  </ul>
+
+  <p class="footnote">
+    Full spec + ready-to-paste snippet:
+    <code>outbox/cro-004-hero-subhead-ab.md</code>.
+    This preview is unindexed (noindex,nofollow) and lives at
+    <code>/cro/hero-subhead-ab/</code> on the growth-assets mirror — it is not part of
+    Aurafy's customer-facing site.
+    Pairs with: <a href="../founder-seat/">CRO #001 (founder seat counter)</a>,
+    <a href="../hero-cta-flip/">CRO #002 (hero CTA flip)</a>,
+    <a href="../free-tier-triggers/">CRO #003 (free-tier upgrade triggers)</a>.
+  </p>
+
+</div>
+
+<script>
+  const variants = {
+    A: "<strong>Replace your TradeZella + Loom + FX Replay stack ($103/mo) with one tool for $49.</strong> Or $19/mo for life if you're one of the first 50 founders.",
+    B: "<strong>Don't blow your funded account on a rule violation.</strong> Track your trailing drawdown, consistency rule, and every trade in one place — built for Topstep, Apex, and MyFundedFutures.",
+    C: "<strong>The only futures journal that records your screen.</strong> See not just your P&L — but why you took the trade in the first place."
+  };
+
+  const subEl   = document.getElementById('sub');
+  const chipEl  = document.getElementById('variant-chip');
+  const ctaEl   = document.getElementById('cta-primary');
+  const btnA    = document.getElementById('show-A');
+  const btnB    = document.getElementById('show-B');
+  const btnC    = document.getElementById('show-C');
+  const cardA   = document.getElementById('card-A');
+  const cardB   = document.getElementById('card-B');
+  const cardC   = document.getElementById('card-C');
+
+  function render(v) {
+    subEl.innerHTML = variants[v];
+    chipEl.textContent = 'Variant ' + v;
+    [btnA,btnB,btnC].forEach(b=>b.classList.remove('active'));
+    [cardA,cardB,cardC].forEach(c=>c.classList.remove('is-active'));
+    ({A:btnA,B:btnB,C:btnC}[v]).classList.add('active');
+    ({A:cardA,B:cardB,C:cardC}[v]).classList.add('is-active');
+    ctaEl.href = '#start-free?utm_source=site&utm_medium=hero&utm_campaign=start-free&utm_content=subhead-' + v;
+  }
+
+  btnA.onclick = () => render('A');
+  btnB.onclick = () => render('B');
+  btnC.onclick = () => render('C');
+  render('A');
+
+  // ===== Random-pick demo (simulates new visitors) =====
+  const demoBtn = document.getElementById('demo-btn');
+  const demoLog = document.getElementById('demo-log');
+  let visitorCount = 0;
+  const counts = { A:0, B:0, C:0 };
+  demoBtn.onclick = () => {
+    visitorCount += 1;
+    const v = ['A','B','C'][Math.floor(Math.random()*3)];
+    counts[v] += 1;
+    const ts = new Date().toLocaleTimeString();
+    const line = document.createElement('div');
+    line.innerHTML = `<span class="ts">[${ts}]</span> visitor #${visitorCount} → Variant ${v}` +
+      ` · cookie set (30d) · CTA tagged <em>utm_content=subhead-${v}</em>` +
+      ` · running totals: A=${counts.A} B=${counts.B} C=${counts.C}`;
+    demoLog.prepend(line);
+    render(v);
+  };
+</script>
+
+</body>
+</html>
