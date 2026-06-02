@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CRO #003 Preview — Free-tier upgrade triggers (Aurafy growth proposal)</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#1a1f2e; --muted:#5a6478; --line:#e5e9f0;
+          --brand:#2d7df0; --brand-dark:#1a5dc7; --brand-tint:#eaf2ff;
+          --good:#1e8a52; --warn:#c08c00;
+          --app-bg:#fbfcfe; --app-ink:#1a1f2e; --app-muted:#5a6478;
+          --app-border:#e5e9f0; --app-row:#fff; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+  header .kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                 color:var(--muted);margin:0 0 6px}
+  header h1{margin:0 0 6px;font-size:1.65rem;line-height:1.25}
+  header p{margin:0;color:var(--muted);font-size:0.95rem}
+  .note{background:#fff8e1;border:1px solid #f0d97c;border-radius:8px;padding:12px 14px;
+        font-size:0.9rem;color:#6b5a1a;margin:0 0 28px}
+  h2{font-size:1.15rem;margin:36px 0 12px;border-left:3px solid var(--brand);padding-left:10px}
+
+  /* ===== Trigger picker buttons ===== */
+  .triggers{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 22px}
+  .triggers button{background:#fff;border:1px solid var(--line);border-radius:999px;
+                   padding:10px 18px;font-size:0.92rem;cursor:pointer;color:var(--ink);
+                   font-family:inherit;font-weight:500;transition:background .15s,border-color .15s;
+                   display:flex;align-items:center;gap:8px}
+  .triggers button:hover{background:var(--brand-tint);border-color:#c5d8f5}
+  .triggers button .pill{background:#eef2f8;color:var(--muted);font-size:0.72rem;
+                          padding:2px 8px;border-radius:999px;font-weight:600;letter-spacing:0.04em}
+
+  /* ===== Mocked Aurafy app surface ===== */
+  .app{background:var(--app-bg);border:1px solid var(--app-border);border-radius:14px;
+       overflow:hidden;margin:0 0 18px}
+  .app__topbar{display:flex;align-items:center;gap:16px;padding:14px 20px;
+               border-bottom:1px solid var(--app-border);background:#fff;
+               font-size:0.92rem;color:var(--app-muted)}
+  .app__brand{font-weight:700;color:var(--ink);font-size:1rem}
+  .app__nav{display:flex;gap:18px}
+  .app__nav a{color:var(--app-muted);text-decoration:none}
+  .app__nav a.active{color:var(--ink);font-weight:600}
+  .app__user{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .app__plan-pill{background:#f0f3f8;color:var(--muted);font-size:0.72rem;
+                  padding:3px 9px;border-radius:999px;font-weight:600;letter-spacing:0.04em}
+
+  /* Banner — passive (Trigger D) */
+  .app__banner{display:flex;align-items:center;gap:14px;padding:11px 20px;
+               background:linear-gradient(90deg,#fff7e0 0%,#fffaeb 100%);
+               border-bottom:1px solid #f0d97c;font-size:0.9rem;color:#6b5a1a}
+  .app__banner.hidden{display:none}
+  .app__banner-msg{flex:1}
+  .app__banner-cta{background:#1a5dc7;color:#fff;padding:6px 14px;border-radius:6px;
+                   text-decoration:none;font-weight:600;font-size:0.85rem}
+  .app__banner-dismiss{background:transparent;border:0;color:#6b5a1a;font-size:1.1rem;
+                       cursor:pointer;padding:4px 8px;line-height:1;opacity:0.6}
+  .app__banner-dismiss:hover{opacity:1}
+
+  .app__body{padding:22px 20px;min-height:280px}
+  .app__h{font-size:1.05rem;font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  .app__h .count{background:#eef2f8;color:var(--muted);font-size:0.74rem;
+                 padding:2px 9px;border-radius:999px;font-weight:500}
+
+  /* Trade list (for history trigger) */
+  .trades{background:var(--app-row);border:1px solid var(--app-border);border-radius:8px;
+          overflow:hidden}
+  .trades__row{display:grid;grid-template-columns:90px 60px 80px 80px 1fr;gap:14px;
+               padding:11px 14px;border-bottom:1px solid var(--app-border);font-size:0.88rem;
+               align-items:center}
+  .trades__row:last-child{border-bottom:0}
+  .trades__row.archived{opacity:0.5;background:#f7f9fc}
+  .trades__row .date{color:var(--muted);font-variant-numeric:tabular-nums}
+  .trades__row .sym{font-weight:600}
+  .trades__row .pnl{font-variant-numeric:tabular-nums;text-align:right}
+  .trades__row .pnl.pos{color:var(--good)}
+  .trades__row .pnl.neg{color:#c0392b}
+  .trades__row .why{color:var(--muted);font-size:0.82rem}
+  .trades__divider{padding:10px 14px;background:#f0f3f8;font-size:0.82rem;color:var(--muted);
+                   border-top:1px dashed #c5cad6;border-bottom:1px dashed #c5cad6;display:flex;
+                   align-items:center;gap:10px}
+  .trades__divider strong{color:var(--ink);font-weight:600}
+
+  /* Accounts grid */
+  .acct-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px}
+  @media(max-width:540px){.acct-grid{grid-template-columns:1fr}}
+  .acct{background:var(--app-row);border:1px solid var(--app-border);border-radius:8px;
+        padding:14px;display:flex;flex-direction:column;gap:6px}
+  .acct .name{font-weight:600;font-size:0.95rem}
+  .acct .meta{color:var(--muted);font-size:0.82rem}
+  .acct.empty{border-style:dashed;align-items:center;justify-content:center;text-align:center;
+              cursor:pointer;color:var(--brand);font-weight:500;min-height:96px}
+  .acct.empty:hover{background:var(--brand-tint)}
+
+  /* Playbooks */
+  .pb-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:680px}
+  @media(max-width:680px){.pb-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.pb-grid{grid-template-columns:1fr}}
+  .pb{background:var(--app-row);border:1px solid var(--app-border);border-radius:8px;padding:14px}
+  .pb .name{font-weight:600;font-size:0.95rem;margin:0 0 4px}
+  .pb .meta{color:var(--muted);font-size:0.82rem}
+  .pb.empty{border-style:dashed;display:flex;align-items:center;justify-content:center;
+            text-align:center;cursor:pointer;color:var(--brand);font-weight:500;min-height:96px}
+  .pb.empty:hover{background:var(--brand-tint)}
+
+  .hidden{display:none !important}
+
+  /* ===== The cap modal (shared by all 3 triggers) ===== */
+  dialog.cap-modal{border:0;border-radius:16px;padding:0;max-width:480px;width:calc(100% - 32px);
+                   box-shadow:0 24px 60px rgba(0,0,0,0.18);background:#fff;color:var(--ink)}
+  dialog.cap-modal::backdrop{background:rgba(14,22,38,0.55);backdrop-filter:blur(2px)}
+  .cap-modal__form{padding:30px 28px 22px;display:block}
+  .cap-modal__kicker{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+                     color:var(--muted);margin:0 0 10px;font-weight:600}
+  .cap-modal__title{margin:0 0 10px;font-size:1.35rem;line-height:1.25}
+  .cap-modal__body{margin:0 0 20px;color:#3a4255;line-height:1.55;font-size:0.95rem}
+  .cap-modal__offer{background:linear-gradient(135deg,#eaf2ff 0%,#f4f8ff 100%);
+                    border:1px solid #c5d8f5;border-radius:12px;padding:14px 16px;margin:0 0 18px}
+  .cap-modal__offer-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .cap-modal__price{font-size:1.9rem;font-weight:700;color:var(--brand-dark);line-height:1}
+  .cap-modal__per{font-size:1rem;font-weight:500;color:var(--muted)}
+  .cap-modal__lock{font-size:0.74rem;color:var(--good);font-weight:700;
+                   text-transform:uppercase;letter-spacing:0.05em}
+  .cap-modal__seats{margin:6px 0 0;font-size:0.84rem;color:var(--muted)}
+  .cap-modal__cta-row{display:flex;gap:12px;align-items:center}
+  .cap-modal__primary{background:var(--brand);color:#fff;padding:13px 22px;border-radius:8px;
+                      font-weight:600;text-decoration:none;flex:1;text-align:center;
+                      transition:background .15s;font-size:0.95rem}
+  .cap-modal__primary:hover{background:var(--brand-dark)}
+  .cap-modal__secondary{background:transparent;border:0;color:var(--muted);font-weight:500;
+                        padding:13px 8px;cursor:pointer;font-family:inherit;font-size:0.92rem}
+  .cap-modal__secondary:hover{color:var(--ink)}
+  .cap-modal__fine{margin:12px 0 0;font-size:0.78rem;color:#8a98b3;text-align:center}
+  @media(max-width:520px){
+    .cap-modal__cta-row{flex-direction:column;align-items:stretch}
+    .cap-modal__secondary{order:2}
+    .cap-modal__primary{order:1}
+  }
+
+  /* Event log (debug surface so operator can see what fires) */
+  .log{background:#1a1f2e;color:#cfd6e4;border-radius:10px;padding:14px 16px;font-size:0.82rem;
+       font-family:ui-monospace,"SF Mono",Menlo,monospace;line-height:1.6;max-height:200px;
+       overflow:auto;margin:18px 0 30px}
+  .log__title{color:#7aa6ed;text-transform:uppercase;letter-spacing:0.08em;font-size:0.7rem;
+              margin-bottom:8px;font-family:inherit;font-weight:600}
+  .log__row{display:grid;grid-template-columns:80px 110px 1fr;gap:12px}
+  .log__row .t{color:#6b7693}
+  .log__row .e{color:#7aa6ed}
+
+  table.metrics{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+                border-radius:10px;overflow:hidden;font-size:0.9rem;margin:8px 0 24px}
+  table.metrics th,table.metrics td{padding:11px 14px;border-bottom:1px solid var(--line);
+                                     text-align:left;vertical-align:top}
+  table.metrics tr:last-child td{border-bottom:0}
+  table.metrics th{background:#f4f7fc;font-weight:600;color:var(--muted);font-size:0.78rem;
+                   text-transform:uppercase;letter-spacing:0.05em}
+
+  .footnote{font-size:0.85rem;color:var(--muted);border-top:1px solid var(--line);
+            padding-top:18px;margin-top:36px;line-height:1.5}
+  .footnote code{background:#f0f3f8;padding:1px 6px;border-radius:4px;font-size:0.85em}
+  .footnote a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Aurafy growth · CRO proposal preview</p>
+    <h1>CRO #003 — Free-tier caps become upgrade triggers</h1>
+    <p>Interactive preview of the 3 cap-hit modals + the 25-day heads-up banner. <strong>Not a live app surface</strong> — operator review only.</p>
+  </header>
+
+  <p class="note">
+    <strong>Why this preview exists:</strong> the full spec is in
+    <code>outbox/cro-003-free-tier-upgrade-triggers.md</code>. This page mocks the in-app surfaces
+    so the modal copy + offer block are clickable, not imagined. Approximated palette — actual
+    app.aurafy.dev styling should be used on deploy.
+  </p>
+
+  <h2>Trigger the 3 modals (click to simulate cap-hit)</h2>
+
+  <div class="triggers">
+    <button data-trigger="history">Trigger A · 30-day history <span class="pill">scroll past day 30</span></button>
+    <button data-trigger="accounts">Trigger B · 2nd account <span class="pill">click +Add account</span></button>
+    <button data-trigger="playbooks">Trigger C · 4th playbook <span class="pill">click +New playbook</span></button>
+    <button data-trigger="banner-show">Trigger D · 25-day banner <span class="pill">passive heads-up</span></button>
+  </div>
+
+  <div class="app">
+    <div class="app__topbar">
+      <span class="app__brand">Aurafy</span>
+      <nav class="app__nav">
+        <a class="active" href="#" data-view="trades">Trades</a>
+        <a href="#" data-view="accounts">Accounts</a>
+        <a href="#" data-view="playbooks">Playbooks</a>
+        <a href="#" data-view="trades">Stats</a>
+      </nav>
+      <div class="app__user">
+        <span class="app__plan-pill">FREE</span>
+        <span>trader@example.com</span>
+      </div>
+    </div>
+
+    <!-- Passive banner (Trigger D) -->
+    <div class="app__banner hidden" id="passive-banner">
+      <span class="app__banner-msg">⏳ <strong>Your earliest trade rolls off the free view in ~5 days.</strong>
+        Upgrade to Pro ($19 founder seat) to keep your full history searchable.</span>
+      <a href="#" class="app__banner-cta" data-trigger-from="banner">Upgrade — $19/mo</a>
+      <button class="app__banner-dismiss" id="dismiss-banner" aria-label="Dismiss">×</button>
+    </div>
+
+    <!-- ============= TRADES VIEW (Trigger A demo surface) ============= -->
+    <div class="app__body" id="view-trades">
+      <h3 class="app__h">Trades <span class="count">last 30 days · free</span></h3>
+      <div class="trades">
+        <div class="trades__row"><span class="date">Jun 02</span><span class="sym">ES</span><span>3 ct</span><span class="pnl pos">+$487.50</span><span class="why">Breakout · A+ setup</span></div>
+        <div class="trades__row"><span class="date">May 31</span><span class="sym">NQ</span><span>2 ct</span><span class="pnl neg">−$240.00</span><span class="why">Trend pullback · stopped</span></div>
+        <div class="trades__row"><span class="date">May 29</span><span class="sym">MES</span><span>5 ct</span><span class="pnl pos">+$112.50</span><span class="why">Scalp · partial</span></div>
+        <div class="trades__row"><span class="date">May 27</span><span class="sym">ES</span><span>2 ct</span><span class="pnl pos">+$300.00</span><span class="why">Open drive</span></div>
+        <div class="trades__row"><span class="date">May 22</span><span class="sym">CL</span><span>1 ct</span><span class="pnl neg">−$190.00</span><span class="why">Inventory · faded</span></div>
+        <div class="trades__row"><span class="date">May 09</span><span class="sym">NQ</span><span>2 ct</span><span class="pnl pos">+$540.00</span><span class="why">A+ trend day</span></div>
+        <div class="trades__divider">📅 <strong>End of 30-day window.</strong> 134 older trades archived from free view.
+          <a href="#" data-trigger-from="history" style="color:var(--brand);text-decoration:none;font-weight:600;margin-left:auto">View archived →</a></div>
+        <div class="trades__row archived"><span class="date">May 02</span><span class="sym">ES</span><span>2 ct</span><span class="pnl pos">+$237.50</span><span class="why">— archived —</span></div>
+        <div class="trades__row archived"><span class="date">Apr 28</span><span class="sym">NQ</span><span>1 ct</span><span class="pnl neg">−$110.00</span><span class="why">— archived —</span></div>
+      </div>
+    </div>
+
+    <!-- ============= ACCOUNTS VIEW (Trigger B demo surface) ============= -->
+    <div class="app__body hidden" id="view-accounts">
+      <h3 class="app__h">Trading accounts <span class="count">1 of 1 · free</span></h3>
+      <div class="acct-grid">
+        <div class="acct">
+          <span class="name">Apex 100K · Eval</span>
+          <span class="meta">Tradovate · connected May 14 · 47 trades</span>
+        </div>
+        <div class="acct empty" data-trigger-from="accounts">+ Add account</div>
+      </div>
+    </div>
+
+    <!-- ============= PLAYBOOKS VIEW (Trigger C demo surface) ============= -->
+    <div class="app__body hidden" id="view-playbooks">
+      <h3 class="app__h">Playbooks <span class="count">3 of 3 · free</span></h3>
+      <div class="pb-grid">
+        <div class="pb"><p class="name">A+ Open Drive</p><p class="meta">18 trades · 67% win</p></div>
+        <div class="pb"><p class="name">Trend Pullback</p><p class="meta">42 trades · 54% win</p></div>
+        <div class="pb"><p class="name">Range Fade</p><p class="meta">11 trades · 45% win</p></div>
+        <div class="pb empty" data-trigger-from="playbooks">+ New playbook</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="log" id="event-log">
+    <div class="log__title">Event log · fires when triggers + CTAs are clicked</div>
+    <div class="log__row"><span class="t">—</span><span class="e">—</span><span>(no events yet — click a trigger above)</span></div>
+  </div>
+
+  <!-- ============= THE SHARED MODAL ============= -->
+  <dialog class="cap-modal" id="cap-modal" aria-labelledby="cap-modal-title">
+    <form method="dialog" class="cap-modal__form">
+      <p class="cap-modal__kicker" data-bind="kicker">FREE TIER · TRADE HISTORY</p>
+      <h2 class="cap-modal__title" id="cap-modal-title" data-bind="title">Your full history is here — unlock it.</h2>
+      <p class="cap-modal__body" data-bind="body">Free accounts show the last 30 days of trades.</p>
+
+      <div class="cap-modal__offer">
+        <div class="cap-modal__offer-row">
+          <span class="cap-modal__price">$19<span class="cap-modal__per">/mo</span></span>
+          <span class="cap-modal__lock">locked for life</span>
+        </div>
+        <p class="cap-modal__seats"><span id="cap-seats-left">14</span> of 50 founder seats left</p>
+      </div>
+
+      <div class="cap-modal__cta-row">
+        <a class="cap-modal__primary"
+           id="cap-upgrade-link"
+           href="#"
+           data-bind-cta>
+           Unlock — $19/mo
+        </a>
+        <button class="cap-modal__secondary" value="dismiss" id="cap-dismiss-btn">Stay on free</button>
+      </div>
+
+      <p class="cap-modal__fine">No card needed to stay on free. You can upgrade or cancel any time.</p>
+    </form>
+  </dialog>
+
+  <h2>What each trigger does (recap)</h2>
+  <table class="metrics">
+    <tr><th>Trigger</th><th>Fires when</th><th>Surface</th><th>Expected click→upgrade</th></tr>
+    <tr><td><strong>A · history</strong></td><td>User scrolls/filters past 30-day boundary, or clicks an archived trade</td><td>Modal</td><td>~3–8% (mid intent — may just be curious)</td></tr>
+    <tr><td><strong>B · accounts</strong></td><td>User clicks "Add account" with 1 already connected</td><td>Modal</td><td>~10–20% (high intent — active commitment)</td></tr>
+    <tr><td><strong>C · playbooks</strong></td><td>User clicks "New playbook" with 3 already created</td><td>Modal</td><td>~10–25% (highest signal — serious trader)</td></tr>
+    <tr><td><strong>D · 25-day banner</strong></td><td>User's oldest visible trade is ≥ 25 days old</td><td>Passive top banner (dismissable)</td><td>Low click rate, but pre-empts Trigger A friction</td></tr>
+  </table>
+
+  <h2>The funnel this completes</h2>
+  <table class="metrics">
+    <tr><th>CRO change</th><th>Role in funnel</th><th>Without it</th></tr>
+    <tr><td><strong>#002 hero flip</strong></td><td>Lowers cold-visitor click threshold</td><td>Visitors evaluate price before they've felt the product</td></tr>
+    <tr><td><strong>#001 founder counter</strong></td><td>Direct convert path for warm/high-intent visitors</td><td>$19 offer is invisible — strongest pricing lever sits unused</td></tr>
+    <tr><td><strong>#003 cap triggers</strong></td><td>Captures free signups at moment-of-need</td><td>Free users hit a cap, get silent friction, churn invisibly</td></tr>
+  </table>
+
+  <p class="footnote">
+    Full spec, copy options, rationale, and tracking plan:
+    <code>outbox/cro-003-free-tier-upgrade-triggers.md</code>.
+    This preview is unindexed (noindex,nofollow) and lives at
+    <code>/cro/free-tier-triggers/</code> on the growth-assets mirror — it is not part of
+    Aurafy's customer-facing site. See also CRO #001
+    (<a href="../founder-seat/">founder seat counter</a>) and CRO #002
+    (<a href="../hero-cta-flip/">hero CTA flip</a>) which together with this proposal form one funnel.
+  </p>
+
+</div>
+
+<script>
+  const CAP_COPY = {
+    history: {
+      kicker: 'FREE TIER · TRADE HISTORY',
+      title:  'Your full history is here — unlock it.',
+      body:   'Free accounts show the last 30 days of trades. The rest of your history is safely stored — you just need Pro to view it.',
+      cta:    'Unlock full history — $19/mo',
+      triggerParam: 'history',
+    },
+    accounts: {
+      kicker: 'FREE TIER · 1 ACCOUNT LIMIT',
+      title:  'Add unlimited trading accounts.',
+      body:   'Free includes 1 account — perfect for one prop-firm challenge. Pro is unlimited, so you can journal every challenge attempt, your funded account, and your personal account in one place.',
+      cta:    'Add unlimited accounts — $19/mo',
+      triggerParam: 'accounts',
+    },
+    playbooks: {
+      kicker: 'FREE TIER · 3 PLAYBOOK LIMIT',
+      title:  "You're a 4-strategy trader. Free covers 3.",
+      body:   "The fact you need a 4th playbook means you're actively refining your edge — that's exactly when journaling pays off most. Pro gives you unlimited playbooks.",
+      cta:    'Add unlimited playbooks — $19/mo',
+      triggerParam: 'playbooks',
+    },
+  };
+
+  const SEATS_LEFT = 14; // mock — would come from /api/founder-seats per CRO #001
+
+  const modal = document.getElementById('cap-modal');
+  const log = document.getElementById('event-log');
+  let logSeeded = false;
+
+  function nowHHMMSS() {
+    const d = new Date();
+    return [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':');
+  }
+  function logEvent(eventName, payload) {
+    if (!logSeeded) { log.innerHTML = '<div class="log__title">Event log · fires when triggers + CTAs are clicked</div>'; logSeeded = true; }
+    const row = document.createElement('div');
+    row.className = 'log__row';
+    row.innerHTML = `<span class="t">${nowHHMMSS()}</span><span class="e">${eventName}</span><span>${JSON.stringify(payload)}</span>`;
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function showCapModal(cap) {
+    const copy = CAP_COPY[cap];
+    if (!copy) return;
+    const bind = (key, val) => modal.querySelector(`[data-bind="${key}"]`).textContent = val;
+    bind('kicker', copy.kicker);
+    bind('title',  copy.title);
+    bind('body',   copy.body);
+    modal.querySelector('.cap-modal__primary').textContent = copy.cta;
+    modal.querySelector('#cap-seats-left').textContent = SEATS_LEFT;
+    const link = modal.querySelector('#cap-upgrade-link');
+    link.href = `/upgrade?seat=founder&trigger=${copy.triggerParam}`
+              + `&utm_source=app&utm_medium=cap-trigger&utm_campaign=founder-seat`;
+    logEvent('cap_hit', { cap, seats_left: SEATS_LEFT });
+    modal.showModal();
+  }
+
+  // Switch app view to the relevant surface BEFORE firing the modal, so operator sees context
+  function switchView(view) {
+    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`view-${view}`).classList.remove('hidden');
+    document.querySelectorAll('.app__nav a').forEach(a =>
+      a.classList.toggle('active', a.dataset.view === view));
+  }
+  const TRIGGER_TO_VIEW = { history: 'trades', accounts: 'accounts', playbooks: 'playbooks' };
+
+  // Top trigger buttons
+  document.querySelectorAll('.triggers button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.trigger;
+      if (t === 'banner-show') {
+        switchView('trades');
+        document.getElementById('passive-banner').classList.remove('hidden');
+        logEvent('banner_shown', { trigger: 'history-25day' });
+        return;
+      }
+      switchView(TRIGGER_TO_VIEW[t]);
+      showCapModal(t);
+    });
+  });
+
+  // In-app simulated cap-hit elements (clicking the +Add account / +New playbook / View archived link)
+  document.querySelectorAll('[data-trigger-from]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const t = el.dataset.triggerFrom;
+      if (t === 'banner') {
+        logEvent('banner_cta_click', { trigger: 'history-25day' });
+        switchView('trades');
+        showCapModal('history');
+        return;
+      }
+      switchView(TRIGGER_TO_VIEW[t]);
+      showCapModal(t);
+    });
+  });
+
+  // Nav switching (cosmetic)
+  document.querySelectorAll('.app__nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      switchView(a.dataset.view);
+    });
+  });
+
+  // Modal CTA / dismiss logging
+  modal.querySelector('#cap-upgrade-link').addEventListener('click', e => {
+    e.preventDefault();
+    const trigger = new URL(e.currentTarget.href, location.href).searchParams.get('trigger');
+    logEvent('cap_upgrade_click', { cap: trigger });
+    modal.close();
+  });
+  modal.querySelector('#cap-dismiss-btn').addEventListener('click', () => {
+    logEvent('cap_dismissed', { via: 'button' });
+  });
+  modal.addEventListener('close', () => {
+    if (modal.returnValue !== 'dismiss') logEvent('cap_dismissed', { via: 'escape' });
+  });
+
+  // Banner dismiss
+  document.getElementById('dismiss-banner').addEventListener('click', () => {
+    document.getElementById('passive-banner').classList.add('hidden');
+    logEvent('banner_dismissed', { trigger: 'history-25day' });
+  });
+</script>
+</body>
+</html>
