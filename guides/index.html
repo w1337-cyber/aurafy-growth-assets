@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How to Export Your Trades — Broker Export Guides for Futures Traders (2026) | Aurafy</title>
+<meta name="description" content="Independent, step-by-step CSV export guides for futures + prop-firm traders. Tradovate, NinjaTrader 8, Sierra Chart — exact export path, column reference, the quiet pitfalls, and a journal-ready cleanup checklist for each platform." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/guides/" />
+<meta property="og:title" content="How to Export Your Trades — Broker Export Guides (2026)" />
+<meta property="og:description" content="Independent CSV export guides for Tradovate, NinjaTrader 8, and Sierra Chart — exact paths, column references, pitfalls, and cleanup steps." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  code{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:0.88em;color:#d6dde6}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .guide-grid{display:grid;gap:14px;margin:18px 0}
+  @media(min-width:640px){.guide-grid{grid-template-columns:1fr 1fr}}
+  .guide-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column}
+  .guide-card h3{margin:0 0 6px;font-size:1.05rem;color:#fff}
+  .guide-card .role{font-size:0.78rem;color:#a890ff;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
+  .guide-card p.summary{margin:0 0 10px;font-size:0.92rem;color:#c4ccd6;flex:1}
+  .guide-card .wedge{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:8px 10px;border-radius:4px;font-size:0.85rem;color:#d6dde6;margin-bottom:12px}
+  .guide-card .wedge strong{color:#fff}
+  .guide-card a.go{font-size:0.9rem;font-weight:600;color:#a890ff}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  details ul{font-size:0.91rem;color:#c4ccd6}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .decision{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.93rem;color:#d6dde6}
+  .decision strong{color:#fff;display:block;margin-bottom:4px}
+  .checklist{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:14px 0}
+  .checklist h4{margin:0 0 8px;font-size:0.96rem;color:#fff}
+  .checklist ol{margin:0;padding-left:22px;font-size:0.92rem;color:#d6dde6}
+  .checklist ol li{margin-bottom:6px}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Broker CSV export guides for prop-firm traders</span>
+  <h1>How to Export Your Trades — Broker Export Guides for Futures Traders (2026)</h1>
+  <p class="lede">Every futures journal lives or dies by a clean CSV import. The export step looks simple — until the timestamps are in the wrong timezone, the rollover changes the instrument code mid-quarter, the simulation account silently merges into the live one, or every order modify creates a duplicate row. These guides walk through the exact export path on each platform, what every CSV column means, the 3 quiet pitfalls that break naïve imports, and the journal-ready cleanup checklist before you load it anywhere.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent guides.</strong> Aurafy is not affiliated with Tradovate Holdings, NinjaTrader Group, Safe Harbor Trading Technologies (Sierra Chart), Rithmic, or any prop firm. All trademarks belong to their respective owners. Every export path described here uses your own platform export — no credentials shared, no API keys, no plugins installed. <strong>Verify against your current install</strong> — platform UI labels shift between versions and data-feed builds. The cleanup steps + column mappings are version-independent.
+</div>
+
+<div class="toc">
+  <a href="#which-guide">Which guide do I read?</a>
+  <a href="#guides">The export guides</a>
+  <a href="#what-clean-means">What "clean" actually means</a>
+  <a href="#shared-pitfalls">The 4 pitfalls that hit every platform</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="which-guide">Which export guide do I read?</h2>
+<p>Pick the page that matches where the <em>fills</em> come from, not where you watch the chart. If your fills clear through Rithmic but you click them in NinjaTrader 8, the NinjaTrader export is your authoritative file (Rithmic statements are a multi-firm fallback). If you front-end Sierra Chart over a Rithmic-routed firm, the Sierra Chart Trade Activity Log is your file — not the firm portal's CSV.</p>
+
+<div class="decision"><strong>I trade Topstep on TopstepX, Tradovate, or the Topstep mobile app</strong>Read the <a href="/guides/tradovate-export-trades/">Tradovate export guide</a>. TopstepX uses Tradovate-style fills and the same export interface, just with the Topstep skin. Topstep moved off Rithmic in 2024 — don't look for a Rithmic statement.</div>
+
+<div class="decision"><strong>I trade Apex / MFFU / TPT / Bulenox / Earn2Trade via NinjaTrader 8</strong>Read the <a href="/guides/ninjatrader-export-trades/">NinjaTrader 8 export guide</a>. The Control Center → Account Performance → Trades grid → right-click → Export path is the cleanest source. Watch the <strong>"All Accounts" Sim101-mixed-into-live</strong> gotcha — flagged in the guide.</div>
+
+<div class="decision"><strong>I trade orderflow / footprint in Sierra Chart</strong>Read the <a href="/guides/sierra-chart-export-trades/">Sierra Chart export guide</a>. Trade Activity Log inside the workspace + the on-disk <code>Logs/TradeActivityLog.YYYY-MM-DD.txt</code> long-term archive (most SC users don't know the second file exists). Watch the per-workspace Trade Simulation Mode toggle.</div>
+
+<div class="decision"><strong>I trade Apex / MFFU / TPT on TradingView, Quantower, or MotiveWave</strong>Your front-end is one of these but the fills still route through Tradovate, NinjaTrader, or Rithmic underneath. Pick the guide that matches the actual order route. Tradovate web is the cleanest fallback if your charting platform's own CSV is patchy.</div>
+
+<div class="decision"><strong>I have multiple firm accounts under one Rithmic R|Trader Pro login</strong>The export comes from R|Trader Pro itself — covered in the upcoming <em>Rithmic R|Trader Pro export guide</em> (this page will link it once shipped). In the meantime: the <a href="/brokers/rithmic/">Rithmic broker page</a> describes the multi-firm-on-one-login workflow and the import path.</div>
+
+<h2 id="guides">The export guides</h2>
+<p>Three guides, three audience profiles. Each one covers the exact export menu path, the full CSV column reference for that platform, the platform-specific pitfalls, and a 6-step cleanup checklist before import.</p>
+
+<div class="guide-grid">
+
+  <div class="guide-card">
+    <div class="role">Default prop-firm execution · web + mobile</div>
+    <h3>Tradovate Export Guide (2026)</h3>
+    <p class="summary">5-step export path on web + mobile, full 9-column CSV reference, the 3 quiet pitfalls (timezone, partial fills, multi-leg bracketed orders), and a 6-step journal-ready cleanup checklist with timestamp normalization + root-symbol mapping.</p>
+    <div class="wedge"><strong>Platform-specific wedge:</strong> Tradovate has one trade grid, not three — simpler than NT8, but contract-month suffix (<code>ESM5</code>) breaks rollover grouping if you don't map to the root.</div>
+    <a class="go" href="/guides/tradovate-export-trades/">Read the Tradovate guide →</a>
+  </div>
+
+  <div class="guide-card">
+    <div class="role">Most popular charting + execution platform</div>
+    <h3>NinjaTrader 8 Export Guide (2026)</h3>
+    <p class="summary">Control Center → Account Performance → Trades grid → right-click → Export. The "Trades vs Orders vs Executions — which grid?" mini-section. 10-column reference (Instrument / Account / Quantity / Entry+Exit / MAE / MFE / Profit / Cum. profit / Commission). 3 pitfalls (rollover instruments, "All Accounts" sim-mixed-into-live, data-feed-timezone defaults).</p>
+    <div class="wedge"><strong>Platform-specific wedge:</strong> NT8's "All Accounts" export silently merges Sim101 into live. The platform marks the Sim row in the Account column — must filter before journaling or your P&amp;L is fake.</div>
+    <a class="go" href="/guides/ninjatrader-export-trades/">Read the NinjaTrader 8 guide →</a>
+  </div>
+
+  <div class="guide-card">
+    <div class="role">Orderflow / footprint platform</div>
+    <h3>Sierra Chart Export Guide (2026)</h3>
+    <p class="summary">Trade &gt; Trade Activity Log → filter → right-click → save. The on-disk <code>Logs/TradeActivityLog.YYYY-MM-DD.txt</code> long-term archive most users miss. 10-column reference. 3 pitfalls (per-workspace Trade Simulation Mode toggle, every order modify being its own row, CQG-style symbol format <code>ESM26-CME</code>). Internal Order ID / Parent Internal Order ID for round-turn pairing.</p>
+    <div class="wedge"><strong>Platform-specific wedge:</strong> Trade Simulation Mode is per-WORKSPACE, not per-account. No automatic column marker — enable "Mark simulated trades" in Global Settings or you'll silently log sim fills as live.</div>
+    <a class="go" href="/guides/sierra-chart-export-trades/">Read the Sierra Chart guide →</a>
+  </div>
+
+  <div class="guide-card" style="opacity:0.62">
+    <div class="role">Coming soon · multi-firm prop traders</div>
+    <h3>Rithmic R|Trader Pro Export Guide</h3>
+    <p class="summary">For traders with 2-3 funded accounts across Apex / MFFU / TPT / Tradeify / Bulenox under one R|Trader Pro login. Covers the multi-firm statement, account separation, and Rithmic-side commission reconciliation. Pairs with the existing Rithmic broker page workflow.</p>
+    <div class="wedge"><strong>Why it's the next one:</strong> Rithmic is the data feed + clearing route under most prop firms. One R|Trader login often spans multiple firms — the multi-firm import workflow is the unsolved problem this guide will solve.</div>
+    <a class="go" href="/brokers/rithmic/">For now — read the Rithmic broker page →</a>
+  </div>
+
+</div>
+
+<h2 id="what-clean-means">What "clean" actually means — independent of platform</h2>
+<p>Every one of these guides ends with a cleanup checklist. The checklists differ in detail but they're solving the same six problems. If you understand the shape first, the platform-specific steps make sense the first time you read them:</p>
+
+<div class="checklist">
+  <h4>The 6 things every futures CSV needs before any journal touches it</h4>
+  <ol>
+    <li><strong>Delimiter + encoding sanity.</strong> Comma-separated, UTF-8, no smart quotes. Sierra Chart in particular sometimes ships tab- or semicolon-delimited depending on workspace settings.</li>
+    <li><strong>Timestamps in ISO format, in your account timezone.</strong> Convert from data-feed time (NT8 default: data-feed zone) or platform time (Tradovate default: UTC) to your local trading session timezone before pairing fills. <code>2026-06-02T14:30:18-04:00</code> is the format every journal accepts.</li>
+    <li><strong>Symbols mapped to a root.</strong> <code>ES 03-26</code> (NT8) / <code>ESM5</code> (Tradovate) / <code>ESM26-CME</code> (Sierra Chart) all need to collapse to <code>ES</code> for grouping across quarterly rollovers. Otherwise your <code>ES</code> stats split into 4 contracts per year.</li>
+    <li><strong>Sim vs live separation.</strong> NT8's <code>Sim101</code>, Sierra Chart's per-workspace Trade Simulation Mode, Tradovate's separate demo accounts — explicit account filter before import. One sim trade in a funded-account journal blows the rule tracker.</li>
+    <li><strong>Round-turn pairing.</strong> Orders are not trades. NT8's Trades grid does this for you (one row per round turn). Tradovate's order export needs fill-to-order grouping. Sierra Chart's Trade Activity Log gives action-level rows that need <code>Parent Internal Order ID</code> grouping before they become round turns.</li>
+    <li><strong>Raw-row archive.</strong> Save the unmodified export before you touch it. Every cleanup step should be reversible. If the journal misreads something, you need the raw rows to verify against the platform.</li>
+  </ol>
+</div>
+
+<h2 id="shared-pitfalls">The 4 pitfalls that hit every platform</h2>
+<p>The platform-specific pitfalls are in each guide. These four hit you regardless of where you trade:</p>
+
+<ul>
+  <li><strong>Quarterly rollover splits your stats.</strong> The same contract has 4+ codes per year. Your journal needs root mapping or your <code>ES</code> stats will look like four different futures.</li>
+  <li><strong>Commission reconciliation.</strong> Platform commissions are templates the user filled in (or didn't). They may differ from what the firm + exchange + NFA actually charged you. Cross-check against the firm's monthly statement at least once per quarter.</li>
+  <li><strong>Wash sales aren't a concept in futures trading</strong> (60/40 §1256 treatment for U.S. residents), but partial fills still create order-level rows that look like duplicate trades to a naïve import. Group fills by order ID, not by row.</li>
+  <li><strong>Timezone drift across DST changes.</strong> If your platform's "local" timezone is the data-feed's timezone, a March or November DST change creates a 1-hour gap that breaks the session-by-session day cutoff. ISO-with-offset timestamps make this self-healing.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>The reusable principle:</strong> the export step is the boundary between the broker / charting platform's view of your trading and the journal's view. The broker / platform optimizes for execution; the journal optimizes for review, rule tracking, and pattern detection. The cleanup steps are the translation layer. Skipping them — even one step — silently corrupts every downstream stat the journal computes.
+</div>
+
+<h2 id="tools">Free calculators — use these before you import</h2>
+<p>Read the rule headroom before you load the CSV. Each calculator runs in your browser, no login, no card:</p>
+
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Topstep + Apex 4.0 presets. Intraday + EOD trail mechanics. See exact drawdown line, headroom, and lock threshold per account size.</p>
+    <a href="/tools/trailing-drawdown-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency Rule Calculator</h4>
+    <p>Topstep 50% / Apex 30% / MFFU 40% presets. Drop in daily P&amp;L; see payout eligibility and extra profit needed to stay compliant.</p>
+    <a href="/tools/consistency-rule-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L / Tick-Value Calculator</h4>
+    <p>30+ contracts preloaded. Entry / exit / stop → ticks, points, gross + net P&amp;L, $ risk, R-multiple — all in one screen.</p>
+    <a href="/tools/futures-pnl-calculator/">Open the calculator →</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator (Prop-Firm Aware)</h4>
+    <p>Topstep / Apex 4.0 / MFFU presets + 22 instruments. Stop in ticks → max contracts, % of trail-DD buffer used, N losses to floor.</p>
+    <a href="/tools/position-size-calculator/">Open the calculator →</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Skip the cleanup — Aurafy does it</h3>
+  <p>Every step in the cleanup checklists above is what Aurafy runs automatically when you drop in a Tradovate / NinjaTrader / Sierra Chart export. Timestamps normalize. Symbols collapse to root. Orders pair into round turns. Sim accounts route to a separate book. Prop-firm rule headroom (Topstep 100K Combine, Apex 4.0 100K EOD, MFFU Core 50K, etc.) tracks against each account live. Screen recording captures the session you took the trades in — the part no CSV can ever export. Free tier never expires (last 30 days, 1 account, 3 playbooks, no card). First 50 founders: $19/mo locked for life.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&utm_medium=guides-hub&utm_campaign=export-guides">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing?utm_source=tools&utm_medium=guides-hub&utm_campaign=export-guides">See $19 founder seat</a>
+</div>
+
+<h2 id="faq">FAQ — exports + import workflow</h2>
+
+<details>
+  <summary>Why not auto-sync via API instead of CSV export?</summary>
+  <p>API sync sounds easier and is the right answer for retail brokers. For prop-firm traders it's a liability — sharing API credentials with a third-party journal is a rules violation on several firms (Topstep, Apex, MFFU all have language in the funded-trader agreement around credential sharing or third-party automation). CSV export uses your own platform UI, your file, your decision when to import. Nothing installed in the broker, no API keys passed around, no surface area for a credential leak. This is the legitimate version of the same outcome.</p>
+</details>
+
+<details>
+  <summary>How often should I re-export?</summary>
+  <p>Daily after the session is the cleanest. If you trade multiple sessions or multiple firms, end-of-day across all of them. Weekly works but you lose the 1-day feedback loop most prop-firm traders actually need — most rule violations happen within hours of a winning streak, not after a long drawdown. Aurafy will refresh from a fresh CSV without re-importing prior trades; the duplicate-detection runs on the platform-side trade ID, not the row number.</p>
+</details>
+
+<details>
+  <summary>I trade two prop firms on the same platform (e.g. NT8 with Apex + MFFU under one Rithmic login). One CSV or two?</summary>
+  <p>Two — one filtered to each account. The "All Accounts" export merges them and even though the Account column tags each row, a naïve import treats them as a single book. Filter inside the platform before exporting (NT8: Account dropdown in Control Center; Sierra Chart: Trade Activity Log filter). Aurafy treats each as a separate prop-firm-rules-tracked book with its own trail-DD floor, consistency threshold, and DLL setting. That's the entire point of running one journal across multiple firms.</p>
+</details>
+
+<details>
+  <summary>What about screenshots / chart context?</summary>
+  <p>CSV exports don't carry the chart you were looking at. Aurafy's screen-recording captures the session window-by-window — replay the screen you saw, not just the fills you took. The CSV import locates each trade on the recording's timeline so you watch the 30 seconds before and after the entry without scrubbing. None of NT8 Market Replay, Sierra Chart Chart Replay, or Tradovate's mobile replay covers this — they replay market data, not your screen.</p>
+</details>
+
+<details>
+  <summary>My platform export is missing commissions / has zero commissions everywhere. What now?</summary>
+  <p>NT8 + Sierra Chart commissions come from a user-filled template in the platform — if you never set it up, every commission cell reads $0. Tradovate populates from the broker side and is usually correct. Fix the template at the platform if you can; if not, the journal can apply a per-instrument commission rate at import (Aurafy does this — Topstep MES = $0.74 round-turn, Apex MES = $0.78 round-turn, etc., editable per account). The platform CSV's <em>gross</em> P&amp;L is still authoritative; only the <em>net</em> P&amp;L needs the commission overlay.</p>
+</details>
+
+<details>
+  <summary>What about TradingView, Quantower, MotiveWave, and other charting front-ends?</summary>
+  <p>These front-end a Tradovate or Rithmic order route — the fills clear at the broker, not at the front-end. The cleanest export is from the broker side (Tradovate web or Rithmic R|Trader Pro), not the charting platform. The charting platform may have its own CSV; treat it as a fallback when the broker export is unavailable or you need front-end-specific tags (chart timeframe, indicator markers) that the broker doesn't carry.</p>
+</details>
+
+<details>
+  <summary>Topstep, Apex, MFFU also have built-in dashboards. Why not use those CSVs?</summary>
+  <p>Firm dashboards (TopstepX, ApexTrader, MFFU portals) surface what the firm needs for rule enforcement — daily P&amp;L, current drawdown, payout status — not what a journal needs (per-trade rows with timestamps, fills, MAE / MFE). Some firm dashboards do export a trades CSV; quality varies. The rule of thumb: the platform you <em>executed</em> on has the cleanest per-trade file. The firm dashboard is the authoritative source for daily P&amp;L totals to cross-check against, not the import file.</p>
+</details>
+
+<details>
+  <summary>What's coming next in this guide series?</summary>
+  <p>Rithmic R|Trader Pro export guide (the multi-firm-on-one-login workflow) is the next one — it's the data feed + clearing route under Apex / MFFU / TPT / Tradeify / Bulenox, and a single R|Trader login often spans multiple firms. After that, firm-specific import paths (Topstep TopstepX export, Apex import workflow, MFFU Core / Expert program-aware imports). Each new guide will appear in the grid above when it ships — bookmark this page if you want notified-by-RSS-equivalent.</p>
+</details>
+
+<footer>
+  <p><strong>Aurafy</strong> — Futures trading journal + screen recording + bar-replay backtester for prop-firm traders.</p>
+  <p>Independent guides. Tradovate, NinjaTrader, Sierra Chart, Rithmic, R|Trader, TopstepX, and all firm names are trademarks of their respective owners. Aurafy is not affiliated with any of them. Verify current export formats with your platform before relying on any third-party reference.</p>
+  <p><a href="https://aurafy.dev?utm_source=tools&utm_medium=guides-hub&utm_campaign=export-guides">aurafy.dev</a></p>
+</footer>
+
+</div>
+</body>
+</html>
