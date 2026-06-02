@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>How to Export Your Trades — Broker Export Guides for Futures Traders (2026) | Aurafy</title>
-<meta name="description" content="Independent, step-by-step CSV export guides for futures + prop-firm traders. Tradovate, NinjaTrader 8, Sierra Chart, Rithmic R|Trader Pro — exact export path, column reference, the quiet pitfalls, and a journal-ready cleanup checklist for each platform." />
+<meta name="description" content="Independent, step-by-step CSV export guides for futures + prop-firm traders. Tradovate, NinjaTrader 8, Sierra Chart, Rithmic R|Trader Pro, plus firm-specific paths (Topstep / TopstepX) — exact export path, column reference, the quiet pitfalls, and a journal-ready cleanup checklist for each." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://aurafy.dev/guides/" />
 <meta property="og:title" content="How to Export Your Trades — Broker Export Guides (2026)" />
@@ -107,7 +107,7 @@
 <h2 id="which-guide">Which export guide do I read?</h2>
 <p>Pick the page that matches where the <em>fills</em> come from, not where you watch the chart. If your fills clear through Rithmic but you click them in NinjaTrader 8, the NinjaTrader export is your authoritative file (Rithmic statements are a multi-firm fallback). If you front-end Sierra Chart over a Rithmic-routed firm, the Sierra Chart Trade Activity Log is your file — not the firm portal's CSV.</p>
 
-<div class="decision"><strong>I trade Topstep on TopstepX, Tradovate, or the Topstep mobile app</strong>Read the <a href="/guides/tradovate-export-trades/">Tradovate export guide</a>. TopstepX uses Tradovate-style fills and the same export interface, just with the Topstep skin. Topstep moved off Rithmic in 2024 — don't look for a Rithmic statement.</div>
+<div class="decision"><strong>I trade Topstep (TopstepX web or NinjaTrader 8 with the Topstep DLL)</strong>Read the firm-specific <a href="/guides/topstep-export-trades/">Topstep export guide</a> — covers both paths (TopstepX dashboard CSV and NT8 Account Performance), the post-Aug-2024 DLL split that makes the two files measure P&amp;L differently, and the Combine-vs-XFA tagging your journal needs. Topstep moved off Tradovate and Rithmic in 2024 — those routes don't apply anymore.</div>
 
 <div class="decision"><strong>I trade Apex / MFFU / TPT / Bulenox / Earn2Trade via NinjaTrader 8</strong>Read the <a href="/guides/ninjatrader-export-trades/">NinjaTrader 8 export guide</a>. The Control Center → Account Performance → Trades grid → right-click → Export path is the cleanest source. Watch the <strong>"All Accounts" Sim101-mixed-into-live</strong> gotcha — flagged in the guide.</div>
 
@@ -152,6 +152,14 @@
     <p class="summary">Account &gt; Statements → Executions tab → right-click → Export to CSV. The multi-firm-on-one-login workflow (Apex + MFFU + TPT + Tradeify + Bulenox + Earn2Trade under one Rithmic login). 11-column reference with the broken-out commission / exchange-fee / clearing-fee / NFA columns. 3 pitfalls (partial fills inflating trade count, "All Accounts" silently mixing firm presets, R|Trader basic vs R|Trader Pro confusion).</p>
     <div class="wedge"><strong>Platform-specific wedge:</strong> the only platform where one login spans multiple firm-issued account IDs at once. The Account column is the firm-preset key — split per Account ID before any rule math, or trail-DD / consistency formulas get applied to the wrong rows.</div>
     <a class="go" href="/guides/rithmic-rtrader-pro-export-trades/">Read the Rithmic R|Trader Pro guide →</a>
+  </div>
+
+  <div class="guide-card">
+    <div class="role">Firm-specific · Topstep Combine + XFA</div>
+    <h3>Topstep Export Guide (TopstepX + NT8) (2026)</h3>
+    <p class="summary">Both Topstep export paths in one place. TopstepX dashboard → trade-history → Download CSV (raw exchange fills, no DLL adjustment). NinjaTrader 8 → Account Performance → Trades grid (DLL-adjusted P&amp;L). The post-Aug-2024 DLL split, why the two files measure P&amp;L differently, Combine-vs-XFA account tagging for the right trail-DD math, and the 50% consistency-rule angle.</p>
+    <div class="wedge"><strong>Firm-specific wedge:</strong> Topstep is the only major firm with TWO export paths that disagree by design — TopstepX exports raw fills, NT8 exports DLL-scored fills. Joining the two CSVs on timestamp will silently mis-reconcile. Pick one source per account or import them as separate books.</div>
+    <a class="go" href="/guides/topstep-export-trades/">Read the Topstep guide →</a>
   </div>
 
 </div>
@@ -257,7 +265,7 @@
 
 <details>
   <summary>What's coming next in this guide series?</summary>
-  <p>The <a href="/guides/rithmic-rtrader-pro-export-trades/">Rithmic R|Trader Pro guide</a> just shipped — that closes the four-platform set covering Tradovate, NinjaTrader 8, Sierra Chart, and Rithmic. Next on the queue: firm-specific import paths (Topstep TopstepX export, Apex import workflow, MFFU Core / Expert program-aware imports) and front-end-platform CSVs (Quantower, MotiveWave, TradingView-with-Rithmic). Each new guide will appear in the grid above when it ships — bookmark this page if you want notified-by-RSS-equivalent.</p>
+  <p>The <a href="/guides/topstep-export-trades/">Topstep export guide</a> just shipped — opens the firm-specific axis alongside the four platform guides (Tradovate / NinjaTrader 8 / Sierra Chart / Rithmic R|Trader Pro). Next on the queue: Apex firm-specific import workflow, MFFU Core / Expert program-aware imports, and front-end-platform CSVs (Quantower, MotiveWave, TradingView-with-Rithmic). Each new guide will appear in the grid above when it ships — bookmark this page if you want notified-by-RSS-equivalent.</p>
 </details>
 
 <footer>

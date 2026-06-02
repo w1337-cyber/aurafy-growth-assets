@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How to Export Your Topstep Trades (TopstepX + NinjaTrader 8) (2026) | Aurafy</title>
+<meta name="description" content="Step-by-step guide to exporting your Topstep Combine and Express Funded Account trades in 2026. Both paths covered: TopstepX web platform (post-Aug-2024 default, no DLL) and NinjaTrader 8 with the TopstepX DLL. The post-2024 DLL split, account ID format, multi-account workflow, and a journal-ready cleanup checklist." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/guides/topstep-export-trades/" />
+<meta property="og:title" content="How to Export Your Topstep Trades (2026)" />
+<meta property="og:description" content="Full guide — both TopstepX web + NinjaTrader 8 export paths, DLL-vs-no-DLL impact on the exported P&L, Combine + XFA account ID workflow, journal-ready clean-up steps." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:32px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  code{font-family:var(--mono);font-size:0.88em;background:var(--panel-2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:#d6dde6}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.92rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.col{font-family:var(--mono);font-weight:600;color:#fff;white-space:nowrap}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .step{display:flex;align-items:flex-start;gap:14px;margin:18px 0}
+  .step-num{flex-shrink:0;width:32px;height:32px;background:rgba(124,92,255,0.15);border:1px solid rgba(124,92,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a890ff;font-family:var(--mono);font-size:0.95rem}
+  .step-body{flex:1}
+  .step-body strong{color:#fff;display:block;margin-bottom:6px;font-size:1rem}
+  .step-body p{font-size:0.93rem;color:#c4ccd6;margin:0 0 6px}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .pitfall{background:rgba(255,92,124,0.05);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:12px 0;font-size:0.92rem;color:#f5d6db}
+  .pitfall strong{color:#ff8fa3}
+  .route{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:10px 0;font-size:0.93rem;color:#d6dde6}
+  .route strong{color:#fff;display:block;margin-bottom:6px;font-size:1rem}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · TopstepX web + NinjaTrader 8</span>
+  <h1>How to Export Your Topstep Trades (TopstepX + NinjaTrader 8) (2026)</h1>
+  <p class="lede">Topstep traders have two valid export paths, and they produce subtly different files. TopstepX (Topstep's proprietary web platform, default since August 2024) exports raw exchange fills with no broker-side DLL adjustment. NinjaTrader 8 — still allowed by Topstep — exports through the TopstepX-issued DLL, which adjusts your visible P&amp;L to match the official trail-DD math. The same trade can read a few hundred dollars differently between the two files. Here's the clean path on each, the post-2024 DLL split that breaks naïve reconciliation, and the cleanup steps that get your Combine and Express Funded Account (XFA) data into any journal correctly.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent reference, not Topstep documentation.</strong> Aurafy is not affiliated with Topstep, LLC, Trading Technologies, or NinjaTrader Group. Topstep, TopstepX, Express Funded Account, and XFA are trademarks of Topstep, LLC. Topstep's platform availability shifts — they moved off Tradovate / Rithmic to TopstepX in 2024, and the TopstepX DLL behaviour changed on NinjaTrader 8 around the same time. Always verify against your current account before scripting against an export. We import the standard TopstepX trade-history CSV and the NinjaTrader 8 Account Performance export; no API connection, no credentials shared, no plugins installed.
+</div>
+
+<div class="toc">
+  <a href="#which-path">Which export path do I need?</a>
+  <a href="#topstepx">Export from TopstepX (web)</a>
+  <a href="#nt8">Export from NinjaTrader 8 (Topstep DLL build)</a>
+  <a href="#dll-split">The DLL split — why the two files don't match</a>
+  <a href="#account-ids">Combine vs XFA account IDs</a>
+  <a href="#pitfalls">3 quiet pitfalls</a>
+  <a href="#cleanup">Cleaning the CSV for any journal</a>
+  <a href="#import">Importing into Aurafy</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="which-path">Which export path do I need?</h2>
+
+<p>Topstep doesn't route through Rithmic anymore (the cutover happened in 2024 when TopstepX became the default platform). So forget any guide that tells you to export from R|Trader Pro for Topstep — that path doesn't exist on Topstep accounts in 2026. You have two real options:</p>
+
+<div class="route">
+  <strong>I trade on TopstepX (web or mobile app)</strong>
+  Export from the TopstepX dashboard's trade-history view. This is the default for Combine and Express Funded accounts opened after August 2024. The CSV reflects raw exchange fills with no DLL adjustment — the P&amp;L you see in the export equals the P&amp;L the exchange routed, not what the rule engine scored.
+</div>
+
+<div class="route">
+  <strong>I trade on NinjaTrader 8 with the TopstepX DLL</strong>
+  Export from NT8's Control Center &gt; Account Performance &gt; Trades grid. Topstep still allows NT8 for Combine and XFA, but the connection runs through the TopstepX-issued NinjaTrader DLL — the DLL applies the trail-DD scoring inline, so the visible P&amp;L matches the rule engine. CSV columns are NinjaTrader's standard 10-column Account Performance export.
+</div>
+
+<div class="route">
+  <strong>I use a third-party charting front-end (Quantower, MotiveWave, TradingView)</strong>
+  Front-ends that route through TopstepX or the TopstepX-NT8 DLL inherit the same fills and the same DLL behaviour as their underlying route. The cleanest export is still TopstepX's own trade history (if web-routed) or NinjaTrader 8's Account Performance export (if NT8-routed). The charting front-end's own CSV is a fallback.
+</div>
+
+<div class="key-fact">
+  <strong>Choose the file that matches the rule view you want.</strong> If you're reconciling against Topstep's payout calculation, the NinjaTrader DLL export already matches. If you want to see what the exchange actually filled (slippage analysis, broker-disagreement audits), the TopstepX raw export is the truth. Most active Topstep traders end up wanting both.
+</div>
+
+<h2 id="topstepx">How to export trades from TopstepX (web)</h2>
+
+<p>TopstepX is the web-based proprietary platform Topstep launched in 2024 to replace its earlier Tradovate-based setup. The export path lives in the trade-history view of the dashboard. Menu wording shifts between TopstepX releases — what's below is the pattern; verify on your current dashboard.</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Log into the TopstepX dashboard and select the account.</strong>
+    <p>If you have a Combine account, an XFA account, and any prior reset accounts, they each appear in the account-selector dropdown at the top. <strong>Pick a single account — not "all" or "combined."</strong> Each Topstep account is independently rule-tracked (separate trailing drawdown, separate consistency tracker, separate DLL) and you want one export per account ID.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Open the trade history view.</strong>
+    <p>TopstepX exposes a trade-history or performance view from the main navigation (the exact label varies — often <em>Trades</em>, <em>History</em>, or <em>Performance</em>). The view is a per-fill ledger with date, time, contract, side, qty, price, and P&amp;L columns. This is the ledger you export — not the daily-summary view, which is aggregated.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Set the date range to your evaluation window or payout cycle.</strong>
+    <p>For Combine accounts you usually want the entire evaluation window (signup date → today). For XFA accounts the meaningful window is the current payout cycle. Picking "all" works but produces larger files; explicit date ranges are easier to reconcile against your rule tracker.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Use the Export / Download CSV control.</strong>
+    <p>The export control is usually an icon at the top of the trade-history table (download / export arrow). On some TopstepX builds it lives in an overflow menu. CSV is the right format for any journal import — pick CSV rather than PDF if you're given the choice.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <strong>Open the file and confirm the account ID is consistent.</strong>
+    <p>Open the CSV (Excel, LibreOffice, or any text editor) and check the Account column shows a single account ID across all rows. If it shows multiple, you selected "all" in step 1 and the rule tracker downstream will mix Combine and XFA math. Re-export per account if so. Also verify row count against what the dashboard table shows for the same date range — they should match exactly.</p>
+  </div>
+</div>
+
+<div class="key-fact">
+  <strong>Mobile note:</strong> the TopstepX mobile app exposes the trade history but the CSV download is desktop-web only on most release lines. If you only have mobile in front of you, the export waits until you're at a browser.
+</div>
+
+<h2 id="nt8">How to export trades from NinjaTrader 8 with the TopstepX DLL</h2>
+
+<p>NinjaTrader 8 remains an allowed execution platform on Topstep Combine and XFA accounts. The connection is provisioned through a Topstep-issued NinjaTrader DLL — that DLL is what makes NT8 fills score correctly against Topstep's trail-DD rules. Export from NT8 itself, not from the TopstepX dashboard, when NT8 is your execution path. The full step-by-step lives in our dedicated NT8 guide; the Topstep-specific summary:</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Open NinjaTrader 8's Control Center &gt; Account Performance.</strong>
+    <p>From the Control Center main menu: <em>New &gt; Account Performance</em>. The window opens with sub-tabs across the top — <strong>Trades</strong> is the round-turn grid (one row per round-turn), <strong>Orders</strong> is order-level, <strong>Executions</strong> is fill-level. For a journal, <strong>Trades</strong> is the right tab.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Filter to your Topstep account, not "All Accounts."</strong>
+    <p>The Account dropdown in the Account Performance header defaults to "All Accounts" — which on NT8 silently merges your Sim101 paper account into the live Topstep account. <strong>Pick your specific Topstep account by ID</strong> (Topstep account IDs use prefixes like <code>TPSXNNNNN</code> or <code>TXFNNNNN</code>; verify against your dashboard). Date range to your evaluation window or payout cycle.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Right-click the Trades grid → Export → CSV.</strong>
+    <p>Right-clicking any row in the Trades grid opens the context menu. Pick <em>Export</em> → <em>CSV</em> (the menu wording is consistent across NT8.x releases). NT8 writes a 10-column CSV: Instrument, Account, Quantity, Entry price, Entry time, Exit price, Exit time, MAE, MFE, Profit, Cum. profit, Commission. Profit is signed in dollars and already reflects the DLL adjustment Topstep applied to your fills.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Open the file and verify the Account column is your Topstep ID, not Sim101.</strong>
+    <p>Open the CSV and scan the Account column. If you see <code>Sim101</code> rows mixed in with your Topstep ID, the "All Accounts" filter slipped through and the export merged your sim trades with the live Topstep account. Re-filter and re-export. Importing that into any rule-tracking journal blows the trail-DD math instantly — sim fills count as real and the drawdown floor moves with them.</p>
+  </div>
+</div>
+
+<p class="lede" style="font-size:0.92rem;margin-top:10px">Full NT8 export reference, all 10 columns, the rollover-instrument pitfall, and the timezone defaults all live in the <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> — read that page if you want NT8-specific depth. The Topstep angle on NT8 is what's covered here.</p>
+
+<h2 id="dll-split">The DLL split — why the same trade reads differently in the two files</h2>
+
+<p>This is the single fact that breaks most Topstep journal reconciliations in 2026. <strong>TopstepX (web) exports raw exchange fills. NinjaTrader 8 with the TopstepX DLL exports DLL-adjusted fills.</strong> Both are correct; they're measuring different things.</p>
+
+<ul>
+  <li><strong>TopstepX raw export:</strong> the P&amp;L column equals (exit price − entry price) × tick value × qty, signed by direction. No broker-side scoring layer. The same number the exchange routed.</li>
+  <li><strong>NinjaTrader 8 + Topstep DLL export:</strong> the P&amp;L column is the same arithmetic, but the DLL has already applied the intraday trail-DD scoring at the fill level. If your trade crossed the trailing-drawdown floor mid-trade, the DLL closes the position and the export reflects the auto-flatten, not the price you tried to ride to.</li>
+</ul>
+
+<p>For a Combine account (intraday trail), this matters every time the trail-DD floor is touched intraday. For an XFA account (end-of-day trail, locks at starting balance once reached), it matters less day-to-day but reappears around the trail-DD lock event itself.</p>
+
+<div class="key-fact">
+  <strong>August 2024 cutover:</strong> Topstep removed the default DLL from TopstepX (so the web platform now shows raw fills without scoring) but kept the DLL on the NinjaTrader 8 build. This is intentional — the TopstepX dashboard separately surfaces your scored P&amp;L in a different view, but the trade-history CSV is the raw fills. So the platform split is also a "where does the scoring happen" split: NT8 = inline on fills, TopstepX = separately in the dashboard view, but not in the export.
+</div>
+
+<div class="pitfall">
+  <strong>Fix:</strong> never reconcile a TopstepX CSV against an NT8 CSV by joining on trade timestamp + symbol and expecting the P&amp;L columns to match. They won't, by design. If you trade on both platforms (some Topstep traders run NT8 for ES + NQ and TopstepX-web for ad-hoc micros), import them as two separate accounts in your journal and reconcile against the TopstepX dashboard's daily-scored P&amp;L, not against each other.
+</div>
+
+<h2 id="account-ids">Combine vs XFA account IDs — they look the same, they aren't</h2>
+
+<p>A Combine account and an XFA account share most of the same surface — same UI, same dashboard, similar account ID format — but they're rule-distinct in two load-bearing ways your journal needs to know:</p>
+
+<ul>
+  <li><strong>Combine = intraday trail.</strong> The trailing drawdown moves with your real-time equity high-water mark (including unrealized P&amp;L) and locks nowhere until you pass. On a 100K Combine the trail is $3,000.</li>
+  <li><strong>XFA (Express Funded Account) = end-of-day trail.</strong> The trail moves only at session close, and locks at the starting balance ($100,000 on a 100K) permanently once the EOD equity reaches it. After lock, the drawdown floor is fixed — no more trailing.</li>
+  <li><strong>Daily loss limit (DLL):</strong> $2,000 on the 100K, $1,000 on the 50K, $3,000 on the 150K — applies to BOTH Combine and XFA as a hard intraday floor that resets each session.</li>
+  <li><strong>Consistency rule:</strong> Topstep's consistency rule is 50% in the eval (no single trading day can be more than 50% of total Combine P&amp;L). Verify current funded-side enforcement on your account — Topstep adjusts payout consistency separately.</li>
+</ul>
+
+<p>If you have a Combine and an XFA on the same Topstep login, the trade-history view will let you switch between them — and both have to be tagged distinctly downstream or your trail-DD math runs the wrong formula on the wrong rows.</p>
+
+<div class="key-fact">
+  <strong>For Aurafy users:</strong> tag each Topstep account with its phase (Combine or XFA) at import. Aurafy applies intraday trail-DD math to Combine, EOD trail-DD math to XFA (including the lock at starting balance once reached), the 50% consistency tracker to the Combine phase, and DLL tracking to both. Combine→XFA transitions get the rule-shift flagged in the timeline view.
+</div>
+
+<h2 id="pitfalls">The three quiet pitfalls</h2>
+
+<p>Most "my Topstep numbers don't match my journal" tickets trace to one of these.</p>
+
+<h3>1. Tradovate exports don't apply to Topstep anymore (post-2024)</h3>
+
+<p>If you opened your Topstep account before mid-2024, you may have used Tradovate as the execution platform. After the TopstepX cutover, that path is gone — current Topstep accounts (Combine and XFA opened after August 2024) don't route through Tradovate at all. Any old Tradovate-based instruction set you find still floating online is out of date. The export path is now TopstepX-web or NT8-with-Topstep-DLL.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> ignore any Topstep "how to export from Tradovate" guide written before mid-2024. If you have legacy Tradovate-exported Topstep trade history sitting in old CSV files, those are still valid history for archival — just don't try to refresh them via Tradovate. Use TopstepX dashboard for any new export.
+</div>
+
+<h3>2. NT8's "All Accounts" silently merges Sim101 into your live Topstep account</h3>
+
+<p>This is the NT8-generic pitfall (also covered in our NT8 export guide) and it bites Topstep traders especially hard. NT8's Sim101 paper-trading account is enabled by default, and "All Accounts" exports merge its rows into the file alongside your real Topstep account. Importing that into a rule-tracking journal counts paper trades against your real trail-DD floor — which can either falsely fail the rule (sim losses pulling the trailing high-water mark down) or falsely pass it (sim profits cushioning the math). Both are wrong.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> always filter to your specific Topstep account ID in the Account Performance Account dropdown before exporting. Verify the Account column in the resulting CSV shows only your Topstep ID — no <code>Sim101</code> rows. If you actively want to track sim performance, import it as a separate book in your journal, not merged into the funded account.
+</div>
+
+<h3>3. Combine accounts have an intraday trail, so the export's daily-summary view lies about your trail-DD floor</h3>
+
+<p>TopstepX dashboards (and many third-party trackers) show your trail-DD floor as if it were end-of-day for everything — they update the floor at session close based on the day's high realized equity. That's correct for XFA accounts. It is not correct for Combine accounts: the Combine trail moves intraday with your unrealized equity high-water mark, which means your "real" floor at any instant during the trading day can be tighter than what the daily summary shows.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> for Combine accounts, model trail-DD against the intraday equity high-water mark (entry price + unrealized P&amp;L peak), not just the realized P&amp;L at session close. The <a href="../../tools/trailing-drawdown-calculator/?utm_source=tools&amp;utm_medium=topstep-export-guide">Trailing Drawdown Calculator</a> has a Topstep Combine preset that models exactly this — intraday trail, no lock, $3,000 floor on the 100K. For XFA accounts, the EOD preset applies and the lock-at-starting-balance behaviour kicks in.
+</div>
+
+<h2 id="cleanup">Cleaning the CSV before import (regardless of source)</h2>
+
+<p>Whether the file came from TopstepX or NT8, the cleanup steps are similar — the difference is in which fields are pre-computed and which you derive downstream.</p>
+
+<ol>
+  <li><strong>Verify the account ID column is consistent.</strong> Single Topstep account ID across all rows. If it isn't, split by Account before any rule math runs.</li>
+  <li><strong>Tag each Account as Combine or XFA.</strong> Both look similar in the file but the trail-DD formula differs. The journal needs the phase to apply the right math.</li>
+  <li><strong>Verify the timezone.</strong> NT8's data-feed-zone default and TopstepX's UTC-or-local default both bite if you assume local time. Pick a fill you remember and check it matches what you remember.</li>
+  <li><strong>Pair fills into round-turns (if exporting from TopstepX).</strong> TopstepX is per-fill; NT8's Trades tab is already round-turn. For TopstepX, sort by time within each Account + Symbol, walk through fills FIFO, close a round-turn each time cumulative signed Qty returns to zero.</li>
+  <li><strong>Normalize the timestamp to ISO 8601 with timezone offset.</strong> <code>2026-06-02T13:30:00-05:00</code>. Self-healing across DST boundaries.</li>
+  <li><strong>Map symbol to a root.</strong> Add a <code>root</code> column derived from the symbol (<code>ESM26</code> → <code>ES</code>, <code>MNQU26</code> → <code>MNQ</code>). All cross-quarter analysis groups by root.</li>
+  <li><strong>Archive the raw export.</strong> Save the unmodified CSV alongside the cleaned version. Every transformation should be reversible against the original.</li>
+</ol>
+
+<div class="cta" id="import">
+  <h3>Or skip all of that — drop the file into Aurafy</h3>
+  <p>Aurafy's Topstep importer reads both the TopstepX trade-history CSV and the NinjaTrader 8 Account Performance export. It splits by Account ID, tags each as Combine or XFA, pairs fills into round-turns (for TopstepX) or accepts NT8's pre-paired rows, normalizes the timezone, maps symbols to roots, and applies the correct Topstep trail-DD math per account (intraday for Combine, EOD with starting-balance lock for XFA). The 50% consistency tracker, the DLL floor, and the trail-DD headroom all compute independently per account. Free tier — 1 account, 30 days of history, no card required.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=topstep-export-guide&amp;utm_content=primary-cta">Start importing free</a>
+  <a class="btn ghost" href="https://aurafy.dev/prop-firms/topstep/?utm_source=tools&amp;utm_medium=topstep-export-guide&amp;utm_content=topstep-landing">More on Aurafy + Topstep</a>
+</div>
+
+<h2>While you're cleaning up the data — track the rules too</h2>
+
+<p>Once your Topstep trades are in a journal, a few free Aurafy tools layer prop-firm rule math on top of any trade history — no signup required:</p>
+
+<ul>
+  <li><a href="../../tools/trailing-drawdown-calculator/?utm_source=tools&amp;utm_medium=topstep-export-guide">Trailing Drawdown Calculator</a> — Topstep Combine (intraday) and XFA (EOD, locks at starting balance) presets. Model your drawdown floor on a sequence of P&amp;L days from your TopstepX or NT8 export.</li>
+  <li><a href="../../tools/consistency-rule-calculator/?utm_source=tools&amp;utm_medium=topstep-export-guide">Consistency-Rule Calculator</a> — Topstep 50% eval threshold preset. Drop in daily P&amp;L; see your single-day maximum and the extra profit needed to bring an outlier day back into compliance.</li>
+  <li><a href="../../tools/futures-pnl-calculator/?utm_source=tools&amp;utm_medium=topstep-export-guide">Futures P&amp;L / Tick-Value Calculator</a> — exact tick-value math for every contract Topstep allows (ES, NQ, MES, MNQ, CL, MCL, GC, MGC, ZB, 6E, and 20+ more).</li>
+  <li><a href="../../tools/position-size-calculator/?utm_source=tools&amp;utm_medium=topstep-export-guide">Position Size Calculator (prop-firm aware)</a> — Topstep 50K / 100K / 150K presets, max contracts by stop distance, % of trail-DD buffer used per trade.</li>
+</ul>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Can I still use Tradovate or Rithmic to trade Topstep in 2026?</summary>
+  <p>No. Topstep moved off Tradovate and Rithmic when TopstepX launched as the default platform in 2024. Current Topstep Combine and XFA accounts route through TopstepX (web) or NinjaTrader 8 (with the Topstep DLL). Any guide that says "export your Topstep trades from R|Trader Pro" is referring to a pre-2024 setup that no longer exists. Our <a href="../rithmic-rtrader-pro-export-trades/">Rithmic R|Trader Pro export guide</a> explicitly covers Apex / MFFU / TPT / Tradeify / Bulenox / Earn2Trade — Topstep is no longer on that list.</p>
+</details>
+
+<details>
+  <summary>Why don't the P&amp;L numbers match between my TopstepX export and the dashboard's daily-summary view?</summary>
+  <p>The trade-history CSV is the raw fill ledger (gross-or-net depending on the build). The daily-summary view applies the trail-DD scoring on top — so on any day where the trail-DD floor was touched intraday, the dashboard's scored daily P&amp;L will read lower than the sum of the per-trade P&amp;L in the CSV. Both numbers are correct; they're measuring different things. The scored number is what counts for your evaluation / payout calculation.</p>
+</details>
+
+<details>
+  <summary>What's the right format for Topstep account IDs?</summary>
+  <p>Topstep uses several account-ID prefixes depending on phase. Current Combine and XFA accounts use prefixes like <code>TPSX</code> or <code>TXF</code> followed by a numeric suffix; older Tradovate-routed accounts had different prefixes (now legacy). The exact format on your account is visible at the top of the TopstepX dashboard and in the NT8 Account dropdown — match the one in the dashboard to the one in your CSV's Account column to make sure they reference the same account.</p>
+</details>
+
+<details>
+  <summary>I trade Topstep on both TopstepX (micros) and NT8 (ES + NQ). One journal or two?</summary>
+  <p>One journal, two accounts. Aurafy (and most prop-firm-aware journals) handles multi-route accounts by tagging each with its execution platform. Import the TopstepX micros CSV and the NT8 ES/NQ CSV as separate accounts under the same Topstep firm preset, and the trail-DD / DLL / consistency rule trackers apply per account. Don't try to merge them — the DLL split means the two files measure P&amp;L differently and merging silently corrupts the rule math.</p>
+</details>
+
+<details>
+  <summary>Can I export via TopstepX API instead of the CSV?</summary>
+  <p>TopstepX exposes some API surface (mostly for partner integrations — third-party charting front-ends like Quantower / MotiveWave use it). For one-off journal exports the dashboard CSV is the right path — no API key, no credentials shared, takes a minute. For programmatic nightly exports the API is the right answer but it's overkill for any individual trader. Aurafy imports the standard CSV, not API-pulled data — so the two flows don't compete.</p>
+</details>
+
+<details>
+  <summary>How does this differ from the NinjaTrader 8 export guide?</summary>
+  <p>The <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> covers NT8 as a generic platform — applies to any firm that allows NT8 (Apex, MFFU, TPT, Bulenox, Earn2Trade, Topstep with the TopstepX DLL). This page covers the Topstep-specific angle: which export path applies to your account type (TopstepX vs NT8), the DLL split between the two, and the Combine-vs-XFA tagging that decides which trail-DD formula runs. Read both for full coverage if you're NT8-on-Topstep specifically.</p>
+</details>
+
+<details>
+  <summary>What about Quantower / MotiveWave / TradingView on Topstep?</summary>
+  <p>If your front-end charting platform routes through TopstepX's web API, the cleanest export is from TopstepX itself — your front-end's CSV may not carry the same fields. If it routes through NinjaTrader 8 (and Topstep's DLL on top of that), NT8's Account Performance export is the authoritative file. Treat the front-end's own CSV as a fallback for when you need front-end-side tags (chart timeframe, indicator markers) the broker side doesn't carry.</p>
+</details>
+
+<details>
+  <summary>Does the export include trades from a previous Combine that was reset?</summary>
+  <p>Reset Combines get a new account ID. Trades from the prior (reset) Combine stay attached to the prior account ID — they don't transfer to the new account. The TopstepX dashboard exposes the prior account in the account-selector dropdown for archival purposes; you can export it the same way as the active account. For journal purposes, import each Combine attempt as its own account so the rule math + result trace separately.</p>
+</details>
+
+<div class="cta">
+  <h3>Free trading journal that actually reads Topstep statements cleanly</h3>
+  <p>Aurafy imports the standard TopstepX trade-history CSV and the NinjaTrader 8 Account Performance export. It tags each account as Combine or XFA, applies the correct trail-DD formula (intraday vs EOD-with-starting-balance-lock), tracks the 50% consistency rule on Combine, watches the DLL floor on both, and pairs fills into round-turns automatically. Multi-account, multi-platform Topstep traders import each route as a separate book under one Topstep firm preset. Free tier — 1 account, 30 days history, no card.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=topstep-export-guide&amp;utm_content=final-cta">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing/?utm_source=tools&amp;utm_medium=topstep-export-guide&amp;utm_content=pricing">See pricing</a>
+</div>
+
+<footer>
+  Independent guide by Aurafy — a futures trading journal for prop-firm traders.
+  Not affiliated with Topstep, LLC, Trading Technologies, NinjaTrader Group, or any other platform.
+  Topstep, TopstepX, Combine, Express Funded Account, and XFA are trademarks of Topstep, LLC. Platform export interfaces vary across releases;
+  verify menu labels and column names against your current build.
+  <br><br>
+  <a href="https://aurafy.dev/">Aurafy home</a> ·
+  <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> ·
+  <a href="../tradovate-export-trades/">Tradovate export guide</a> ·
+  <a href="../rithmic-rtrader-pro-export-trades/">Rithmic R|Trader Pro export guide</a> ·
+  <a href="../sierra-chart-export-trades/">Sierra Chart export guide</a> ·
+  <a href="../">All guides</a> ·
+  <a href="../../prop-firms/topstep/">Topstep firm page</a> ·
+  <a href="../../tools/trailing-drawdown-calculator/">Trail calculator</a>
+</footer>
+
+</div>
+</body>
+</html>
