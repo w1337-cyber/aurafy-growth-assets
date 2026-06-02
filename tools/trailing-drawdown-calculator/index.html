@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Prop Firm Trailing Drawdown Calculator (2026) — Topstep, Apex 4.0 | Aurafy</title>
-<meta name="description" content="Free trailing drawdown calculator for Topstep, Apex 4.0 and other futures prop firms. Shows your exact drawdown line, headroom, and how far to lock — for intraday and EOD trail. No login." />
+<title>Prop Firm Trailing Drawdown Calculator (2026) — Topstep, Apex 4.0, Earn2Trade | Aurafy</title>
+<meta name="description" content="Free trailing drawdown calculator for Topstep, Apex 4.0, Earn2Trade Gauntlet Mini and other futures prop firms. Shows your exact drawdown line, headroom, and how far to lock — for intraday and EOD trail. No login." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://aurafy.dev/tools/trailing-drawdown-calculator/" />
 <meta property="og:title" content="Prop Firm Trailing Drawdown Calculator (2026)" />
-<meta property="og:description" content="Free. No login. Topstep + Apex 4.0 presets. Intraday + EOD trail. Built by traders, for traders." />
+<meta property="og:description" content="Free. No login. Topstep + Apex 4.0 + Earn2Trade GAU presets. Intraday + EOD trail. Built by traders, for traders." />
 <meta property="og:type" content="website" />
 <style>
   *,*::before,*::after{box-sizing:border-box}
@@ -211,6 +211,19 @@ const FIRMS = {
     locks_at_offset: 100,
     locks_in_modes: ["intraday","eod"],
     note: "Apex 4.0 lets you choose Intraday or EOD trail at purchase. EOD is calculated once at 4:59:59pm ET. Trailing stops permanently once the EOD threshold reaches Starting Balance + $100 — the locked line sits $100 above your start. DLL only applies on EOD-style accounts."
+  },
+  earn2trade: {
+    name: "Earn2Trade Gauntlet Mini",
+    accounts: {
+      "GAU50":  {balance:50000,  dd:2000, pt:3000,  dll:1100},
+      "GAU100": {balance:100000, dd:3500, pt:6000,  dll:2200},
+      "GAU150": {balance:150000, dd:4500, pt:9000,  dll:3300},
+      "GAU200": {balance:200000, dd:6000, pt:11000, dll:4400}
+    },
+    trails: ["eod"],
+    locks_at_offset: 0,
+    locks_in_modes: ["eod"],
+    note: "Earn2Trade Gauntlet Mini (GAU): EOD-only trailing drawdown — the line updates once per day at session close. Locks at your starting balance once HWM hits Starting Balance + DD (same archetype as Topstep XFA). DLL applies on every account size and persists through LiveSim and Live funded states."
   }
 };
 
