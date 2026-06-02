@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Prop Firm Trailing Drawdown Calculator (2026) — Topstep, Apex 4.0 | Aurafy</title>
+<meta name="description" content="Free trailing drawdown calculator for Topstep, Apex 4.0 and other futures prop firms. Shows your exact drawdown line, headroom, and how far to lock — for intraday and EOD trail. No login." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/tools/trailing-drawdown-calculator/" />
+<meta property="og:title" content="Prop Firm Trailing Drawdown Calculator (2026)" />
+<meta property="og:description" content="Free. No login. Topstep + Apex 4.0 presets. Intraday + EOD trail. Built by traders, for traders." />
+<meta property="og:type" content="website" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-size:1.55rem;margin:0 0 6px;letter-spacing:-0.01em}
+  header p.lede{color:var(--muted);margin:0 0 22px;font-size:0.98rem}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:640px){.cols-2{grid-template-columns:1fr 1fr}}
+  label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+  select,input[type=number]{
+    width:100%;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);border-radius:8px;
+    padding:11px 12px;font-size:1rem;font-family:var(--mono);
+    -webkit-appearance:none;appearance:none;
+  }
+  select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px}
+  .seg button{flex:1;background:transparent;color:var(--muted);border:0;padding:9px 8px;border-radius:6px;font-size:0.92rem;cursor:pointer;font-weight:500}
+  .seg button.on{background:var(--accent);color:#fff}
+  .seg button:disabled{opacity:0.35;cursor:not-allowed}
+  .info-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border);font-size:0.93rem}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{font-family:var(--mono);font-weight:600}
+  .result-card{
+    background:linear-gradient(135deg,#171c25 0%,#13171c 100%);
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .big{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em}
+  .big.pos{color:var(--green)}
+  .big.neg{color:var(--red)}
+  .big.warn{color:var(--amber)}
+  .sub{color:var(--muted);font-size:0.86rem;margin-top:2px}
+  .status-bar{height:8px;border-radius:4px;background:#1e242c;overflow:hidden;margin-top:14px}
+  .status-bar > div{height:100%;transition:width 0.25s ease}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.76rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
+  .badge.locked{background:rgba(61,220,151,0.12);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+  .badge.trailing{background:rgba(124,92,255,0.12);color:#a890ff;border:1px solid rgba(124,92,255,0.3)}
+  .badge.violated{background:rgba(255,92,124,0.12);color:var(--red);border:1px solid rgba(255,92,124,0.3)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:12px 14px;color:#f0d4a8;font-size:0.86rem;margin-bottom:18px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:18px;margin-top:22px}
+  .cta h3{margin:0 0 6px;font-size:1.05rem}
+  .cta p{margin:0 0 10px;color:var(--muted);font-size:0.93rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-weight:600;font-size:0.92rem}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  details{margin-top:18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.95rem}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  footer{margin-top:30px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.6}
+  .note-firm{font-size:0.84rem;color:var(--muted);margin-top:8px;padding:10px 12px;background:var(--panel-2);border-radius:8px;border-left:3px solid var(--accent-2)}
+  h2{font-size:1.05rem;margin:0 0 14px;letter-spacing:-0.005em}
+  .hint{font-size:0.78rem;color:var(--muted);margin-top:6px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Prop Firm Trailing Drawdown Calculator</h1>
+  <p class="lede">Where's your drawdown line right now? Pick your firm, account size and trail mode. Updated for Apex 4.0 (2026).</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with your firm.</strong> Prop firm rules change. These presets reflect public info as of June 2026 — always confirm the exact numbers in your firm's current rulebook before you trade. This is a planning tool, not advice.
+</div>
+
+<section class="panel">
+  <h2>1. Your account</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="firm">Prop firm</label>
+      <select id="firm"></select>
+    </div>
+    <div>
+      <label for="account">Account size</label>
+      <select id="account"></select>
+    </div>
+  </div>
+
+  <div style="margin-top:14px">
+    <label>Trail type</label>
+    <div class="seg" id="trailseg">
+      <button data-trail="intraday" type="button">Intraday</button>
+      <button data-trail="eod" type="button">End of Day</button>
+    </div>
+    <div class="hint" id="trail-hint"></div>
+  </div>
+
+  <div style="margin-top:16px">
+    <div class="info-row"><span class="k">Starting balance</span><span class="v" id="kSB">—</span></div>
+    <div class="info-row"><span class="k">Max trailing drawdown</span><span class="v" id="kDD">—</span></div>
+    <div class="info-row"><span class="k">Profit target (eval)</span><span class="v" id="kPT">—</span></div>
+    <div class="info-row"><span class="k">Daily loss limit</span><span class="v" id="kDLL">—</span></div>
+    <div class="info-row"><span class="k">Drawdown locks when balance hits</span><span class="v" id="kLock">—</span></div>
+  </div>
+
+  <div class="note-firm" id="firm-note"></div>
+</section>
+
+<section class="panel">
+  <h2>2. Where are you now?</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="peak"><span id="peakLabel">Peak equity reached</span></label>
+      <input id="peak" type="number" inputmode="decimal" step="any" placeholder="e.g. 101500" />
+      <div class="hint" id="peakHint"></div>
+    </div>
+    <div>
+      <label for="now">Current equity</label>
+      <input id="now" type="number" inputmode="decimal" step="any" placeholder="e.g. 100200" />
+      <div class="hint">Account balance + open P&amp;L right now</div>
+    </div>
+  </div>
+</section>
+
+<div class="result-card">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+    <div>
+      <div class="sub">Your drawdown line</div>
+      <div class="big" id="rLine">—</div>
+    </div>
+    <div id="rBadge"></div>
+  </div>
+  <div class="status-bar"><div id="rBar" style="width:0%;background:var(--green)"></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px">
+    <div>
+      <div class="sub">Headroom</div>
+      <div class="big" id="rHead">—</div>
+    </div>
+    <div>
+      <div class="sub" id="rDistLbl">To lock</div>
+      <div class="big" id="rDist">—</div>
+    </div>
+  </div>
+</div>
+
+<details>
+  <summary>How the trailing drawdown actually works</summary>
+  <p><strong>Intraday trail:</strong> the high-water mark (HWM) follows your live account equity, including open P&amp;L. Every new peak — even a wick of unrealized gain — moves the drawdown line up. If price snaps back, the line stays at the new high. This punishes "letting winners run then giving it all back."</p>
+  <p><strong>End-of-day (EOD) trail:</strong> the HWM only updates at the daily session close (typically 4:59:59pm ET). Intraday spikes don't count — you can hold an unrealized peak through the close to drag the line up, but a single bad close erases the day's progress.</p>
+  <p><strong>The lock:</strong> once your HWM crosses a threshold (starting balance + drawdown on Topstep funded; starting balance + drawdown + $100 on Apex 4.0), the drawdown line stops moving. After that you can't lose your "buffer" — but you also can't ever fall below the lock line again or the account dies.</p>
+  <p><strong>Why this calc matters:</strong> traders blow funded accounts on rules, not strategy. Knowing the exact line — and the exact equity that locks it — turns the trailing drawdown from a black box into a number you trade against.</p>
+</details>
+
+<div class="cta">
+  <h3>Track this automatically in Aurafy</h3>
+  <p>Aurafy logs your trades, calculates trailing drawdown per account in real time, and screen-records your sessions so you can review the moments you almost gave the line back. Pro is $49/mo — first 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=trailing-drawdown-calc&utm_medium=tool&utm_campaign=prop-firm" rel="noopener">See Aurafy →</a>
+</div>
+
+<footer>
+  Built by <a href="https://aurafy.dev?utm_source=trailing-drawdown-calc&utm_medium=footer">Aurafy</a> — futures trading journal + screen recording. Not affiliated with any prop firm. Verify all rules with your firm.
+</footer>
+
+</div>
+
+<script>
+const FIRMS = {
+  topstep: {
+    name: "Topstep",
+    accounts: {
+      "50K":  {balance:50000,  dd:2000, pt:3000, dll:1000},
+      "100K": {balance:100000, dd:3000, pt:6000, dll:2000},
+      "150K": {balance:150000, dd:4500, pt:9000, dll:3000}
+    },
+    trails: ["intraday","eod"],
+    locks_at_offset: 0,
+    locks_in_modes: ["eod"],
+    note: "Topstep Combine uses intraday trailing (live equity). Express Funded (XFA) uses EOD trailing and locks the drawdown line at your starting balance once HWM hits balance + drawdown — permanently. DLL is enforced on Combine."
+  },
+  apex: {
+    name: "Apex Trader Funding (4.0)",
+    accounts: {
+      "25K":  {balance:25000,  dd:1000, pt:1500, dll:null},
+      "50K":  {balance:50000,  dd:2000, pt:3000, dll:null},
+      "100K": {balance:100000, dd:3000, pt:6000, dll:null},
+      "150K": {balance:150000, dd:4000, pt:9000, dll:null}
+    },
+    trails: ["intraday","eod"],
+    locks_at_offset: 100,
+    locks_in_modes: ["intraday","eod"],
+    note: "Apex 4.0 lets you choose Intraday or EOD trail at purchase. EOD is calculated once at 4:59:59pm ET. Trailing stops permanently once the EOD threshold reaches Starting Balance + $100 — the locked line sits $100 above your start. DLL only applies on EOD-style accounts."
+  }
+};
+
+const $ = id => document.getElementById(id);
+const fmt = n => isFinite(n) ? "$" + n.toLocaleString("en-US",{maximumFractionDigits:0}) : "—";
+const fmtSign = n => isFinite(n) ? (n>=0?"+":"−") + "$" + Math.abs(n).toLocaleString("en-US",{maximumFractionDigits:0}) : "—";
+
+const state = {firm:"topstep", account:"100K", trail:"intraday"};
+
+function fillFirmDropdown(){
+  const sel = $("firm");
+  sel.innerHTML = "";
+  Object.entries(FIRMS).forEach(([k,v])=>{
+    const o = document.createElement("option");
+    o.value = k; o.textContent = v.name;
+    sel.appendChild(o);
+  });
+  sel.value = state.firm;
+}
+
+function fillAccountDropdown(){
+  const sel = $("account");
+  sel.innerHTML = "";
+  const firm = FIRMS[state.firm];
+  Object.keys(firm.accounts).forEach(k=>{
+    const o = document.createElement("option");
+    o.value = k; o.textContent = k + " account";
+    sel.appendChild(o);
+  });
+  if(!firm.accounts[state.account]) state.account = Object.keys(firm.accounts)[0];
+  sel.value = state.account;
+}
+
+function refreshTrailButtons(){
+  const firm = FIRMS[state.firm];
+  document.querySelectorAll("#trailseg button").forEach(b=>{
+    const t = b.dataset.trail;
+    const supported = firm.trails.includes(t);
+    b.disabled = !supported;
+    b.classList.toggle("on", state.trail === t);
+  });
+  if(!firm.trails.includes(state.trail)){
+    state.trail = firm.trails[0];
+    refreshTrailButtons();
+  }
+}
+
+function compute(){
+  const firm = FIRMS[state.firm];
+  const acct = firm.accounts[state.account];
+  const SB = acct.balance, DD = acct.dd;
+  const locks = firm.locks_in_modes.includes(state.trail);
+  const lockOffset = firm.locks_at_offset;
+  const lockHWM = SB + DD + lockOffset;
+  const lockedLine = SB + lockOffset;
+
+  $("kSB").textContent = fmt(SB);
+  $("kDD").textContent = fmt(DD);
+  $("kPT").textContent = fmt(acct.pt);
+  $("kDLL").textContent = acct.dll==null ? "—" : fmt(acct.dll);
+  $("kLock").textContent = locks ? fmt(lockHWM) + " → line locks at " + fmt(lockedLine) : "Does not lock (always trails)";
+  $("firm-note").textContent = firm.note;
+
+  if(state.trail === "intraday"){
+    $("peakLabel").textContent = "Peak equity reached (intraday HWM)";
+    $("peakHint").textContent = "The highest your account balance + open P&L has ever touched.";
+    $("trail-hint").textContent = "Intraday — drawdown line follows your live equity peak, including unrealized gains.";
+  } else {
+    $("peakLabel").textContent = "Peak end-of-day balance";
+    $("peakHint").textContent = "Your highest balance at the daily session close (~4:59:59pm ET).";
+    $("trail-hint").textContent = "End of Day — drawdown line updates once per day at the close, not on intraday spikes.";
+  }
+
+  const peak = parseFloat($("peak").value);
+  const now = parseFloat($("now").value);
+
+  if(!isFinite(peak) || !isFinite(now)){
+    $("rLine").textContent = "—";
+    $("rLine").className = "big";
+    $("rHead").textContent = "—"; $("rHead").className = "big";
+    $("rDist").textContent = "—"; $("rDist").className = "big";
+    $("rDistLbl").textContent = locks ? "To lock" : "From start";
+    $("rBadge").innerHTML = "";
+    $("rBar").style.width = "0%";
+    return;
+  }
+
+  const effPeak = Math.max(peak, SB);
+  let line, locked;
+  if(locks && effPeak >= lockHWM){
+    line = lockedLine;
+    locked = true;
+  } else {
+    line = effPeak - DD;
+    if(line > SB && locks) line = Math.min(line, lockedLine);
+    locked = false;
+  }
+
+  const headroom = now - line;
+  const violated = headroom <= 0;
+  const toLock = lockHWM - effPeak;
+
+  $("rLine").textContent = fmt(line);
+  $("rHead").textContent = fmtSign(headroom);
+  $("rHead").className = "big " + (violated ? "neg" : headroom < DD*0.25 ? "warn" : "pos");
+  $("rLine").className = "big " + (violated ? "neg" : "");
+
+  if(locks){
+    if(locked){
+      $("rDistLbl").textContent = "Lock status";
+      $("rDist").textContent = "Locked ✓";
+      $("rDist").className = "big pos";
+    } else {
+      $("rDistLbl").textContent = "Peak needed to lock";
+      $("rDist").textContent = fmt(toLock);
+      $("rDist").className = "big";
+    }
+  } else {
+    $("rDistLbl").textContent = "Above starting balance";
+    $("rDist").textContent = fmtSign(effPeak - SB);
+    $("rDist").className = "big";
+  }
+
+  let badgeHTML = "";
+  if(violated) badgeHTML = '<span class="badge violated">Below the line</span>';
+  else if(locked) badgeHTML = '<span class="badge locked">Locked</span>';
+  else badgeHTML = '<span class="badge trailing">Trailing</span>';
+  $("rBadge").innerHTML = badgeHTML;
+
+  const ratio = Math.max(0, Math.min(1, headroom / DD));
+  $("rBar").style.width = (ratio*100).toFixed(1) + "%";
+  $("rBar").style.background = violated ? "var(--red)" : ratio < 0.25 ? "var(--amber)" : "var(--green)";
+}
+
+function rerender(){
+  fillAccountDropdown();
+  refreshTrailButtons();
+  compute();
+}
+
+$("firm").addEventListener("change", e=>{ state.firm = e.target.value; rerender(); });
+$("account").addEventListener("change", e=>{ state.account = e.target.value; compute(); });
+document.querySelectorAll("#trailseg button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    if(b.disabled) return;
+    state.trail = b.dataset.trail;
+    refreshTrailButtons();
+    compute();
+  });
+});
+$("peak").addEventListener("input", compute);
+$("now").addEventListener("input", compute);
+
+fillFirmDropdown();
+rerender();
+</script>
+</body>
+</html>
