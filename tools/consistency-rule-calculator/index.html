@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Prop Firm Consistency Rule Calculator (2026) — Topstep, Apex 4.0 | Aurafy</title>
+<meta name="description" content="Free consistency rule calculator for Topstep, Apex 4.0 and other futures prop firms. Enter your daily P&L and see if you're payout-eligible — plus the exact extra profit you need to pass. No login." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/tools/consistency-rule-calculator/" />
+<meta property="og:title" content="Prop Firm Consistency Rule Calculator (2026)" />
+<meta property="og:description" content="Free. No login. Topstep 50% + Apex 30% presets. See exactly how much more profit you need to be payout-eligible." />
+<meta property="og:type" content="website" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-size:1.55rem;margin:0 0 6px;letter-spacing:-0.01em}
+  header p.lede{color:var(--muted);margin:0 0 22px;font-size:0.98rem}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:640px){.cols-2{grid-template-columns:1fr 1fr}}
+  label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+  select,input[type=number],input[type=text]{
+    width:100%;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);border-radius:8px;
+    padding:11px 12px;font-size:1rem;font-family:var(--mono);
+    -webkit-appearance:none;appearance:none;
+  }
+  select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px;flex-wrap:wrap}
+  .seg button{flex:1 1 auto;min-width:80px;background:transparent;color:var(--muted);border:0;padding:9px 8px;border-radius:6px;font-size:0.92rem;cursor:pointer;font-weight:500}
+  .seg button.on{background:var(--accent);color:#fff}
+  .info-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border);font-size:0.93rem}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{font-family:var(--mono);font-weight:600}
+  .result-card{
+    background:linear-gradient(135deg,#171c25 0%,#13171c 100%);
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .big{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em}
+  .big.pos{color:var(--green)}
+  .big.neg{color:var(--red)}
+  .big.warn{color:var(--amber)}
+  .sub{color:var(--muted);font-size:0.86rem;margin-top:2px}
+  .status-bar{height:8px;border-radius:4px;background:#1e242c;overflow:hidden;margin-top:14px}
+  .status-bar > div{height:100%;transition:width 0.25s ease}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.76rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
+  .badge.pass{background:rgba(61,220,151,0.12);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+  .badge.fail{background:rgba(255,92,124,0.12);color:var(--red);border:1px solid rgba(255,92,124,0.3)}
+  .badge.warn{background:rgba(255,180,84,0.12);color:var(--amber);border:1px solid rgba(255,180,84,0.3)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:12px 14px;color:#f0d4a8;font-size:0.86rem;margin-bottom:18px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:18px;margin-top:22px}
+  .cta h3{margin:0 0 6px;font-size:1.05rem}
+  .cta p{margin:0 0 10px;color:var(--muted);font-size:0.93rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-weight:600;font-size:0.92rem}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  details{margin-top:18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.95rem}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  details ul{font-size:0.91rem;color:#c4ccd6;margin:8px 0;padding-left:20px}
+  details li{margin:4px 0}
+  footer{margin-top:30px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.6}
+  .note-firm{font-size:0.84rem;color:var(--muted);margin-top:8px;padding:10px 12px;background:var(--panel-2);border-radius:8px;border-left:3px solid var(--accent-2)}
+  h2{font-size:1.05rem;margin:0 0 14px;letter-spacing:-0.005em}
+  .hint{font-size:0.78rem;color:var(--muted);margin-top:6px;font-style:italic}
+
+  /* Days table */
+  .days-list{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .day-row{display:grid;grid-template-columns:60px 1fr 38px;gap:8px;align-items:center}
+  .day-row .day-label{color:var(--muted);font-size:0.85rem;font-family:var(--mono);text-align:right;padding-right:4px}
+  .day-row input{padding:9px 10px;font-size:0.95rem}
+  .day-row .pnl-pos{color:var(--green)}
+  .day-row .pnl-neg{color:var(--red)}
+  .day-row .pnl-best{border-color:var(--accent) !important;box-shadow:0 0 0 1px var(--accent) inset}
+  .day-row button.rm{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:8px 0;font-size:1rem;cursor:pointer}
+  .day-row button.rm:hover{color:var(--red);border-color:var(--red)}
+  .day-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .day-actions button{flex:1;min-width:120px;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:0.9rem;cursor:pointer;font-weight:500}
+  .day-actions button:hover{border-color:var(--accent);color:var(--accent)}
+  .day-actions button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .day-actions button.primary:hover{background:#6a4dee;color:#fff}
+
+  /* Paste textarea */
+  .paste-area{display:none;margin-top:10px}
+  .paste-area.show{display:block}
+  textarea{width:100%;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:11px 12px;font-size:0.95rem;font-family:var(--mono);min-height:110px;resize:vertical}
+  textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+  /* Headline metric block */
+  .metric-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:640px){.metric-grid{grid-template-columns:1fr 1fr}}
+  .metric{padding:14px 16px;background:var(--panel-2);border:1px solid var(--border);border-radius:10px}
+  .metric .k{font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+  .metric .v{font-family:var(--mono);font-size:1.15rem;font-weight:600}
+  .metric .v.pos{color:var(--green)}
+  .metric .v.neg{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Prop Firm Consistency Rule Calculator</h1>
+  <p class="lede">Will your account pass the consistency check? Drop in your daily P&amp;L and find out — plus the exact extra profit you need to be payout-eligible. Updated for 2026.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with your firm.</strong> Consistency-rule thresholds and payout policies change. These presets reflect public info as of June 2026 — always confirm the exact rule with your firm before you trade or request a payout. This is a planning tool, not advice.
+</div>
+
+<section class="panel">
+  <h2>1. Your firm</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="firm">Prop firm</label>
+      <select id="firm">
+        <option value="topstep">Topstep (XFA / Funded) — 50%</option>
+        <option value="apex">Apex Trader Funding 4.0 — 30%</option>
+        <option value="mffu">MyFundedFutures — 40%</option>
+        <option value="custom">Custom threshold</option>
+      </select>
+    </div>
+    <div>
+      <label for="threshold">Best-day cap (% of total profit)</label>
+      <input type="number" id="threshold" min="1" max="99" step="1" value="50" />
+      <p class="hint">Your single best winning day can't exceed this share of total net profit.</p>
+    </div>
+  </div>
+  <div id="firm-note" class="note-firm"></div>
+</section>
+
+<section class="panel">
+  <h2>2. Your trading days</h2>
+  <p class="hint" style="margin-top:-6px;margin-bottom:10px;font-style:normal">Enter the net P&amp;L for each trading day (negative for losing days). Most firms only count days you actually traded.</p>
+
+  <div id="days" class="days-list"></div>
+
+  <div class="day-actions">
+    <button type="button" id="add-day">+ Add day</button>
+    <button type="button" id="toggle-paste">Paste list</button>
+    <button type="button" id="reset">Reset</button>
+  </div>
+
+  <div id="paste-area" class="paste-area">
+    <label for="paste-input">Paste daily P&amp;L (one number per line, or comma-separated)</label>
+    <textarea id="paste-input" placeholder="450&#10;-120&#10;800&#10;220&#10;-90"></textarea>
+    <div class="day-actions" style="margin-top:8px">
+      <button type="button" class="primary" id="apply-paste">Apply</button>
+    </div>
+  </div>
+</section>
+
+<div class="result-card">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+    <span id="status-badge" class="badge pass">Payout-eligible</span>
+    <span class="sub" id="rule-summary">Best day ≤ 50% of total</span>
+  </div>
+  <div class="big" id="ratio-display">0.0%</div>
+  <div class="sub" id="ratio-sub">Best day / total net profit</div>
+  <div class="status-bar"><div id="ratio-bar" style="width:0%;background:var(--green)"></div></div>
+</div>
+
+<section class="panel">
+  <h2>Breakdown</h2>
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="k">Total net P&amp;L</div>
+      <div class="v" id="m-total">$0</div>
+    </div>
+    <div class="metric">
+      <div class="k">Best winning day</div>
+      <div class="v" id="m-best">$0</div>
+    </div>
+    <div class="metric">
+      <div class="k">Trading days entered</div>
+      <div class="v" id="m-days">0</div>
+    </div>
+    <div class="metric">
+      <div class="k">Winning days</div>
+      <div class="v" id="m-wins">0</div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>What it takes to pass</h2>
+  <div id="advice">
+    <div class="info-row"><span class="k">Max allowed best day for current total</span><span class="v" id="a-max-best">—</span></div>
+    <div class="info-row"><span class="k">Extra net profit needed to be eligible</span><span class="v" id="a-need-more">—</span></div>
+    <div class="info-row"><span class="k">Max safe single-day P&amp;L going forward</span><span class="v" id="a-safe-next">—</span></div>
+  </div>
+  <p class="hint" id="advice-note" style="margin-top:10px">Reduce risk-per-day to widen the gap between best day and total.</p>
+</section>
+
+<div class="cta">
+  <h3>Track this automatically in Aurafy</h3>
+  <p>Aurafy logs every trade from Tradovate, NinjaTrader, Sierra Chart and Rithmic — so consistency, drawdown and daily loss limits update live as you trade. No spreadsheets.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&utm_medium=consistency-calc&utm_campaign=prop-firm-tools">See Aurafy →</a>
+</div>
+
+<details>
+  <summary>How the consistency rule actually works</summary>
+  <p>Most futures prop firms cap how much of your total profit can come from a single trading day. If one big day dominates, they won't pay you out until you spread the gains across more sessions — the point is to show consistent performance, not lucky one-offs.</p>
+  <p><strong>The math:</strong> ratio = best winning day ÷ total net profit. If ratio &gt; threshold, you fail. To pass you either need (a) more total profit so your best day shrinks as a share, or (b) wait for the next payout window and trade more days.</p>
+  <p><strong>"Max safe next-day P&amp;L"</strong> = the most you can make on your next trading day before <em>that</em> day becomes your new best and breaks the ratio. Formula: threshold × current_total ÷ (1 − threshold). Useful as a sanity check when you're sizing up a setup.</p>
+</details>
+
+<details>
+  <summary>Firm-by-firm notes (June 2026)</summary>
+  <ul>
+    <li><strong>Topstep (XFA / Funded):</strong> public rule = no single trading day's profit may exceed <strong>50%</strong> of total profits at the time of a payout request. Applies to the funded account, not the combine.</li>
+    <li><strong>Apex Trader Funding 4.0:</strong> <strong>30%</strong> rule — your largest winning day can't be more than 30% of total realized profits in the payout window. Also requires minimum profitable trading days (varies by account size).</li>
+    <li><strong>MyFundedFutures (MFFU):</strong> commonly cited at <strong>40%</strong> — verify against current rulebook, MFFU has updated tiers.</li>
+    <li><strong>Custom:</strong> set your own % if your firm isn't listed or if rules have changed.</li>
+  </ul>
+  <p>Always confirm the live rule. Aurafy is not affiliated with any prop firm.</p>
+</details>
+
+<footer>
+  Built by <a href="https://aurafy.dev/?utm_source=tools&utm_medium=consistency-calc&utm_campaign=footer">Aurafy</a> — the futures trading journal that handles consistency, drawdown and replay in one tool.<br/>
+  Free forever. No login required for this calculator.
+</footer>
+
+</div>
+
+<script>
+(() => {
+  const FIRMS = {
+    topstep: {threshold: 50, note: "Topstep XFA / Funded: 50% rule. Single day's profit cannot exceed 50% of total profits at payout request time. Confirm in Topstep's current rulebook."},
+    apex:    {threshold: 30, note: "Apex 4.0: 30% rule. Largest winning day cannot exceed 30% of total realized profits in the payout window. Account-size-dependent minimum-day count also applies."},
+    mffu:    {threshold: 40, note: "MyFundedFutures: commonly 40%. Tiers and rules update — verify against MFFU's current account agreement."},
+    custom:  {threshold: 50, note: "Custom threshold — enter your firm's published cap and use this as a planning aid."},
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const firmSel = $('firm');
+  const thresholdInput = $('threshold');
+  const firmNote = $('firm-note');
+  const daysEl = $('days');
+  const addBtn = $('add-day');
+  const togglePasteBtn = $('toggle-paste');
+  const resetBtn = $('reset');
+  const pasteArea = $('paste-area');
+  const pasteInput = $('paste-input');
+  const applyPasteBtn = $('apply-paste');
+
+  let days = [450, -120, 800, 220, -90]; // sensible default sample
+  let userTouchedThreshold = false;
+
+  const fmt = (n) => {
+    if (!isFinite(n)) return '—';
+    const sign = n < 0 ? '-' : '';
+    const abs = Math.abs(n);
+    return sign + '$' + abs.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  };
+  const fmtPct = (n) => {
+    if (!isFinite(n)) return '—';
+    return n.toLocaleString('en-US', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + '%';
+  };
+
+  function renderDays() {
+    daysEl.innerHTML = '';
+    const bestIdx = days.reduce((bi, v, i) => v > (days[bi] ?? -Infinity) ? i : bi, 0);
+    const hasPositive = days.some(v => v > 0);
+    days.forEach((v, i) => {
+      const row = document.createElement('div');
+      row.className = 'day-row';
+      const label = document.createElement('span');
+      label.className = 'day-label';
+      label.textContent = 'Day ' + (i + 1);
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.step = 'any';
+      input.placeholder = '0';
+      input.value = (v === 0 || v === null || v === undefined) ? '' : String(v);
+      if (v > 0) input.classList.add('pnl-pos');
+      if (v < 0) input.classList.add('pnl-neg');
+      if (hasPositive && i === bestIdx && v > 0) input.classList.add('pnl-best');
+      input.addEventListener('input', (e) => {
+        const raw = e.target.value.trim();
+        days[i] = raw === '' ? 0 : Number(raw);
+        if (!isFinite(days[i])) days[i] = 0;
+        // Don't re-render on every keystroke; just recompute. Re-render on blur.
+        compute();
+      });
+      input.addEventListener('blur', renderDays);
+      const rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'rm';
+      rm.textContent = '×';
+      rm.title = 'Remove day';
+      rm.addEventListener('click', () => {
+        days.splice(i, 1);
+        if (days.length === 0) days = [0];
+        renderDays();
+        compute();
+      });
+      row.appendChild(label);
+      row.appendChild(input);
+      row.appendChild(rm);
+      daysEl.appendChild(row);
+    });
+  }
+
+  function compute() {
+    const threshold = Math.max(1, Math.min(99, Number(thresholdInput.value) || 50)) / 100;
+    const total = days.reduce((s, v) => s + (Number(v) || 0), 0);
+    const winningDays = days.filter(v => v > 0);
+    const best = winningDays.length ? Math.max(...winningDays) : 0;
+    const tradingDays = days.filter(v => v !== 0).length || days.length;
+    const wins = winningDays.length;
+
+    $('m-total').textContent = fmt(total);
+    $('m-total').className = 'v ' + (total > 0 ? 'pos' : total < 0 ? 'neg' : '');
+    $('m-best').textContent = fmt(best);
+    $('m-days').textContent = String(tradingDays);
+    $('m-wins').textContent = String(wins);
+
+    const ratioPct = total > 0 && best > 0 ? (best / total) * 100 : 0;
+    const thresholdPct = threshold * 100;
+    $('ratio-display').textContent = total > 0 && best > 0 ? fmtPct(ratioPct) : '—';
+    $('rule-summary').textContent = 'Rule: best day ≤ ' + thresholdPct.toFixed(0) + '% of total';
+
+    const bar = $('ratio-bar');
+    const ratioDisp = $('ratio-display');
+    const badge = $('status-badge');
+    const adviceNote = $('advice-note');
+
+    if (total <= 0 || best <= 0) {
+      bar.style.width = '0%';
+      ratioDisp.className = 'big';
+      badge.className = 'badge warn';
+      badge.textContent = 'No net profit yet';
+      $('ratio-sub').textContent = 'Need at least one winning day with a positive total';
+      adviceNote.textContent = 'Add winning days to see your consistency ratio.';
+    } else {
+      const passing = ratioPct <= thresholdPct;
+      const widthPct = Math.min(100, (ratioPct / thresholdPct) * 100);
+      bar.style.width = widthPct + '%';
+      if (passing) {
+        bar.style.background = 'var(--green)';
+        ratioDisp.className = 'big pos';
+        badge.className = 'badge pass';
+        badge.textContent = 'Payout-eligible';
+      } else {
+        bar.style.background = 'var(--red)';
+        ratioDisp.className = 'big neg';
+        badge.className = 'badge fail';
+        badge.textContent = 'Fails consistency';
+      }
+      $('ratio-sub').textContent = 'Best day (' + fmt(best) + ') / total net P&L (' + fmt(total) + ')';
+      adviceNote.textContent = passing
+        ? 'You\'re passing. Stay disciplined on sizing — one outsized day can flip this.'
+        : 'You need either more total profit, or to wait and trade smaller days to bring the ratio down.';
+    }
+
+    // Advice
+    const maxAllowedBest = total > 0 ? threshold * total : 0;
+    const minTotalNeeded = best > 0 ? best / threshold : 0;
+    const extraNeeded = Math.max(0, minTotalNeeded - total);
+    // Max safe single next-day P&L X such that X / (total + X) <= threshold (assuming X > current best)
+    const safeNext = total > 0 ? (threshold * total) / (1 - threshold) : 0;
+
+    $('a-max-best').textContent = total > 0 ? fmt(maxAllowedBest) : '—';
+    $('a-need-more').textContent = extraNeeded > 0 ? fmt(extraNeeded) + ' (spread across more days)' : (total > 0 && best > 0 ? 'None — already eligible' : '—');
+    $('a-safe-next').textContent = total > 0 ? fmt(safeNext) : '—';
+  }
+
+  function applyFirm() {
+    const f = FIRMS[firmSel.value] || FIRMS.custom;
+    firmNote.textContent = f.note;
+    if (!userTouchedThreshold || firmSel.value !== 'custom') {
+      thresholdInput.value = f.threshold;
+    }
+    compute();
+  }
+
+  firmSel.addEventListener('change', () => {
+    userTouchedThreshold = false;
+    applyFirm();
+  });
+  thresholdInput.addEventListener('input', () => {
+    userTouchedThreshold = true;
+    firmSel.value = 'custom';
+    firmNote.textContent = FIRMS.custom.note;
+    compute();
+  });
+
+  addBtn.addEventListener('click', () => {
+    days.push(0);
+    renderDays();
+    compute();
+    // Focus the new input
+    const inputs = daysEl.querySelectorAll('input');
+    if (inputs.length) inputs[inputs.length - 1].focus();
+  });
+
+  togglePasteBtn.addEventListener('click', () => {
+    pasteArea.classList.toggle('show');
+  });
+
+  applyPasteBtn.addEventListener('click', () => {
+    const raw = pasteInput.value.trim();
+    if (!raw) return;
+    const parts = raw.split(/[\s,;]+/).map(s => s.replace(/[$,]/g, '').trim()).filter(Boolean);
+    const nums = parts.map(Number).filter(n => isFinite(n));
+    if (nums.length === 0) return;
+    days = nums;
+    pasteArea.classList.remove('show');
+    pasteInput.value = '';
+    renderDays();
+    compute();
+  });
+
+  resetBtn.addEventListener('click', () => {
+    days = [0];
+    renderDays();
+    compute();
+  });
+
+  // Init
+  renderDays();
+  applyFirm();
+})();
+</script>
+</body>
+</html>
