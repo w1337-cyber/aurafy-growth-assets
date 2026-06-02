@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CRO #005 Preview — Main-nav inclusion of /brokers/ + /prop-firms/ + /guides/</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#1a1f2e; --muted:#5a6478; --line:#e5e9f0;
+          --brand:#2d7df0; --brand-dark:#1a5dc7; --brand-tint:#eaf2ff;
+          --urgent:#c0392b; --good:#1e8a52; --warn:#c08c00;
+          --hero-bg:#0e1626; --hero-ink:#f4f6fb; --hero-muted:#8a98b3;
+          --hero-new:#7aa6ed; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+  header .kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                 color:var(--muted);margin:0 0 6px}
+  header h1{margin:0 0 6px;font-size:1.65rem;line-height:1.25}
+  header p{margin:0;color:var(--muted);font-size:0.95rem}
+  .note{background:#fff8e1;border:1px solid #f0d97c;border-radius:8px;padding:12px 14px;
+        font-size:0.9rem;color:#6b5a1a;margin:0 0 28px}
+  h2{font-size:1.15rem;margin:36px 0 12px;border-left:3px solid var(--brand);padding-left:10px}
+  h3{font-size:1rem;margin:24px 0 10px}
+  p{margin:0 0 14px}
+  ul{margin:0 0 14px;padding-left:20px}
+  li{margin:0 0 6px}
+  code{background:#eef1f6;padding:1px 6px;border-radius:4px;font-size:0.88em}
+
+  .toggle{display:flex;gap:0;background:#fff;border:1px solid var(--line);border-radius:999px;
+          padding:4px;width:fit-content;margin:0 0 22px}
+  .toggle button{background:transparent;border:0;padding:8px 18px;font-size:0.88rem;
+                 border-radius:999px;cursor:pointer;color:var(--muted);font-family:inherit;
+                 font-weight:500;transition:background .15s,color .15s}
+  .toggle button.active{background:var(--brand);color:#fff}
+
+  /* ====== Mocked Aurafy hero — only the nav row changes between variants ====== */
+  .hero{background:linear-gradient(135deg,#0e1626 0%,#1a2a45 100%);color:var(--hero-ink);
+        border-radius:16px;padding:36px 32px 48px;position:relative;overflow:hidden;
+        border:1px solid #1f2e4a}
+  .hero::before{content:"";position:absolute;top:-40%;right:-10%;width:55%;height:180%;
+                background:radial-gradient(circle at center,rgba(45,125,240,0.18) 0%,transparent 60%);
+                pointer-events:none}
+  .hero__nav{display:flex;align-items:center;gap:24px;margin-bottom:54px;font-size:0.92rem;
+             position:relative;z-index:1;flex-wrap:wrap}
+  .hero__brand{font-weight:700;font-size:1.05rem}
+  .hero__links{display:flex;gap:18px;color:var(--hero-muted);flex-wrap:wrap}
+  .hero__links a{color:var(--hero-muted);text-decoration:none;transition:color .15s}
+  .hero__links a:hover{color:var(--hero-ink)}
+  .hero__links a.new{color:var(--hero-new);position:relative}
+  .hero__links a.new::after{content:"NEW";position:absolute;top:-9px;right:-22px;
+                            font-size:0.55rem;letter-spacing:0.08em;color:#fff;
+                            background:var(--good);padding:1px 5px;border-radius:3px;font-weight:700}
+  .hero__nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .hero__nav-right .login{color:var(--hero-muted);text-decoration:none;font-size:0.9rem}
+  .hero__nav-right .cta{background:var(--brand);color:#fff;text-decoration:none;
+                        padding:8px 16px;border-radius:8px;font-size:0.9rem;font-weight:500}
+
+  .hero__kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;
+                color:#7aa6ed;margin:0 0 14px;position:relative;z-index:1}
+  .hero__title{font-size:2rem;line-height:1.15;margin:0 0 14px;font-weight:700;
+               position:relative;z-index:1}
+  .hero__sub{font-size:1.05rem;color:#cdd6e6;margin:0 0 24px;max-width:680px;
+             position:relative;z-index:1}
+
+  /* ====== Footer mock (only visible in AFTER) ====== */
+  .footer-mock{background:#0a1120;color:#cdd6e6;border-radius:16px;padding:28px 32px;
+               margin:18px 0 0;font-size:0.88rem;border:1px solid #1f2e4a}
+  .footer-mock__row{display:flex;gap:48px;flex-wrap:wrap}
+  .footer-mock h4{margin:0 0 12px;color:#fff;font-size:0.85rem;text-transform:uppercase;
+                  letter-spacing:0.08em}
+  .footer-mock ul{list-style:none;padding:0;margin:0}
+  .footer-mock li{margin:0 0 6px}
+  .footer-mock a{color:#8fa3c4;text-decoration:none}
+  .footer-mock a.new{color:var(--hero-new)}
+  .footer-mock a.new::before{content:"+ ";color:var(--good);font-weight:700}
+
+  /* ====== Diff annotations ====== */
+  .annot{display:flex;align-items:flex-start;gap:10px;background:#fff;
+         border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:16px 0}
+  .annot .dot{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--good);
+              color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;
+              font-size:0.85rem}
+  .annot p{margin:0;font-size:0.9rem}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 22px}
+  .grid .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px}
+  .grid .card h4{margin:0 0 6px;font-size:0.9rem;color:var(--brand-dark)}
+  .grid .card p{margin:0;font-size:0.85rem;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;margin:0 0 22px;font-size:0.88rem}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#eef1f6;font-weight:600;font-size:0.82rem;text-transform:uppercase;
+     letter-spacing:0.04em;color:var(--muted)}
+  tr.add td:first-child{border-left:3px solid var(--good)}
+
+  .rules{background:#eef7f0;border:1px solid #b6dbc1;border-radius:8px;padding:14px 16px;
+         margin:18px 0 28px}
+  .rules h4{margin:0 0 8px;color:var(--good);font-size:0.95rem}
+  .rules ul{margin:0;padding-left:20px;font-size:0.9rem}
+
+  .footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:0.85rem;
+          color:var(--muted)}
+
+  @media (max-width:720px){
+    .grid{grid-template-columns:1fr}
+    .hero__links{font-size:0.85rem;gap:14px}
+    .hero__nav{margin-bottom:34px}
+    .hero__title{font-size:1.6rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Aurafy growth proposal · CRO #005</p>
+    <h1>Main-nav inclusion of <code>/brokers/</code> + <code>/prop-firms/</code> + <code>/guides/</code></h1>
+    <p>Surface the 3 content hubs that anchor the site's IA — they exist but are orphaned from nav today.</p>
+  </header>
+
+  <p class="note"><strong>Internal review preview.</strong> Not customer-facing, not indexed.
+  Use the toggle below to compare current nav vs proposed nav. The toggle also reveals the proposed
+  footer "Resources" block.</p>
+
+  <div class="toggle" role="tablist" aria-label="Variant toggle">
+    <button id="show-before" class="active">BEFORE (current)</button>
+    <button id="show-after">AFTER (proposed)</button>
+  </div>
+
+  <div class="hero">
+    <!-- BEFORE NAV -->
+    <div class="hero__nav" id="nav-before">
+      <span class="hero__brand">Aurafy</span>
+      <div class="hero__links">
+        <a href="#">Product</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">Blog</a>
+      </div>
+      <div class="hero__nav-right">
+        <a href="#" class="login">Log in</a>
+        <a href="#" class="cta">Start free</a>
+      </div>
+    </div>
+
+    <!-- AFTER NAV -->
+    <div class="hero__nav" id="nav-after" style="display:none">
+      <span class="hero__brand">Aurafy</span>
+      <div class="hero__links">
+        <a href="#">Product</a>
+        <a href="#">Pricing</a>
+        <a href="#">Tools</a>
+        <a href="#" class="new">Guides</a>
+        <a href="#" class="new">Prop Firms</a>
+        <a href="#" class="new">Brokers</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="hero__nav-right">
+        <a href="#" class="login">Log in</a>
+        <a href="#" class="cta">Start free</a>
+      </div>
+    </div>
+
+    <p class="hero__kicker">Futures trading journal · screen recording · bar-replay</p>
+    <h2 class="hero__title" style="border:0;padding:0;margin:0 0 14px">
+      Journal every futures trade. See why you lost.
+    </h2>
+    <p class="hero__sub">
+      The only futures journal that records your screen. Built for prop-firm traders on Topstep,
+      Apex, and MyFundedFutures.
+    </p>
+  </div>
+
+  <!-- AFTER footer reveal -->
+  <div id="footer-after" class="footer-mock" style="display:none">
+    <div class="footer-mock__row">
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Free calculators</a></li>
+          <li><a href="#" class="new">Broker export guides</a></li>
+          <li><a href="#" class="new">Prop-firm rules hub</a></li>
+          <li><a href="#" class="new">Broker landings</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Founder offer</a></li>
+          <li><a href="#">Log in</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>What changes</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:24%">Element</th><th style="width:38%">Before</th><th style="width:38%">After</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Main-nav links</td>
+          <td>Product · Pricing · Tools · Blog</td>
+          <td>Product · Pricing · Tools · <strong>Guides</strong> · <strong>Prop Firms</strong> · <strong>Brokers</strong> · Blog</td></tr>
+      <tr class="add"><td>Mobile hamburger</td>
+          <td>Same 4 items</td>
+          <td>Same 4 + 3 new items in the dropdown</td></tr>
+      <tr class="add"><td>Footer "Resources" block</td>
+          <td>Tools + Blog (assumed)</td>
+          <td>Tools · Guides · Prop-firm rules · Brokers · Blog</td></tr>
+      <tr><td>Visual style</td>
+          <td>—</td>
+          <td>Identical. Same color, font, weight. "NEW" badges are preview-only.</td></tr>
+      <tr><td>JS / schema / analytics</td>
+          <td>—</td>
+          <td>Zero new code. Pure HTML link additions.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Why these 3 hubs</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h4>/guides/</h4>
+      <p>4 broker export how-tos (Tradovate, NT8, Sierra, Rithmic) + cross-platform cleanup framework. Action-intent traffic.</p>
+    </div>
+    <div class="card">
+      <h4>/prop-firms/</h4>
+      <p>7 firm landings (Apex, Topstep, MFFU, TPT, Tradeify, Bulenox, Earn2Trade) + 3-rule-axes comparison table. Research-intent traffic.</p>
+    </div>
+    <div class="card">
+      <h4>/brokers/</h4>
+      <p>4 broker landings (Tradovate, NinjaTrader 8, Sierra Chart, Rithmic R|Trader Pro) + routing decision-blocks. Pre-qualified-platform traffic.</p>
+    </div>
+  </div>
+
+  <div class="annot"><div class="dot">1</div><p><strong>Tools + Guides pair.</strong> Both are action-intent (calculators help you decide; guides help you act). Slotting them adjacent in nav creates a visible action-side cluster.</p></div>
+  <div class="annot"><div class="dot">2</div><p><strong>Prop Firms + Brokers pair.</strong> Both are research-intent (firm rules + execution-platform comparisons). Adjacent placement makes the IA legible.</p></div>
+  <div class="annot"><div class="dot">3</div><p><strong>Blog stays last.</strong> Loosest topical fit — magazine-style content vs structured hubs.</p></div>
+
+  <h2>What stays inside the hard rules</h2>
+
+  <div class="rules">
+    <h4>Aurafy hard-rules check ✓</h4>
+    <ul>
+      <li><strong>No fake claims</strong> — every hub linked is a real, content-complete landing page.</li>
+      <li><strong>No dark patterns</strong> — link text matches hub title; no deceptive labeling, no fake "NEW" forever (the "NEW" badges are preview-only and not part of the deploy).</li>
+      <li><strong>Reversible in 60 seconds</strong> — delete 3 <code>&lt;li&gt;</code> from the nav template; back to baseline.</li>
+      <li><strong>Honest IA</strong> — makes the site easier to navigate, not harder. Helps the visitor more than it helps us.</li>
+    </ul>
+  </div>
+
+  <h2>Pairs with prior CROs</h2>
+  <ul>
+    <li><strong>CRO #001</strong> (founder seat counter) — orthogonal. Ship together fine.</li>
+    <li><strong>CRO #002</strong> (hero CTA flip) — orthogonal. Right-side CTA in nav is unchanged.</li>
+    <li><strong>CRO #003</strong> (free-tier upgrade triggers) — orthogonal (in-app).</li>
+    <li><strong>CRO #004</strong> (hero subhead A/B/C) — orthogonal. Subhead change is below the nav line.</li>
+    <li><strong>No conflicts.</strong> First CRO to touch the nav.</li>
+  </ul>
+
+  <h2>Operator decision needed</h2>
+  <ol>
+    <li><strong>Approve as-is</strong> → I draft CRO #006 next cycle.</li>
+    <li><strong>Approve with edit</strong> (e.g., move Guides before Tools / use "Prop-Firm Rules" instead of "Prop Firms" / drop Brokers from nav, keep Guides + Prop Firms only) → I fold the edit into v2 next cycle.</li>
+    <li><strong>Approve nav only, hold the footer change</strong> → ships the higher-impact half first.</li>
+    <li><strong>Hold</strong> → CRO pipeline pauses; I refocus on content or community drafts.</li>
+  </ol>
+
+  <div class="footer">
+    <p>Full spec: <code>outbox/cro-005-main-nav-hub-inclusion.md</code> · Live preview repo: <code>w1337-cyber/aurafy-growth-assets</code></p>
+  </div>
+</div>
+
+<script>
+  const btnB = document.getElementById('show-before');
+  const btnA = document.getElementById('show-after');
+  const navB = document.getElementById('nav-before');
+  const navA = document.getElementById('nav-after');
+  const footA = document.getElementById('footer-after');
+
+  function show(which) {
+    if (which === 'before') {
+      btnB.classList.add('active'); btnA.classList.remove('active');
+      navB.style.display = 'flex'; navA.style.display = 'none';
+      footA.style.display = 'none';
+    } else {
+      btnA.classList.add('active'); btnB.classList.remove('active');
+      navA.style.display = 'flex'; navB.style.display = 'none';
+      footA.style.display = 'block';
+    }
+  }
+  btnB.addEventListener('click', () => show('before'));
+  btnA.addEventListener('click', () => show('after'));
+</script>
+</body>
+</html>
