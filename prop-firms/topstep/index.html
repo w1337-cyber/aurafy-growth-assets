@@ -189,7 +189,11 @@
 </details>
 <details>
   <summary>How is Topstep different from Apex 4.0?</summary>
-  <p>Apex 4.0 locks at Starting Balance + $100 (a small buffer); Topstep locks at Starting Balance exactly. Apex lets you choose intraday or EOD trail at purchase; Topstep is intraday in the Combine and EOD in the XFA — no choice. Apex consistency rule is 30%; Topstep is 50% (more lenient).</p>
+  <p><a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/apex-trader-funding/">Apex 4.0</a> locks at Starting Balance + $100 (a small buffer); Topstep locks at Starting Balance exactly. Apex lets you choose intraday or EOD trail at purchase; Topstep is intraday in the Combine and EOD in the XFA — no choice. Apex consistency rule is 30%; Topstep is 50% (more lenient).</p>
+</details>
+<details>
+  <summary>How does Topstep compare to TPT, Tradeify, Bulenox, or Earn2Trade?</summary>
+  <p>Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/take-profit-trader/">TPT</a>: same SB-exact lock family with no $100 buffer, but TPT's trail mechanic shifts by phase (Test EOD &rarr; PRO intraday &rarr; PRO+ EOD) while Topstep stays Combine intraday &rarr; XFA EOD with no second flip. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/tradeify/">Tradeify</a>: opposite lock family (Tradeify is SB+$100), and Tradeify drops the DLL on Growth and Select while Topstep enforces a hard DLL on every account at every phase. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/bulenox/">Bulenox</a>: opposite lock family + Bulenox forces a permanent Option 1 vs Option 2 trail-choice lock at signup that Topstep doesn't have &mdash; Topstep's intraday/EOD switch is automatic at the Combine&rarr;XFA transition. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/earn2trade/">Earn2Trade</a>: same SB-exact lock family, but Earn2Trade has the LiveSim two-state funded model and defers the $139 activation fee to first withdrawal &mdash; Topstep collects funded-account fees upfront and routes you to live data faster.</p>
 </details>
 
 <footer>
