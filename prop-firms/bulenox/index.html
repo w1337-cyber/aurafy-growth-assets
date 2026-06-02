@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Bulenox Rules Explained — Option 1 vs Option 2 (2026) | Aurafy</title>
+<meta name="description" content="Bulenox rules in plain English: the PERMANENT binary choice between Option 1 (intraday HWM, no daily loss limit) and Option 2 (EOD trail, with DLL) you make at signup and cannot change. 40% consistency on Master + Funded only, lock at SB+$100, no Tradovate support, first $10K of payouts at 100%. Plus free calculators preset for Bulenox." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/prop-firms/bulenox/" />
+<meta property="og:title" content="Bulenox Rules Explained — Option 1 vs Option 2 (2026)" />
+<meta property="og:description" content="The 2026 guide to Bulenox — the only major prop firm that forces a PERMANENT binary choice between intraday and EOD trail at signup. Plus the 40% consistency rule scope, SB+$100 lock, no-Tradovate gotcha, and the funded-transition rug-pull risk most traders don't see coming." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .alert{background:rgba(255,92,124,0.06);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#f8d6dd}
+  .opt-vis{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;display:grid;gap:12px}
+  @media(min-width:640px){.opt-vis{grid-template-columns:1fr 1fr}}
+  .opt-row{padding:14px;border-radius:8px;background:var(--bg);border:1px solid var(--border)}
+  .opt-row .label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;font-weight:600}
+  .opt-row ul{margin:0;padding-left:18px;font-size:0.88rem;color:#c4ccd6}
+  .opt-row ul li{margin-bottom:4px}
+  .opt-row .pro{color:#7ce8b4;font-weight:600}
+  .opt-row .con{color:#ff9eb0;font-weight:600}
+  .lock-warn{display:inline-block;background:rgba(255,92,124,0.12);color:#ff8aa0;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:3px 8px;border-radius:4px;margin-left:6px}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Bulenox Option 1 + Option 2</span>
+  <h1>Bulenox Rules Explained — Option 1 vs Option 2</h1>
+  <p class="lede">Bulenox is the only major prop firm that forces a <em>permanent</em> binary choice at signup. You pick Option 1 (intraday HWM trail, no daily loss limit, full contracts day one) or Option 2 (EOD trail, with daily loss limit, contract scaling) — and you cannot switch later. Every other firm in this cluster lets you change trail mechanics across phases or programs. Bulenox locks you into a single mechanic for the account's lifetime. Pick wrong and you fight your style for every trade. This is the 2026 guide to both options, the 40% consistency scope, the SB+$100 lock, the no-Tradovate platform gotcha, and the funded-transition risk most traders don't see coming.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with Bulenox.</strong> Prop firm rules change. Numbers below reflect Bulenox's public rules as of June 2026 — always confirm against the current Bulenox rulebook at bulenox.com before you trade. This is a planning resource, not advice.
+</div>
+
+<div class="toc">
+  <a href="#binary">The permanent Option choice</a>
+  <a href="#option1">Option 1 (intraday)</a>
+  <a href="#option2">Option 2 (EOD)</a>
+  <a href="#consistency">40% consistency (scope matters)</a>
+  <a href="#lock">Lock point (SB+$100)</a>
+  <a href="#platforms">Platforms (no Tradovate)</a>
+  <a href="#payouts">Payouts &amp; split</a>
+  <a href="#funded-risk">Funded-transition risk</a>
+  <a href="#restrictions">Other restrictions</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="binary">The thing competitors bury — Bulenox's Option choice is PERMANENT</h2>
+<p>Every other firm in this cluster lets you change trail mechanics by signing up for a different program. Apex offers a single rule set. Tradeify lets you compare Growth, Select, and Lightning. TPT changes trail type as you move from Test to PRO to PRO+. Bulenox is structurally different — at the moment you create your first Bulenox account, you commit to <strong>one of two trail-mechanic philosophies for that account's lifetime</strong>:</p>
+
+<div class="opt-vis">
+  <div class="opt-row">
+    <div class="label">Option 1 — No Scaling</div>
+    <ul>
+      <li><span class="pro">Intraday HWM trail</span> (real-time, not EOD)</li>
+      <li><span class="pro">No daily loss limit</span></li>
+      <li><span class="pro">Full contract size from day one</span></li>
+      <li><span class="con">Trail tightens against unrealized spikes</span></li>
+      <li><span class="con">No daily circuit-breaker if you tilt</span></li>
+    </ul>
+  </div>
+  <div class="opt-row">
+    <div class="label">Option 2 — EOD</div>
+    <ul>
+      <li><span class="pro">EOD-only trail (5pm CT close)</span></li>
+      <li><span class="pro">Sit through unrealized heat</span></li>
+      <li><span class="pro">Daily loss limit acts as circuit-breaker</span></li>
+      <li><span class="con">Contract scaling plan (start small)</span></li>
+      <li><span class="con">DLL can lock you out mid-session</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="alert"><strong>Permanent choice landmine:</strong> Bulenox does not let you migrate an Option 1 account to Option 2 or vice versa. If you start on Option 1 because the "no DLL" sounds attractive, then realise you actually need the DLL as a tilt circuit-breaker, your only path is to close the account and buy a new one — paying a fresh subscription and activation fee on Option 2. Read both columns before you click "buy."</div>
+
+<h2 id="option1">Option 1 — Intraday HWM trail, no daily loss limit, full contracts day one</h2>
+<p>Option 1 is the aggressive choice. The trailing drawdown tightens against your account in real time as your unrealized equity prints a new high — so a +$2,000 unrealized spike that you close back at +$300 still ratchets the trail by $2,000 against you. The compensating reward is no daily loss limit and the full account contract limit available from day one of Qualification.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing DD</th><th>Daily Loss Limit</th><th>Max Contracts</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,500</td><td class="num">—</td><td class="num">3</td></tr>
+    <tr><td class="acct">50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,500</td><td class="num">—</td><td class="num">7</td></tr>
+    <tr><td class="acct">100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,000</td><td class="num">—</td><td class="num">12</td></tr>
+    <tr><td class="acct">150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$4,500</td><td class="num">—</td><td class="num">15</td></tr>
+    <tr><td class="acct">250K</td><td class="num">$250,000</td><td class="num">$15,000</td><td class="num">$5,500</td><td class="num">—</td><td class="num">25</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Who Option 1 favours:</strong> intraday traders with tight stop discipline and high realized-to-unrealized ratios. If you scalp out of winners before they print big unrealized highs, the intraday trail doesn't tighten against you and you keep the no-DLL freedom. If you let runners ride and frequently see unrealized prints far above where you close, Option 1 will tax every retracement.</p>
+
+<h2 id="option2">Option 2 — EOD trail, with daily loss limit, contract scaling plan</h2>
+<p>Option 2 is the conservative choice. The trail only updates at the 5:00 PM CT session close based on your closing balance, so unrealized spikes are invisible — you can sit through deep heat without the trail moving against you. The trade-offs are a daily loss limit that will auto-flatten you and lock the session if hit, and a contract scaling plan that limits position size until you build profit on the account.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing DD</th><th>Daily Loss Limit</th><th>Max Contracts</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,500</td><td class="num">$500</td><td class="num">3</td></tr>
+    <tr><td class="acct">50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,500</td><td class="num">$1,100</td><td class="num">7</td></tr>
+    <tr><td class="acct">100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,000</td><td class="num">$2,200</td><td class="num">12</td></tr>
+    <tr><td class="acct">150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$4,500</td><td class="num">$3,300</td><td class="num">15</td></tr>
+    <tr><td class="acct">250K</td><td class="num">$250,000</td><td class="num">$15,000</td><td class="num">$5,500</td><td class="num">$4,500</td><td class="num">25</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Who Option 2 favours:</strong> swing-and-hold intraday traders, position scalers, and anyone whose biggest risk is tilt-spiral after a bad open. The EOD trail rewards you for sitting through unrealized drawdown patiently, and the DLL acts as a hard circuit-breaker so a single bad day cannot blow the account. The cost is the contract scaling plan — you do not get the full size from day one, you earn it.</p>
+
+<p class="key-fact"><strong>DLL behaviour:</strong> Hitting the daily loss limit on Option 2 auto-flattens your open positions and locks the account for the remainder of that session — but it does <em>not</em> breach the account. Next session you resume at the limit floor with the trail unchanged. This is meaningfully different from a hard trail-breach.</p>
+
+<h2 id="consistency">40% consistency — Master and Funded only, NOT Qualification</h2>
+<p>Bulenox's consistency rule scope is one of the easiest things to misread in a side-by-side comparison. The 40% threshold applies to <strong>Master and Funded phases only</strong> — Qualification (the evaluation phase) has no consistency requirement at all.</p>
+
+<p>This matters because most traders compare Bulenox 40% to MFFU's 40% and assume they behave identically. They don't:</p>
+
+<ul>
+  <li><strong>Bulenox:</strong> Qualification is consistency-free. The rule kicks in at Master.</li>
+  <li><strong>MFFU Core:</strong> 40% applies to funded payouts (post-eval), in the same scope direction as Bulenox.</li>
+  <li><strong>Apex 4.0:</strong> 30% applies to funded payout cycles.</li>
+  <li><strong>Topstep:</strong> 50% applies on a single-payout basis on funded.</li>
+</ul>
+
+<p>The formula is unchanged across firms — your single largest day's profit divided by your total profit balance at payout request must be at or below the threshold. At 40%, your best day cannot be more than 40% of your accumulated funded profit. Walking that ratio backwards: if you have one day at $1,000, you need at least <strong>$2,500 in total profit</strong> before you can withdraw against it without trimming the big day.</p>
+
+<h2 id="lock">When the trail locks — SB+$100 (same family as Apex / MFFU / Tradeify)</h2>
+<p>Bulenox's trailing drawdown stops moving once your balance reaches <strong>Starting Balance + Trailing Drawdown + $100</strong>. The $100 buffer above the starting balance is the same archetype as Apex 4.0, MyFundedFutures, and Tradeify — and structurally different from Topstep and TPT (which lock at the starting balance exactly with no buffer).</p>
+
+<p>Worked on Option 2, 50K account ($2,500 trailing drawdown):</p>
+<ul>
+  <li>Account opens with trail floor at <strong>$47,500</strong></li>
+  <li>EOD trail ratchets up as closing balance prints new HWMs above $50,000</li>
+  <li>Lock trigger fires once balance reaches <strong>$52,600</strong> (= 50,000 + 2,500 + 100)</li>
+  <li>Trail freezes at fixed floor <strong>$50,100</strong> after lock</li>
+  <li>You now have a $100 cushion above starting balance permanently</li>
+</ul>
+
+<p>On Option 1 the trail-update is intraday HWM not EOD, but the lock point is identical. A 100K Option 1 account locks at $103,100 (= 100,000 + 3,000 + 100) with a fixed floor of $100,100 after lock. Same math, different ratchet cadence.</p>
+
+<h2 id="platforms">The platform gotcha — no native Tradovate support</h2>
+<p>Bulenox is a NinjaTrader / Rithmic-first firm. If you default to Tradovate the way most Apex, Topstep, and TPT traders do, you'll need to switch execution stacks. Bulenox's supported platforms:</p>
+<ul>
+  <li><strong>NinjaTrader 8</strong> (free license activated on Master)</li>
+  <li><strong>Rithmic</strong> (raw data feed) and <strong>R|Trader</strong> (Rithmic's interface)</li>
+  <li><strong>ATAS</strong>, <strong>Quantower</strong>, <strong>Tiger Trade</strong>, <strong>Optimus Flow</strong>, <strong>MultiCharts</strong>, <strong>Sierra Chart</strong></li>
+  <li><strong>TradingView</strong> (via PickMyTrade or similar bridge — not native)</li>
+</ul>
+
+<div class="alert"><strong>Tradovate users:</strong> Tradovate is not on Bulenox's official platform list as of June 2026. This is the opposite of Tradeify, which is Tradovate / Rithmic / WealthCharts only with no NinjaTrader. If you're shopping between Tradeify and Bulenox, the platform axis is binary: Tradeify = no NT8, Bulenox = no Tradovate. Pick the firm that matches your execution stack, not the one whose rules read better on paper.</div>
+
+<h2 id="payouts">Payouts &amp; profit split</h2>
+<ul>
+  <li><strong>Profit split:</strong> first $10,000 of withdrawals paid <strong>100% to trader</strong>, then 90 / 10 split (trader / firm) on Master and Funded.<span class="lock-warn">First $10K at 100% is unique</span></li>
+  <li><strong>Payout cadence:</strong> weekly, every Wednesday. 8–12 hour processing typical.</li>
+  <li><strong>Payout methods:</strong> ACH, Wire, PayPal, Wise.</li>
+  <li><strong>Minimum withdrawal:</strong> $1,000 per third-party tracker — verify against current Bulenox payout terms.</li>
+  <li><strong>Activation fees (Qualification → Master, one-time):</strong> $98 / $130 / $220 / $490 for 10K / 25K / 50K / 250K. 100K and 150K activation fees not stated in the current source — confirm on bulenox.com pricing before activating.</li>
+  <li><strong>Monthly subscription:</strong> $145 / $175 / $215 / $325 / $535 for 25K / 50K / 100K / 150K / 250K during Qualification.</li>
+  <li><strong>Reset fees:</strong> $78 mid-cycle reset; free reset at renewal.</li>
+  <li><strong>Funded balance caps:</strong> $2,500 / $5,000 / $10,000 / $15,000 / $25,000 for 25K / 50K / 100K / 150K / 250K (effective 2025-04-28). Profit above the cap is held until the next payout cycle.</li>
+  <li><strong>Account limits:</strong> 3 active accounts at signup, scaling up to 11 Master accounts with $2.75M total funded size.</li>
+</ul>
+
+<p class="key-fact"><strong>First $10K at 100% is a real edge.</strong> Most firms in this cluster start at 80–90 / 10–20 from dollar one. Bulenox effectively front-loads payout efficiency: a trader who reaches $10K in cumulative withdrawals keeps the full $10K, then transitions to 90 / 10. On smaller accounts hitting that $10K threshold can take many cycles, but on a 100K+ account with steady payouts the 100% phase is a meaningful kicker.</p>
+
+<h2 id="funded-risk">The funded-transition rug-pull — declining costs you everything</h2>
+<div class="alert"><strong>Documented 2025 risk pattern:</strong> If you complete three successful Master payouts and then decline the transition to Funded, Bulenox closes your Master account with no further payout — meaning you forfeit whatever balance is sitting on the Master beyond the payouts you've already withdrawn. To keep earning on the same account, you have to accept the Funded transition when it's offered. Several traders have documented losing significant accrued Master balances by declining the transition expecting to continue at Master indefinitely.</div>
+
+<p>If you're planning to compound on Master indefinitely without moving to Funded, Bulenox is the wrong firm. The structure assumes you progress to Funded after the Master payouts. Treat the Funded transition as mandatory once it's offered, or take your accrued payouts and close the account before the transition is forced.</p>
+
+<h2 id="restrictions">Other restrictions to know</h2>
+<ul>
+  <li><strong>News trading: PERMITTED.</strong> Bulenox does not explicitly restrict FOMC / CPI / NFP in the rulebook. Different from TPT, which bans news-window trading on PRO and PRO+.</li>
+  <li><strong>All flat by 15:59 CT.</strong> Positions must be closed before the 3:59 PM CT cutoff. No overnight holds.</li>
+  <li><strong>Cross-account hedging prohibited.</strong> Long one account and short the same instrument on another is banned. Within-account hedging is not explicitly addressed — verify with support before you rely on it.</li>
+  <li><strong>Automated HFT prohibited.</strong> Manual trading and rule-based execution are allowed; full-automation high-frequency strategies are not.</li>
+  <li><strong>Copy-trading across your own accounts prohibited.</strong> Each of your Bulenox accounts must be traded independently — no mirroring of fills across accounts.</li>
+  <li><strong>Trading hours:</strong> 5 PM CT (prior day) to 4 PM CT (current day), CME Globex aligned.</li>
+</ul>
+
+<h2 id="tools">Free calculators we built for this</h2>
+<p>No login, no email — just punch in your numbers:</p>
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Model both Option 1 (intraday HWM) and Option 2 (EOD) trail mechanics for your Bulenox account. Shows the SB+$100 lock trigger and the resulting fixed floor.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/trailing-drawdown-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Check your 40% Bulenox Master/Funded ratio. Tells you the max single-day P&amp;L allowed and the extra balanced profit needed to safely request a payout.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/consistency-rule-calculator/">Open calculator &rarr;</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Tired of running rule math for every Bulenox trade?</h3>
+  <p>Aurafy is a futures trading journal built for prop-firm traders. It auto-tracks your trailing drawdown, lock distance, and consistency ratio in real time on Bulenox, Apex, Topstep, MFFU, TPT, and Tradeify — plus screen-records your sessions so you can replay your mistakes.</p>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">Free tier: last 30 days of trades, 1 account, 3 playbooks, no credit card. First 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&amp;utm_medium=bulenox-landing&amp;utm_campaign=prop-firm-pages">See Aurafy</a>
+  <a class="btn ghost" href="https://app.aurafy.dev?utm_source=tools&amp;utm_medium=bulenox-landing&amp;utm_campaign=prop-firm-pages">Start free</a>
+</div>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Should I pick Option 1 or Option 2?</summary>
+  <p>Honest answer: it depends on whether your biggest realised risk is "trail tightens against unrealized spikes" or "tilt blows the daily." If you scalp out cleanly and rarely sit on large unrealized winners that you give back, Option 1's intraday HWM trail rarely bites — and the no-DLL freedom means a slow grind doesn't get killed by a single bad open. If your edge involves sitting through deep unrealized drawdown on swing-style intraday trades, Option 2's EOD trail rewards that patience — but the DLL will lock you out on a bad day, which is a feature if you tilt, a bug if you trade through volatility. There is no universal answer. The wrong answer is "I'll pick the one that sounds better marketing-wise" — read both columns, then pick.</p>
+</details>
+<details>
+  <summary>Can I switch between Option 1 and Option 2 later?</summary>
+  <p>No. The Option choice is permanent at signup for that account. Your only path to switch is to close the account and buy a new one — paying a fresh activation fee and subscription on the other Option. This is the defining structural quirk that separates Bulenox from every other firm in this cluster.</p>
+</details>
+<details>
+  <summary>Does Bulenox support Tradovate?</summary>
+  <p>No. Tradovate is not on Bulenox's official platform list as of June 2026. Bulenox is a NinjaTrader / Rithmic-first firm. If Tradovate is your default execution platform — the way it is for most Apex, Topstep, and TPT traders — you'll need to either switch to NinjaTrader 8 + Rithmic, R|Trader, or one of the supported alternatives (Sierra Chart, Quantower, ATAS, MultiCharts), or pick a different firm. This is the opposite of Tradeify, which supports Tradovate but not NinjaTrader.</p>
+</details>
+<details>
+  <summary>Is the 40% consistency rule applied during Qualification?</summary>
+  <p>No. The 40% consistency rule applies on Master and Funded phases only. Qualification (the evaluation phase) is consistency-free — you can hit your $1,500 / $3,000 / $6,000 profit target in a single day if your account survives. This is one of the more permissive eval rule sets in the cluster, but the trade-off is that consistency kicks in immediately at Master, not on the first payout.</p>
+</details>
+<details>
+  <summary>How does Bulenox's drawdown lock compare to Apex / Topstep / TPT?</summary>
+  <p>Bulenox locks at Starting Balance + Trailing Drawdown + $100, which is the same archetype as Apex 4.0, MyFundedFutures, and Tradeify. The $100 buffer means after lock you keep a small cushion above your starting balance permanently. This is structurally different from Topstep and TPT, which lock at the starting balance exactly with no buffer. The lock-cushion family matters for sizing — Apex / MFFU / Tradeify / Bulenox traders can stop-out a small loss on a locked account and stay above starting balance, while Topstep / TPT traders cannot.</p>
+</details>
+<details>
+  <summary>What's the funded-transition risk I keep hearing about?</summary>
+  <p>If you complete three Master payouts and decline the transition to Funded, Bulenox closes your Master account with no further payout — forfeiting whatever balance is on the account beyond what you've already withdrawn. The structure assumes you progress to Funded after Master payouts; the transition is effectively mandatory if you want to keep earning on that account. Multiple traders have documented losing accrued Master balances by declining the transition. If you'd planned to compound on Master indefinitely, Bulenox is the wrong fit.</p>
+</details>
+<details>
+  <summary>Why is the first $10,000 of payouts paid at 100%?</summary>
+  <p>Bulenox structures the profit split as 100% to trader on the first $10,000 of withdrawals, then 90 / 10 (trader / firm) after. Most firms in this cluster start at 80–90 / 10–20 from dollar one, so Bulenox effectively front-loads payout efficiency. On smaller account sizes hitting the $10K cumulative threshold can take many cycles, but on larger accounts (100K +) with steady payouts it's a meaningful kicker over a 6-month window. After the $10K threshold the split matches the firms that started at 90 / 10.</p>
+</details>
+<details>
+  <summary>How does Bulenox compare to Apex, Topstep, MFFU, TPT, and Tradeify?</summary>
+  <p>Lock mechanic: same family as Apex 4.0 / MFFU / Tradeify (SB + $100 buffer). Trail type: the only firm in the cluster where you pick once at signup and can never switch — Option 1 (intraday) vs Option 2 (EOD). Consistency rule: 40% applied on Master and Funded only (matches MFFU Core scope direction; threshold same). Platforms: NinjaTrader / Rithmic-first with no Tradovate — opposite of Tradeify's Tradovate-first / no-NT8 stack. Profit split: first $10K at 100%, then 90 / 10 — unique vs comparable firms starting at 80–90 from dollar one. News trading: permitted (same as Tradeify / Apex / MFFU; more permissive than TPT). Subscription model during Qualification rather than one-time challenge fee. Funded-transition forced-progression risk does not have a direct analog in any other firm in this cluster.</p>
+</details>
+
+<footer>
+  <p>Bulenox rules reference · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=bulenox-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
+  This page is independently produced. Aurafy is not affiliated with or endorsed by Bulenox.</p>
+</footer>
+
+</div>
+</body>
+</html>
