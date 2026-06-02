@@ -141,6 +141,8 @@
 
 <div class="key-fact"><strong>The decisive question:</strong> are you happy with EOD trail and consistency on a smaller account (Core), do you want intraday trail freedom (Rapid), or do you want to skip evaluation entirely with a payout cap (Pro)? The plan is the choice — sizes inside the plan are secondary.</div>
 
+<p class="key-fact"><strong>Deep dive →</strong> <a href="/blog/apex-4-0-eod-vs-intraday-2026/">Apex 4.0: EOD vs Intraday trailing drawdown explained (2026)</a> — the Core-vs-Rapid choice you're staring at on MFFU is the same EOD-vs-intraday math Apex 4.0 forces at purchase. The explainer breaks down exactly how each trail type behaves on a runner that gives back, why intraday punishes unrealized highs even on a flat day, and which trading styles each shape rewards. Worth reading before you pick a plan that locks the trail-type for the lifetime of the account.</p>
+
 <h2 id="core">Core — the strict evaluation track</h2>
 <p>Core is MFFU's headline product: a single 50K plan with end-of-day trail and a 40% consistency rule that applies to <em>both</em> evaluation and funded payouts. This is strict by design — Core is meant for traders who want a serious risk-managed track.</p>
 
@@ -186,7 +188,7 @@
 
 <div class="key-fact">Practical takeaway: on Core or Pro you can let winners breathe — the trail won't punish intraday pullbacks. On Rapid, take profits cleanly or use trailing stops, because every unrealized tick is a tick of trail movement.</div>
 
-<p class="key-fact"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/mffu-vs-tradeify-2026/">MFFU vs Tradeify 2026: bundle vs isolate</a> — both firms share the SB+$100 lock floor, but MFFU couples trail type AND consistency together per plan (pick Core = EOD + 40%, pick Rapid = intraday + no rule) while Tradeify keeps EOD trail uniform across every program and forks only on the consistency archetype (Growth = eval-free / funded 35%, Select = eval 40% / funded-free, Lightning = progressive 20→25→30%). Worked examples of which signup-fork shape rewards your trading style — and the platform-support trap (Tradeify has no NinjaTrader / TradingView).</p>
+<p class="key-fact"><strong>Deep dive →</strong> <a href="/blog/mffu-vs-tradeify-2026/">MFFU vs Tradeify 2026: bundle vs isolate</a> — both firms share the SB+$100 lock floor, but MFFU couples trail type AND consistency together per plan (pick Core = EOD + 40%, pick Rapid = intraday + no rule) while Tradeify keeps EOD trail uniform across every program and forks only on the consistency archetype (Growth = eval-free / funded 35%, Select = eval 40% / funded-free, Lightning = progressive 20→25→30%). Worked examples of which signup-fork shape rewards your trading style — and the platform-support trap (Tradeify has no NinjaTrader / TradingView).</p>
 
 <h2 id="lock">When the trail locks (at SB + $100)</h2>
 <p>Once your balance reaches <strong>Starting Balance + $100</strong>, the trailing drawdown stops following your HWM and becomes a fixed floor at <em>Starting Balance + $100 &minus; Trailing Drawdown</em>. This is the <em>same lock pattern as Apex 4.0</em> — and noticeably more generous than Topstep, which locks at exactly the Starting Balance with no buffer.</p>
