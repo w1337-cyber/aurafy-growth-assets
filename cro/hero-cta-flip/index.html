@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CRO #002 Preview — Hero CTA Flip (Aurafy growth proposal)</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#1a1f2e; --muted:#5a6478; --line:#e5e9f0;
+          --brand:#2d7df0; --brand-dark:#1a5dc7; --brand-tint:#eaf2ff;
+          --urgent:#c0392b; --good:#1e8a52; --warn:#c08c00;
+          --hero-bg:#0e1626; --hero-ink:#f4f6fb; --hero-muted:#8a98b3; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:28px}
+  header .kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+                 color:var(--muted);margin:0 0 6px}
+  header h1{margin:0 0 6px;font-size:1.65rem;line-height:1.25}
+  header p{margin:0;color:var(--muted);font-size:0.95rem}
+  .note{background:#fff8e1;border:1px solid #f0d97c;border-radius:8px;padding:12px 14px;
+        font-size:0.9rem;color:#6b5a1a;margin:0 0 28px}
+  h2{font-size:1.15rem;margin:36px 0 12px;border-left:3px solid var(--brand);padding-left:10px}
+
+  .toggle{display:flex;gap:0;background:#fff;border:1px solid var(--line);border-radius:999px;
+          padding:4px;width:fit-content;margin:0 0 22px}
+  .toggle button{background:transparent;border:0;padding:8px 18px;font-size:0.9rem;
+                 border-radius:999px;cursor:pointer;color:var(--muted);font-family:inherit;
+                 font-weight:500;transition:background .15s,color .15s}
+  .toggle button.active{background:var(--brand);color:#fff}
+
+  /* ====== Mocked Aurafy hero (BEFORE + AFTER share frame) ====== */
+  .hero{background:linear-gradient(135deg,#0e1626 0%,#1a2a45 100%);color:var(--hero-ink);
+        border-radius:16px;padding:48px 36px;position:relative;overflow:hidden;
+        border:1px solid #1f2e4a}
+  .hero::before{content:"";position:absolute;top:-40%;right:-10%;width:55%;height:180%;
+                background:radial-gradient(circle at center,rgba(45,125,240,0.18) 0%,transparent 60%);
+                pointer-events:none}
+  .hero__nav{display:flex;align-items:center;gap:24px;margin-bottom:54px;font-size:0.92rem;
+             position:relative;z-index:1}
+  .hero__brand{font-weight:700;font-size:1.05rem}
+  .hero__links{display:flex;gap:18px;color:var(--hero-muted)}
+  .hero__links a{color:var(--hero-muted);text-decoration:none}
+  .hero__nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .hero__nav-right .login{color:var(--hero-muted);text-decoration:none;font-size:0.9rem}
+
+  .hero__kicker{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;
+                color:#7aa6ed;margin:0 0 14px;position:relative;z-index:1}
+  .hero__title{font-size:2.3rem;line-height:1.15;margin:0 0 14px;font-weight:700;
+               position:relative;z-index:1;max-width:680px}
+  .hero__sub{font-size:1.05rem;color:#b8c5dd;margin:0 0 26px;max-width:560px;
+             position:relative;z-index:1;line-height:1.5}
+
+  /* Wrapper for the CTAs swapped by the toggle */
+  .hero__cta{position:relative;z-index:1;min-height:130px}
+
+  /* ====== BEFORE state ====== */
+  .before-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .before-cta__primary{background:#2d7df0;color:#fff;padding:14px 26px;border-radius:8px;
+                       font-weight:600;font-size:1rem;text-decoration:none;display:inline-block}
+  .before-cta__secondary{color:#b8c5dd;font-weight:500;font-size:0.95rem;padding:8px 4px;
+                         text-decoration:none}
+  .before-cta__secondary:hover{color:#fff;text-decoration:underline}
+  .before-cta__fine{font-size:0.82rem;color:#8a98b3;margin:10px 0 0;width:100%}
+
+  /* ====== AFTER state ====== */
+  .after-cta{display:flex;flex-direction:column;align-items:flex-start;gap:6px;max-width:520px}
+  .after-cta__row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .after-cta__primary{background:#2d7df0;color:#fff;padding:16px 28px;border-radius:8px;
+                      font-weight:600;font-size:1.05rem;text-decoration:none;display:inline-block;
+                      transition:background .15s,transform .1s;box-shadow:0 4px 20px rgba(45,125,240,0.28)}
+  .after-cta__primary:hover{background:#1a5dc7}
+  .after-cta__primary:active{transform:translateY(1px)}
+  .after-cta__secondary{color:#b8c5dd;font-weight:500;font-size:0.95rem;padding:8px 4px;
+                        text-decoration:none}
+  .after-cta__secondary:hover{color:#fff;text-decoration:underline}
+  .after-cta__fine{font-size:0.85rem;color:#8a98b3;margin:8px 0 0;line-height:1.45}
+  @media(max-width:520px){.after-cta__primary{display:block;text-align:center;width:100%}}
+
+  /* Side-by-side compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:16px 0 30px}
+  @media(max-width:760px){.compare{grid-template-columns:1fr}}
+  .compare__card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px}
+  .compare__card h3{margin:0 0 10px;font-size:0.92rem;color:var(--muted);
+                    text-transform:uppercase;letter-spacing:0.06em}
+  .compare__card.before-card{border-color:#e5e9f0}
+  .compare__card.after-card{border-color:#c5d8f5;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%)}
+  .compare__card .lead{font-size:1rem;color:var(--ink);line-height:1.5;margin:0 0 10px}
+  .compare__card .why{font-size:0.85rem;color:var(--muted);margin:0;line-height:1.5}
+
+  ul.checklist{padding-left:18px}
+  ul.checklist li{margin:8px 0}
+
+  table.metrics{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+                border-radius:10px;overflow:hidden;font-size:0.92rem;margin:8px 0 24px}
+  table.metrics th,table.metrics td{padding:11px 14px;border-bottom:1px solid var(--line);
+                                     text-align:left;vertical-align:top}
+  table.metrics tr:last-child td{border-bottom:0}
+  table.metrics th{background:#f4f7fc;font-weight:600;color:var(--muted);font-size:0.82rem;
+                   text-transform:uppercase;letter-spacing:0.05em}
+
+  .footnote{font-size:0.85rem;color:var(--muted);border-top:1px solid var(--line);
+            padding-top:18px;margin-top:36px;line-height:1.5}
+  .footnote code{background:#f0f3f8;padding:1px 6px;border-radius:4px;font-size:0.85em}
+  .footnote a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="kicker">Aurafy growth · CRO proposal preview</p>
+    <h1>CRO #002 — Flip hero CTA to "Start free — no card"</h1>
+    <p>Side-by-side preview of the proposed hero. <strong>Not a live page</strong> — operator review only.</p>
+  </header>
+
+  <p class="note">
+    <strong>Why this preview exists:</strong> the markdown spec is in
+    <code>outbox/cro-002-hero-cta-flip.md</code>. This page renders the
+    BEFORE / AFTER hero so you can flip between them with one button.
+    Approximated styling — actual aurafy.dev hero typography/colors should
+    be used on deploy; this preview captures the structural change, not pixel-perfect branding.
+  </p>
+
+  <h2>The hero — toggle between BEFORE and AFTER</h2>
+
+  <div class="toggle" role="tablist">
+    <button id="show-before" class="active">BEFORE (current)</button>
+    <button id="show-after">AFTER (proposed)</button>
+  </div>
+
+  <div class="hero">
+    <div class="hero__nav">
+      <span class="hero__brand">Aurafy</span>
+      <div class="hero__links">
+        <a href="#">Product</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">Blog</a>
+      </div>
+      <div class="hero__nav-right">
+        <a href="#" class="login">Log in</a>
+      </div>
+    </div>
+
+    <p class="hero__kicker">Futures trading journal · screen recording · bar-replay</p>
+    <h2 class="hero__title" style="border:0;padding:0;margin:0 0 14px">
+      Journal every futures trade. See why you lost.
+    </h2>
+    <p class="hero__sub">
+      One tool: journal, screen recording, and (soon) bar-replay backtester.
+      Built for prop-firm traders on Topstep, Apex, and MyFundedFutures.
+    </p>
+
+    <div class="hero__cta">
+      <!-- BEFORE -->
+      <div class="before-cta" id="before-block">
+        <a href="#" class="before-cta__primary">See pricing</a>
+        <a href="#" class="before-cta__secondary">Learn more →</a>
+        <p class="before-cta__fine">Pro $49/mo · Founder pricing $19/mo · Free tier available</p>
+      </div>
+      <!-- AFTER -->
+      <div class="after-cta" id="after-block" hidden>
+        <div class="after-cta__row">
+          <a href="https://app.aurafy.dev/signup?utm_source=site&amp;utm_medium=hero&amp;utm_campaign=start-free"
+             class="after-cta__primary"
+             data-track="hero-start-free">
+            Start free — no card required
+          </a>
+          <a href="/pricing?utm_source=site&amp;utm_medium=hero&amp;utm_campaign=see-pricing"
+             class="after-cta__secondary"
+             data-track="hero-see-pricing">
+            See pricing →
+          </a>
+        </div>
+        <p class="after-cta__fine">
+          Last 30 days of trades, 1 account, 3 playbooks. Upgrade only when you want more.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Why the flip (in one paragraph)</h2>
+  <div class="compare">
+    <div class="compare__card before-card">
+      <h3>Before — "See pricing"</h3>
+      <p class="lead">Cold visitor lands. Primary CTA asks them to evaluate price.</p>
+      <p class="why">
+        They've not used the product yet. Pricing-grid evaluation triggers comparison-shopping
+        ("is this worth $49?") before they've felt whether Aurafy fits. The strongest fact —
+        <em>no card required</em> — is invisible. Best case they bounce to /pricing then leave;
+        worst case they leave the hero entirely.
+      </p>
+    </div>
+    <div class="compare__card after-card">
+      <h3>After — "Start free — no card"</h3>
+      <p class="lead">Cold visitor lands. Primary CTA invites them to try, secondary keeps /pricing one click away.</p>
+      <p class="why">
+        Names the friction they'd ask about anyway ("will this charge me?"). Free tier is real
+        and capped honestly in fine print so there's no surprise later. Price-shoppers still
+        reach /pricing in one click. <strong>Pairs with CRO #001:</strong> warm/high-intent
+        visitors get the founder-seat counter as a direct convert path.
+      </p>
+    </div>
+  </div>
+
+  <h2>What's needed to ship this</h2>
+  <ul class="checklist">
+    <li><strong>Phase 1 (ships today, ~10 min):</strong> swap hero primary button copy +
+      URL (<code>/pricing</code> → <code>app.aurafy.dev/signup</code>); add the fine-print line.</li>
+    <li><strong>Phase 2 (same deploy):</strong> add UTM parameters
+      (<code>utm_source=site&amp;utm_medium=hero&amp;utm_campaign=start-free</code>) +
+      <code>data-track</code> attributes so attribution is in place from day one.</li>
+    <li><strong>Phase 3 (after 2 weeks of data):</strong> review free-signup rate AND free→paid rate.
+      If free signups went up but conversion to paid dropped meaningfully, iterate copy
+      ("Start free — full Pro features for 30 days, no card") or revert.</li>
+  </ul>
+
+  <h2>What we're measuring</h2>
+  <table class="metrics">
+    <tr><th>Metric</th><th>Baseline (today)</th><th>Target shift</th></tr>
+    <tr>
+      <td>Hero CTA click rate</td>
+      <td>Unknown — capture before ship</td>
+      <td>↑ (lower-friction CTAs typically lift CTR by 20–60%)</td>
+    </tr>
+    <tr>
+      <td>Hero → free signup</td>
+      <td>Unknown — capture before ship</td>
+      <td>↑ (this is the real number; CTR alone isn't enough)</td>
+    </tr>
+    <tr>
+      <td>Free signup → paid upgrade</td>
+      <td>Unknown — capture before ship</td>
+      <td>= or ↑ (must not fall; if it does, change is volume-only)</td>
+    </tr>
+    <tr>
+      <td>/pricing visits</td>
+      <td>Unknown — capture before ship</td>
+      <td>Slight ↓ acceptable (secondary CTA still routes there)</td>
+    </tr>
+  </table>
+
+  <p class="footnote">
+    Full spec, copy options, and rationale:
+    <code>outbox/cro-002-hero-cta-flip.md</code>.
+    This preview is unindexed (noindex,nofollow) and lives at
+    <code>/cro/hero-cta-flip/</code> on the growth-assets mirror — it is not part of
+    Aurafy's customer-facing site. See also CRO #001
+    (<a href="../founder-seat/">founder seat counter</a>) which compounds with this change.
+  </p>
+
+</div>
+
+<script>
+  const before = document.getElementById('before-block');
+  const after  = document.getElementById('after-block');
+  const btnB   = document.getElementById('show-before');
+  const btnA   = document.getElementById('show-after');
+
+  function show(state) {
+    if (state === 'before') {
+      before.hidden = false;
+      after.hidden  = true;
+      btnB.classList.add('active');
+      btnA.classList.remove('active');
+    } else {
+      before.hidden = true;
+      after.hidden  = false;
+      btnA.classList.add('active');
+      btnB.classList.remove('active');
+    }
+  }
+  btnB.addEventListener('click', () => show('before'));
+  btnA.addEventListener('click', () => show('after'));
+</script>
+</body>
+</html>
