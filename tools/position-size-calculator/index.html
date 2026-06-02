@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Position Size Calculator for Prop Firm Futures Traders (Topstep, Apex 4.0, MFFU) | Aurafy</title>
+<meta name="description" content="Free position size calculator for prop-firm futures traders. Pick Topstep / Apex 4.0 / MFFU + your stop in ticks + risk per trade — see max contracts, $ risk, % of account, distance to drawdown floor + DLL, and how many of these losses in a row blow the account. No login." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/tools/position-size-calculator/" />
+<meta property="og:title" content="Position Size Calculator — Prop-Firm Aware (Topstep, Apex 4.0, MFFU)" />
+<meta property="og:description" content="The only futures position-size calculator that checks your trail-DD buffer + daily loss limit per trade. Free. No login." />
+<meta property="og:type" content="website" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-size:1.55rem;margin:0 0 6px;letter-spacing:-0.01em}
+  header p.lede{color:var(--muted);margin:0 0 22px;font-size:0.98rem}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+  .panel h2{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:0 0 14px;font-weight:600}
+  .grid{display:grid;gap:14px}
+  @media(min-width:640px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:1fr 1fr 1fr}}
+  label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+  select,input[type=number],input[type=text]{
+    width:100%;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);border-radius:8px;
+    padding:11px 12px;font-size:1rem;font-family:var(--mono);
+    -webkit-appearance:none;appearance:none;
+  }
+  select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px}
+  .seg button{flex:1 1 0;background:transparent;color:var(--muted);border:0;padding:10px 8px;border-radius:6px;font-size:0.94rem;cursor:pointer;font-weight:500}
+  .seg button.on{background:var(--accent);color:#fff}
+  .info-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border);font-size:0.93rem}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{font-family:var(--mono);font-weight:600}
+  .result-card{
+    background:linear-gradient(135deg,#171c25 0%,#13171c 100%);
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .big{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em}
+  .big.pos{color:var(--green)}
+  .big.neg{color:var(--red)}
+  .big.warn{color:var(--amber)}
+  .sub{color:var(--muted);font-size:0.86rem;margin-top:2px}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.76rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
+  .badge.pass{background:rgba(61,220,151,0.12);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+  .badge.fail{background:rgba(255,92,124,0.12);color:var(--red);border:1px solid rgba(255,92,124,0.3)}
+  .badge.warn{background:rgba(255,180,84,0.12);color:var(--amber);border:1px solid rgba(255,180,84,0.3)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:12px 14px;color:#f0d4a8;font-size:0.86rem;margin-bottom:18px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:18px;margin-top:22px}
+  .cta h3{margin:0 0 6px;font-size:1.05rem}
+  .cta p{margin:0 0 10px;color:var(--muted);font-size:0.93rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-weight:600;font-size:0.92rem}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  details{margin-top:18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.95rem}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  details ul{font-size:0.91rem;color:#c4ccd6;margin:8px 0;padding-left:20px}
+  details li{margin:4px 0}
+  footer{margin-top:34px;text-align:center;color:var(--muted);font-size:0.85rem}
+  .spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;font-size:0.9rem;margin-top:4px}
+  @media(min-width:640px){.spec-grid{grid-template-columns:repeat(4,1fr)}}
+  .spec-grid .k{color:var(--muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em}
+  .spec-grid .v{font-family:var(--mono);font-weight:600;color:var(--text)}
+  optgroup{font-style:normal;font-weight:600;color:var(--muted)}
+  .bar-wrap{margin-top:14px}
+  .bar{height:10px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;overflow:hidden;position:relative}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--amber),var(--red));transition:width .15s ease-out}
+  .bar-lbl{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-top:6px;font-family:var(--mono)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:540px){.pair{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Position Size Calculator <span style="color:var(--muted);font-weight:400;font-size:1rem">— for prop firm futures traders</span></h1>
+  <p class="lede">Pick your firm + account + the trade you want to take. See max contracts, your distance to the trail-DD floor + daily loss limit, and how many of these losses back-to-back blow it.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with your firm — rules change.</strong> Trailing drawdown, daily loss limits and lock-points come from public 2026 rulebooks and shift periodically. This is a planning tool, not advice. Commissions/fees ignored in DD math — be conservative.
+</div>
+
+<!-- 1. Firm + account preset -->
+<div class="panel">
+  <h2>1. Firm & account</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="firm">Prop firm</label>
+      <select id="firm">
+        <option value="topstep">Topstep (Combine + XFA)</option>
+        <option value="apex" selected>Apex 4.0</option>
+        <option value="mffu_core">MFFU Core (50K, EOD, 40% consistency)</option>
+        <option value="mffu_rapid">MFFU Rapid (intraday, no consistency)</option>
+        <option value="custom">Custom (no firm rules)</option>
+      </select>
+    </div>
+    <div>
+      <label for="acct">Account size</label>
+      <select id="acct"></select>
+    </div>
+  </div>
+  <div class="info-row" style="margin-top:14px"><span class="k">Starting balance</span><span class="v" id="sbView">—</span></div>
+  <div class="info-row"><span class="k">Trailing drawdown</span><span class="v" id="ddView">—</span></div>
+  <div class="info-row"><span class="k">Daily loss limit</span><span class="v" id="dllView">—</span></div>
+  <div class="info-row"><span class="k">Trail locks at</span><span class="v" id="lockView">—</span></div>
+</div>
+
+<!-- 2. Current account state -->
+<div class="panel">
+  <h2>2. Where your account is right now</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="balance">Current balance ($)</label>
+      <input type="number" id="balance" step="100" />
+      <div class="sub" style="margin-top:4px">Net P&amp;L since start, added to SB. Defaults to SB.</div>
+    </div>
+    <div>
+      <label for="hwm">Trail HWM ($)</label>
+      <input type="number" id="hwm" step="100" />
+      <div class="sub" style="margin-top:4px">Highest equity (intraday) or highest EOD balance the trail has tracked. Defaults to current balance — adjust if you've already had a profit spike.</div>
+    </div>
+  </div>
+  <div class="info-row" style="margin-top:14px"><span class="k">Trail floor right now</span><span class="v" id="floorView">—</span></div>
+  <div class="info-row"><span class="k">Buffer to trail floor</span><span class="v" id="bufView">—</span></div>
+  <div class="info-row"><span class="k">Buffer to daily loss limit</span><span class="v" id="dllBufView">—</span></div>
+</div>
+
+<!-- 3. Trade plan -->
+<div class="panel">
+  <h2>3. The trade you want to take</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="sym">Instrument</label>
+      <select id="sym">
+        <optgroup label="Equity Index">
+          <option value="ES" selected>ES — E-mini S&amp;P 500</option>
+          <option value="NQ">NQ — E-mini Nasdaq 100</option>
+          <option value="RTY">RTY — E-mini Russell 2000</option>
+          <option value="YM">YM — E-mini Dow</option>
+          <option value="MES">MES — Micro S&amp;P 500</option>
+          <option value="MNQ">MNQ — Micro Nasdaq 100</option>
+          <option value="M2K">M2K — Micro Russell 2000</option>
+          <option value="MYM">MYM — Micro Dow</option>
+        </optgroup>
+        <optgroup label="Energy">
+          <option value="CL">CL — WTI Crude Oil</option>
+          <option value="MCL">MCL — Micro WTI Crude</option>
+          <option value="NG">NG — Natural Gas</option>
+        </optgroup>
+        <optgroup label="Metals">
+          <option value="GC">GC — Gold</option>
+          <option value="MGC">MGC — Micro Gold</option>
+          <option value="SI">SI — Silver</option>
+        </optgroup>
+        <optgroup label="Rates">
+          <option value="ZB">ZB — 30-Yr T-Bond</option>
+          <option value="ZN">ZN — 10-Yr T-Note</option>
+          <option value="ZF">ZF — 5-Yr T-Note</option>
+        </optgroup>
+        <optgroup label="FX">
+          <option value="6E">6E — Euro FX</option>
+          <option value="6B">6B — British Pound</option>
+          <option value="6J">6J — Japanese Yen</option>
+        </optgroup>
+        <optgroup label="Crypto">
+          <option value="MBT">MBT — Micro Bitcoin</option>
+          <option value="MET">MET — Micro Ether</option>
+        </optgroup>
+        <optgroup label="Custom">
+          <option value="_custom">Custom tick value…</option>
+        </optgroup>
+      </select>
+      <div class="sub" style="margin-top:4px" id="symSub">$12.50 / tick · 0.25 / tick</div>
+    </div>
+    <div>
+      <label>Risk per trade</label>
+      <div class="seg" id="riskMode" role="tablist">
+        <button data-mode="dollar" class="on">Dollars</button>
+        <button data-mode="percent">% of balance</button>
+      </div>
+      <div style="margin-top:10px">
+        <input type="number" id="riskVal" step="any" value="200" />
+        <div class="sub" style="margin-top:4px" id="riskSub">$200 risk per trade</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid cols-2" style="margin-top:14px">
+    <div>
+      <label for="stop">Stop loss (ticks)</label>
+      <input type="number" id="stop" step="1" value="8" />
+      <div class="sub" style="margin-top:4px" id="stopSub">8 ticks = $100/contract on ES</div>
+    </div>
+    <div id="customTvWrap" style="display:none">
+      <label for="customTv">Custom tick value ($)</label>
+      <input type="number" id="customTv" step="any" value="10" />
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="result-card">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+    <div>
+      <div class="sub" style="margin-bottom:2px">Max contracts you can take</div>
+      <div class="big" id="contractsOut">—</div>
+    </div>
+    <div id="verdict"><span class="badge pass" id="verdictBadge">SAFE</span></div>
+  </div>
+  <div class="bar-wrap">
+    <div class="bar"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+    <div class="bar-lbl"><span>% of trail-DD buffer used by 1 stop-out</span><span id="bufPctLbl">—</span></div>
+  </div>
+  <div style="margin-top:14px">
+    <div class="info-row"><span class="k">$ risk per contract</span><span class="v" id="perContract">—</span></div>
+    <div class="info-row"><span class="k">$ risk total (at max contracts)</span><span class="v" id="totalRisk">—</span></div>
+    <div class="info-row"><span class="k">% of current balance</span><span class="v" id="pctBal">—</span></div>
+    <div class="info-row"><span class="k">% of trail-DD buffer</span><span class="v" id="pctBuf">—</span></div>
+    <div class="info-row"><span class="k">% of daily loss limit</span><span class="v" id="pctDll">—</span></div>
+    <div class="info-row"><span class="k">N losses in a row to hit trail floor</span><span class="v" id="streakDd">—</span></div>
+    <div class="info-row"><span class="k">N losses in a row to hit DLL</span><span class="v" id="streakDll">—</span></div>
+  </div>
+</div>
+
+<details>
+  <summary>How this works (the math)</summary>
+  <p><strong>Max contracts</strong> = floor( $ risk per trade ÷ (stop ticks × tick value) ). If you risk $200 with an 8-tick ES stop ($100/contract risk), max = 2 contracts.</p>
+  <p><strong>Trail floor</strong> depends on the firm:</p>
+  <ul>
+    <li><strong>Topstep:</strong> trail tracks intraday equity HWM (Combine) or daily EOD balance (XFA), and <em>locks</em> at the starting balance once HWM = SB + drawdown amount. Funded account = $0 net P&amp;L is your floor permanently.</li>
+    <li><strong>Apex 4.0:</strong> trail locks at <em>starting balance + $100</em> (the "safety net"). E.g. 100K → lock at $103,100. Both EOD and intraday options exist; the $ floor is the same.</li>
+    <li><strong>MFFU Core / Rapid:</strong> same SB+$100 lock as Apex. Core is EOD; Rapid is intraday.</li>
+    <li><strong>Custom:</strong> no firm rules — the calc only shows $ risk per trade and % of balance.</li>
+  </ul>
+  <p><strong>Buffer to trail floor</strong> = current balance − trail floor (the floor depends on your HWM if not yet locked).</p>
+  <p><strong>N losses in a row to hit the floor</strong> = floor(buffer ÷ $ risk per trade). This is the most useful number on the page — it answers "if I keep taking this size, how many in a row before I'm out?"</p>
+  <p><strong>What this calc does NOT model:</strong> commissions/fees (be conservative; subtract a few dollars per RT from your real buffer), unrealized P&amp;L drawdowns on the trail (intraday trail tracks unrealized HWM), profit-target progression, consistency-rule blocks on payout (use the <a href="/aurafy-growth-assets/tools/consistency-rule-calculator/">consistency calc</a> for that).</p>
+</details>
+
+<details>
+  <summary>Why sizing for the trail-DD buffer matters more than sizing for risk %</summary>
+  <p>Most position-size calculators assume a static account: "you have $50K, you risk 1%, that's $500 per trade, here are your contracts." That's fine for retail brokerage. It's <em>dangerous</em> on a prop-firm account.</p>
+  <p>On a prop firm, you don't have $50K to draw from. You have a <em>trail-DD buffer</em> that's typically $1,500–$3,000 wide at the start, and that buffer <em>moves up with profits but stops moving once it locks</em> (Topstep at SB, Apex/MFFU at SB+$100).</p>
+  <p>If you're sizing for "1% of the $50K", you're risking $500/trade on a $2,000 buffer. Three losses in a row = $1,500 down = 75% of the buffer gone. Four losses = blown.</p>
+  <p>The honest sizing question on a prop firm isn't "what % of my balance am I risking" — it's "<strong>how many of these stop-outs can I survive in a row before the trail floor catches me?</strong>" That's the number this calc puts on the page.</p>
+</details>
+
+<details>
+  <summary>FAQ — Common position-sizing mistakes on prop accounts</summary>
+  <p><strong>"My broker shows my account at $52,000. Why does the calc say my buffer is $2,100 and not $4,100?"</strong><br/>
+  Because once you hit a profit, the trailing drawdown <em>moves up with you</em> (until it locks). If you started at $50K, peaked at $52,100, and your DD is $2,000, your floor is now $50,100 — not $48,000. The "balance" you see and the "buffer" the trail enforces are different numbers. Set the "Trail HWM" field above to your actual peak to model this.</p>
+  <p><strong>"What's the right risk %?"</strong><br/>
+  On a prop account, think in $ not %. A common conservative target is to size so that 5–7 consecutive losses don't blow the trail. With a $2,000 buffer, that's ~$285–$400/trade max. Anything more and you're a coin-flip away from a bad week ending your account.</p>
+  <p><strong>"Does this work for Apex EOD vs Intraday?"</strong><br/>
+  Both lock at SB+$100, so the $ floor is the same. The difference: intraday trail tracks unrealized HWM (any wick to a profit ratchets it up); EOD only tracks the closing balance. EOD is more forgiving for traders who hold through wicks. The buffer math here uses your stated HWM — use whichever your account type tracks.</p>
+  <p><strong>"What about commissions?"</strong><br/>
+  Not included in the DD math (be conservative — subtract $4–$8 per round-trip per contract from your buffer in real life). Use the <a href="/aurafy-growth-assets/tools/futures-pnl-calculator/">futures P&amp;L calculator</a> if you want net-of-fees math on a specific trade.</p>
+</details>
+
+<div class="cta">
+  <h3>Aurafy tracks this automatically while you trade.</h3>
+  <p>Aurafy is a futures trading journal with built-in prop-firm rule tracking — it watches your trailing-DD buffer, DLL, and consistency window in real time as you trade. Plus screen recording of every session (the only futures journal that does this). Free tier, no card.</p>
+  <p><a class="btn" href="https://aurafy.dev?utm_source=tools&utm_medium=position-size-calc&utm_campaign=tools-cluster">Try Aurafy free →</a></p>
+</div>
+
+<footer>
+  Built by <a href="https://aurafy.dev?utm_source=tools&utm_medium=position-size-calc&utm_campaign=footer">Aurafy</a> · not affiliated with Topstep, Apex Trader Funding, or MyFundedFutures · prop-firm rules change — verify before relying on this for live trading
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+// ============ PROP FIRM DATA ============
+// Verified against /research/prop_firm_rules.json (2026-06-02)
+const FIRMS = {
+  topstep: {
+    name: "Topstep",
+    locks: "sb",            // trail locks at starting balance
+    accts: {
+      "50K":  { sb:50000,  dd:2000, dll:1000 },
+      "100K": { sb:100000, dd:3000, dll:2000 },
+      "150K": { sb:150000, dd:4500, dll:3000 },
+    }
+  },
+  apex: {
+    name: "Apex 4.0",
+    locks: "sb_plus_100",   // trail locks at starting balance + $100
+    accts: {
+      "25K":  { sb:25000,  dd:1000, dll:null },
+      "50K":  { sb:50000,  dd:2000, dll:null },
+      "100K": { sb:100000, dd:3000, dll:null },
+      "150K": { sb:150000, dd:4000, dll:null },
+    }
+  },
+  mffu_core: {
+    name: "MFFU Core",
+    locks: "sb_plus_100",
+    accts: {
+      "50K":  { sb:50000, dd:1500, dll:null },
+    }
+  },
+  mffu_rapid: {
+    name: "MFFU Rapid",
+    locks: "sb_plus_100",
+    accts: {
+      "50K":  { sb:50000,  dd:2000, dll:null },
+      "100K": { sb:100000, dd:4000, dll:null },
+      "150K": { sb:150000, dd:6000, dll:null },
+    }
+  },
+  custom: {
+    name: "Custom",
+    locks: null,
+    accts: {
+      "50K":  { sb:50000,  dd:null, dll:null },
+      "100K": { sb:100000, dd:null, dll:null },
+    }
+  }
+};
+
+// ============ INSTRUMENT SPECS ============
+// Tick value (USD per tick) — verified against futures-pnl-calculator
+const INSTR = {
+  ES:  { tv:12.50,  ts:0.25 },
+  NQ:  { tv:5.00,   ts:0.25 },
+  RTY: { tv:5.00,   ts:0.10 },
+  YM:  { tv:5.00,   ts:1.00 },
+  MES: { tv:1.25,   ts:0.25 },
+  MNQ: { tv:0.50,   ts:0.25 },
+  M2K: { tv:0.50,   ts:0.10 },
+  MYM: { tv:0.50,   ts:1.00 },
+  CL:  { tv:10.00,  ts:0.01 },
+  MCL: { tv:1.00,   ts:0.01 },
+  NG:  { tv:10.00,  ts:0.001 },
+  GC:  { tv:10.00,  ts:0.10 },
+  MGC: { tv:1.00,   ts:0.10 },
+  SI:  { tv:25.00,  ts:0.005 },
+  ZB:  { tv:31.25,  ts:1/32 },
+  ZN:  { tv:15.625, ts:1/64 },
+  ZF:  { tv:7.8125, ts:1/128 },
+  "6E":{ tv:12.50,  ts:0.0001 },
+  "6B":{ tv:6.25,   ts:0.0001 },
+  "6J":{ tv:6.25,   ts:0.0000005 },
+  MBT: { tv:0.50,   ts:5 },
+  MET: { tv:0.025,  ts:0.25 },
+};
+
+// ============ STATE ============
+let state = {
+  firm: "apex",
+  acctKey: "100K",
+  riskMode: "dollar",
+  riskVal: 200,
+  sym: "ES",
+  stop: 8,
+  customTv: 10,
+  balance: null,
+  hwm: null,
+};
+
+// ============ HELPERS ============
+const $ = id => document.getElementById(id);
+const fmt$ = n => (n==null || isNaN(n)) ? "—" : (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:0});
+const fmt$d = n => (n==null || isNaN(n)) ? "—" : (n<0?"-":"") + "$" + Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtPct = n => (n==null || isNaN(n)) ? "—" : n.toFixed(1) + "%";
+
+function getAcct(){
+  const f = FIRMS[state.firm];
+  return f.accts[state.acctKey] || Object.values(f.accts)[0];
+}
+function getTrailFloor(acct){
+  if (acct.dd == null) return null;
+  const f = FIRMS[state.firm];
+  const lockPoint = f.locks === "sb" ? acct.sb : (f.locks === "sb_plus_100" ? acct.sb + 100 : null);
+  if (lockPoint == null) return null;
+  const hwm = state.hwm ?? acct.sb;
+  // Pre-lock: floor = HWM - dd
+  // Post-lock: floor = lockPoint (trail has stopped moving)
+  // The trail "locks" when the moving floor would reach the lock point, i.e. when HWM - dd >= lockPoint
+  const movingFloor = hwm - acct.dd;
+  return movingFloor >= lockPoint ? lockPoint : movingFloor;
+}
+function getTickValue(){
+  if (state.sym === "_custom") return state.customTv;
+  return INSTR[state.sym]?.tv ?? 0;
+}
+
+// ============ POPULATE ACCT DROPDOWN ============
+function populateAccts(){
+  const sel = $("acct");
+  sel.innerHTML = "";
+  const f = FIRMS[state.firm];
+  for (const k of Object.keys(f.accts)){
+    const opt = document.createElement("option");
+    opt.value = k;
+    opt.textContent = k;
+    if (k === state.acctKey) opt.selected = true;
+    sel.appendChild(opt);
+  }
+  // Default to first if current key missing
+  if (!f.accts[state.acctKey]) state.acctKey = Object.keys(f.accts)[0];
+}
+
+// ============ DEFAULT BALANCE / HWM ============
+function maybeResetBalanceHwm(force){
+  const acct = getAcct();
+  if (force || $("balance").value === "" || state.balance == null){
+    $("balance").value = acct.sb;
+    state.balance = acct.sb;
+  }
+  if (force || $("hwm").value === "" || state.hwm == null){
+    $("hwm").value = acct.sb;
+    state.hwm = acct.sb;
+  }
+}
+
+// ============ RECALC ============
+function recalc(){
+  const acct = getAcct();
+  const tv = getTickValue();
+  const sym = state.sym;
+  const stop = Math.max(0, state.stop || 0);
+  const balance = state.balance ?? acct.sb;
+  const hwm = state.hwm ?? acct.sb;
+
+  // Firm panel
+  $("sbView").textContent = fmt$(acct.sb);
+  $("ddView").textContent = acct.dd == null ? "—" : fmt$(acct.dd) + " trail";
+  $("dllView").textContent = acct.dll == null ? "none" : fmt$(acct.dll);
+  const f = FIRMS[state.firm];
+  $("lockView").textContent = f.locks === "sb" ? "Starting balance ($" + acct.sb.toLocaleString() + ")"
+                            : f.locks === "sb_plus_100" ? "SB + $100 ($" + (acct.sb+100).toLocaleString() + ")"
+                            : "—";
+
+  // Floor + buffers
+  const floor = getTrailFloor(acct);
+  const buf = (floor != null) ? (balance - floor) : null;
+  const dllBuf = (acct.dll != null) ? acct.dll : null;
+  $("floorView").textContent = floor==null ? "—" : fmt$(floor);
+  $("bufView").textContent = buf==null ? "—" : fmt$(buf);
+  $("dllBufView").textContent = dllBuf==null ? "no DLL" : fmt$(dllBuf);
+
+  // Risk per trade in $
+  let riskDollars;
+  if (state.riskMode === "dollar") riskDollars = state.riskVal;
+  else riskDollars = balance * (state.riskVal / 100);
+  riskDollars = Math.max(0, riskDollars || 0);
+
+  // Per-contract risk
+  const perContractRisk = stop * tv;
+  $("perContract").textContent = fmt$d(perContractRisk);
+
+  // Max contracts
+  let maxContracts = 0;
+  if (perContractRisk > 0) maxContracts = Math.floor(riskDollars / perContractRisk);
+
+  // Total risk at max contracts
+  const totalRisk = maxContracts * perContractRisk;
+  $("totalRisk").textContent = fmt$d(totalRisk);
+  $("pctBal").textContent = balance > 0 ? fmtPct(100 * totalRisk / balance) : "—";
+
+  // % of buffer
+  const pctBuf = (buf && buf > 0) ? (100 * totalRisk / buf) : null;
+  $("pctBuf").textContent = pctBuf==null ? "—" : fmtPct(pctBuf);
+  const pctDll = (dllBuf && dllBuf > 0) ? (100 * totalRisk / dllBuf) : null;
+  $("pctDll").textContent = pctDll==null ? "—" : fmtPct(pctDll);
+
+  // Streak before floor / DLL
+  const streakDd = (buf && totalRisk > 0) ? Math.floor(buf / totalRisk) : null;
+  const streakDll = (dllBuf && totalRisk > 0) ? Math.floor(dllBuf / totalRisk) : null;
+  $("streakDd").textContent = streakDd==null ? "—" : streakDd + " loss" + (streakDd===1?"":"es");
+  $("streakDll").textContent = streakDll==null ? "—" : streakDll + " loss" + (streakDll===1?"":"es");
+
+  // Big output
+  $("contractsOut").textContent = maxContracts > 0 ? maxContracts.toString() : "0";
+
+  // Bar fill = pctBuf clamped to 0-100
+  const barPct = pctBuf==null ? 0 : Math.min(100, Math.max(0, pctBuf));
+  $("barFill").style.width = barPct + "%";
+  $("bufPctLbl").textContent = pctBuf==null ? "—" : fmtPct(pctBuf);
+
+  // Verdict
+  const badge = $("verdictBadge");
+  let verdict = "safe", cls = "pass";
+  if (maxContracts === 0) { verdict = "0 contracts"; cls = "fail"; }
+  else if (pctBuf == null) { verdict = "no firm rules"; cls = "warn"; }
+  else if (pctBuf > 50) { verdict = "1 stop = " + Math.round(pctBuf) + "% of buffer"; cls = "fail"; }
+  else if (pctBuf > 25) { verdict = "borderline"; cls = "warn"; }
+  else { verdict = "safe"; cls = "pass"; }
+  badge.textContent = verdict;
+  badge.className = "badge " + cls;
+
+  // Big color
+  const big = $("contractsOut");
+  big.classList.remove("pos","neg","warn");
+  if (cls === "pass") big.classList.add("pos");
+  else if (cls === "warn") big.classList.add("warn");
+  else big.classList.add("neg");
+
+  // Sub-text on inputs
+  if (state.sym !== "_custom"){
+    const i = INSTR[state.sym];
+    $("symSub").textContent = "$" + i.tv.toFixed(2) + " / tick";
+    $("stopSub").textContent = stop + " tick" + (stop===1?"":"s") + " = $" + (stop*tv).toFixed(2) + "/contract on " + state.sym;
+  } else {
+    $("symSub").textContent = "$" + state.customTv.toFixed(2) + " / tick (custom)";
+    $("stopSub").textContent = stop + " tick" + (stop===1?"":"s") + " = $" + (stop*tv).toFixed(2) + "/contract";
+  }
+  if (state.riskMode === "dollar"){
+    $("riskSub").textContent = "$" + state.riskVal + " risk per trade";
+  } else {
+    $("riskSub").textContent = state.riskVal + "% of $" + balance.toLocaleString() + " = $" + Math.round(balance*state.riskVal/100);
+  }
+}
+
+// ============ EVENTS ============
+$("firm").addEventListener("change", e => {
+  state.firm = e.target.value;
+  // pick a sensible default acct
+  const f = FIRMS[state.firm];
+  const keys = Object.keys(f.accts);
+  state.acctKey = keys.includes("100K") ? "100K" : keys[0];
+  populateAccts();
+  maybeResetBalanceHwm(true);
+  recalc();
+});
+$("acct").addEventListener("change", e => {
+  state.acctKey = e.target.value;
+  maybeResetBalanceHwm(true);
+  recalc();
+});
+$("balance").addEventListener("input", e => {
+  state.balance = parseFloat(e.target.value);
+  if (isNaN(state.balance)) state.balance = getAcct().sb;
+  recalc();
+});
+$("hwm").addEventListener("input", e => {
+  state.hwm = parseFloat(e.target.value);
+  if (isNaN(state.hwm)) state.hwm = getAcct().sb;
+  recalc();
+});
+$("sym").addEventListener("change", e => {
+  state.sym = e.target.value;
+  $("customTvWrap").style.display = (state.sym === "_custom") ? "" : "none";
+  recalc();
+});
+$("customTv").addEventListener("input", e => {
+  state.customTv = parseFloat(e.target.value) || 0;
+  recalc();
+});
+$("stop").addEventListener("input", e => {
+  state.stop = parseFloat(e.target.value) || 0;
+  recalc();
+});
+$("riskVal").addEventListener("input", e => {
+  state.riskVal = parseFloat(e.target.value) || 0;
+  recalc();
+});
+document.querySelectorAll("#riskMode button").forEach(btn => {
+  btn.addEventListener("click", e => {
+    state.riskMode = btn.dataset.mode;
+    document.querySelectorAll("#riskMode button").forEach(b => b.classList.toggle("on", b===btn));
+    // Sensible default value swap
+    if (state.riskMode === "dollar" && state.riskVal < 5) state.riskVal = 200;
+    if (state.riskMode === "percent" && state.riskVal > 20) state.riskVal = 1;
+    $("riskVal").value = state.riskVal;
+    recalc();
+  });
+});
+
+// ============ INIT ============
+populateAccts();
+maybeResetBalanceHwm(true);
+recalc();
+</script>
+</body>
+</html>
