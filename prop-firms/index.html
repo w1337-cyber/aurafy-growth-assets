@@ -148,21 +148,29 @@
   </div>
 
   <div class="firm-card">
+    <div class="role">Phase-shifting trail · daily payouts</div>
+    <h3>Take Profit Trader (TPT)</h3>
+    <p class="summary">5 eval sizes (25K / 50K / 75K / 100K / 150K). EOD trail in Test, intraday in PRO, EOD again in PRO+. 50% consistency on Test only — drops on funded. No DLL since Jan 2025. 80% split on PRO, 90% on PRO+ (auto-promoted since 2026-03-18). Daily payouts on funded once buffer cleared.</p>
+    <div class="wedge"><strong>Unique wedge:</strong> TPT is the only major firm whose trailing-drawdown TYPE changes between phases. Test (EOD) → PRO (intraday) → PRO+ (EOD). Most TPT blow-ups happen at the handoff days because traders don't re-tune position management for the new trail mechanic.</div>
+    <a class="go" href="/prop-firms/take-profit-trader/">Read the TPT guide →</a>
+  </div>
+
+  <div class="firm-card">
     <div class="role">Coming soon · the rest of the field</div>
-    <h3>Take Profit Trader, Tradeify, Bulenox</h3>
-    <p class="summary">All Rithmic-routed, each with their own rule quirks. TPT and Tradeify use trailing-drawdown variants; Bulenox runs a static-drawdown model that's the closest thing to a non-trailing alternative in this market. Dedicated pages in progress — rule presets being verified against current rulebooks before publishing.</p>
-    <div class="wedge"><strong>Unique angle:</strong> If you're considering any of these, the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow for all of them today — the firm-specific rule pages will follow once the data is independently verified.</div>
+    <h3>Tradeify, Bulenox</h3>
+    <p class="summary">Both Rithmic-routed. Tradeify runs trailing-drawdown variants similar to TPT/Apex; Bulenox runs a static-drawdown model that's the closest thing to a non-trailing alternative in this market. Dedicated pages in progress — rule presets being verified against current rulebooks before publishing.</p>
+    <div class="wedge"><strong>Unique angle:</strong> If you're considering either, the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow today — the firm-specific rule pages will follow once the data is independently verified.</div>
     <a class="go" href="#faq">See FAQ on firms not covered yet →</a>
   </div>
 
 </div>
 
 <h2 id="three-axes">The three rule axes that actually decide survival</h2>
-<p>Across all three firms, the same three axes determine whether your account survives activation. Every other rule (profit target, activation fee, payout cadence) matters for the path to funded but doesn't decide what kills the account afterward.</p>
+<p>Across all four firms, the same three axes determine whether your account survives activation. Every other rule (profit target, activation fee, payout cadence) matters for the path to funded but doesn't decide what kills the account afterward.</p>
 
 <table>
   <thead>
-    <tr><th>Rule axis</th><th>Topstep</th><th>Apex 4.0</th><th>MFFU</th></tr>
+    <tr><th>Rule axis</th><th>Topstep</th><th>Apex 4.0</th><th>MFFU</th><th>TPT</th></tr>
   </thead>
   <tbody>
     <tr>
@@ -170,24 +178,28 @@
       <td>Combine = intraday<br>XFA funded = EOD</td>
       <td>Chosen at purchase: EOD or intraday</td>
       <td>Core = EOD<br>Rapid = intraday<br>Pro = EOD</td>
+      <td>Test = EOD<br>PRO = intraday<br>PRO+ = EOD</td>
     </tr>
     <tr>
       <td><strong>Lock point</strong></td>
       <td>Starting Balance ($0 buffer)</td>
       <td>SB + $100 ($100 buffer)</td>
       <td>SB + $100 ($100 buffer)</td>
+      <td>Starting Balance ($0 buffer)</td>
     </tr>
     <tr>
       <td><strong>Consistency rule</strong></td>
       <td>50% eval only<br>None on funded</td>
       <td>30% on funded payouts</td>
       <td>Core: 40% on eval AND funded<br>Rapid: none<br>Pro: TBD</td>
+      <td>50% on Test only<br>None on PRO / PRO+</td>
     </tr>
     <tr>
       <td><strong>Daily loss limit</strong></td>
       <td>Yes on Combine<br>Conditional on XFA</td>
       <td>EOD accounts only<br>None on intraday</td>
       <td>None on any plan</td>
+      <td>None — removed firmwide Jan 2025</td>
     </tr>
   </tbody>
 </table>
@@ -252,8 +264,8 @@
 </details>
 
 <details>
-  <summary>What about Take Profit Trader, Tradeify, Bulenox, Earn2Trade?</summary>
-  <p>All real firms with real users, but we haven't shipped dedicated pages for them yet because the rule presets need to be independently verified against current rulebooks — and rule pages are only useful if they're correct. The work is queued. In the meantime, all four route through Rithmic, so the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow for any of them today. Tradovate-routed firms are rare outside Topstep / Apex / MFFU as of mid-2026.</p>
+  <summary>What about Tradeify, Bulenox, Earn2Trade?</summary>
+  <p>All real firms with real users, but we haven't shipped dedicated pages for them yet because the rule presets need to be independently verified against current rulebooks — and rule pages are only useful if they're correct. The work is queued. In the meantime, all three route through Rithmic, so the <a href="/brokers/rithmic/">Rithmic broker page</a> covers the import workflow for any of them today. Take Profit Trader was the most recent firm we verified — its <a href="/prop-firms/take-profit-trader/">dedicated page is now live</a> with the same independent-rulebook standard we apply to the others.</p>
 </details>
 
 <details>

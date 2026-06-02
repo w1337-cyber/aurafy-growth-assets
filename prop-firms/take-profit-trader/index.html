@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Take Profit Trader (TPT) Rules Explained — Test, PRO &amp; PRO+ (2026) | Aurafy</title>
+<meta name="description" content="Take Profit Trader rules in plain English: how the trail SHIFTS from EOD (Test) to intraday (PRO) and back to EOD (PRO+), 50% consistency on Test, no daily loss limit since Jan 2025, daily payouts, locks at starting balance. Plus free calculators preset for TPT." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/prop-firms/take-profit-trader/" />
+<meta property="og:title" content="Take Profit Trader (TPT) Rules Explained — Test, PRO &amp; PRO+ (2026)" />
+<meta property="og:description" content="The 2026 guide to TPT — the only major firm whose trailing-drawdown type SHIFTS between phases. Test (EOD) → PRO (intraday) → PRO+ (EOD), with lock at starting balance, no DLL, daily payouts on funded. With free calculators." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .alert{background:rgba(255,92,124,0.06);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#f8d6dd}
+  .phase-grid{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:720px){.phase-grid{grid-template-columns:1fr 1fr 1fr}}
+  .phase-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .phase-card h4{margin:0 0 8px;font-size:1rem;color:#fff}
+  .phase-card .tag{display:inline-block;font-size:0.7rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:2px 8px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px}
+  .phase-card .trail{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px;margin-left:4px}
+  .trail-eod{background:rgba(61,220,151,0.12);color:#7ce8b4;border:1px solid rgba(61,220,151,0.3)}
+  .trail-intra{background:rgba(255,180,84,0.12);color:#ffc878;border:1px solid rgba(255,180,84,0.3)}
+  .phase-card ul{padding-left:18px;margin:6px 0 0;font-size:0.88rem;color:#c4ccd6}
+  .phase-card ul li{margin-bottom:4px}
+  .shift-vis{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;text-align:center;font-family:var(--mono);font-size:0.93rem}
+  .shift-vis .arrow{color:var(--muted);margin:0 10px}
+  .shift-vis .eod{color:#7ce8b4;font-weight:700}
+  .shift-vis .intra{color:#ffc878;font-weight:700}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · TPT Test + PRO + PRO+</span>
+  <h1>Take Profit Trader (TPT) Rules Explained — Test, PRO &amp; PRO+</h1>
+  <p class="lede">TPT is the only major prop firm whose trailing-drawdown <em>type</em> changes between phases. You evaluate under EOD trail, get funded into intraday trail, then auto-promote back to EOD on PRO+. Most blow-ups happen at those handoffs. This is the plain-English 2026 guide — phases, account sizes, the SB-only lock point, the 50% Test consistency rule, and the daily payouts on funded.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with Take Profit Trader.</strong> Prop firm rules change. Numbers below reflect TPT's public rules as of June 2026 — always confirm against the current TPT rulebook before you trade. This is a planning resource, not advice.
+</div>
+
+<div class="toc">
+  <a href="#shift">The phase-shift gotcha</a>
+  <a href="#test">Test (eval)</a>
+  <a href="#pro">PRO</a>
+  <a href="#proplus">PRO+</a>
+  <a href="#trail">Trail mechanics</a>
+  <a href="#lock">Lock point (SB)</a>
+  <a href="#consistency">50% consistency</a>
+  <a href="#payouts">Payouts</a>
+  <a href="#restrictions">Restrictions</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="shift">The thing competitors bury — TPT's trail type SHIFTS between phases</h2>
+<p>Every other major prop firm picks one trail type and sticks with it. TPT doesn't. Across the TPT lifecycle, your drawdown mechanic changes <em>twice</em>:</p>
+
+<div class="shift-vis">
+  Test <span class="eod">[ EOD trail ]</span>
+  <span class="arrow">→</span>
+  PRO <span class="intra">[ INTRADAY trail ]</span>
+  <span class="arrow">→</span>
+  PRO+ <span class="eod">[ EOD trail ]</span>
+</div>
+
+<p>This matters because the same set of trades behaves <em>completely differently</em> against an EOD-tracked trail than an intraday-tracked trail. A position that ran +$1,200 unrealized and gave back $800 of it before close is invisible to an EOD trail (only the closing balance counts) but moves an intraday trail by the full $1,200. Traders who pass Test under EOD trail often blow PRO the same week because they don't change how they manage open positions when the mechanic flips.</p>
+
+<div class="alert"><strong>The lifecycle landmines:</strong> the first day on PRO (EOD → intraday handoff) and the first day on PRO+ (intraday → EOD handoff). Most TPT blow-ups happen at these transitions, not deep into a phase. Plan your sizing and trade-management style explicitly for the trail type you're operating under that day.</div>
+
+<h2 id="test">Test — the evaluation phase (EOD trail, 50% consistency)</h2>
+<p>Test is TPT's evaluation: five sizes available, end-of-day trailing drawdown, a 50% single-day consistency rule, and a minimum of 5 trading days before you can pass. There is <strong>no daily loss limit</strong> on any TPT phase — the trail is your only floor.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing Drawdown</th><th>Max Contracts</th><th>Max Micros</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Test 25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,500</td><td class="num">3</td><td class="num">30</td></tr>
+    <tr><td class="acct">Test 50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,000</td><td class="num">6</td><td class="num">60</td></tr>
+    <tr><td class="acct">Test 75K</td><td class="num">$75,000</td><td class="num">$4,500</td><td class="num">$2,500</td><td class="num">9</td><td class="num">90</td></tr>
+    <tr><td class="acct">Test 100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,000</td><td class="num">12</td><td class="num">120</td></tr>
+    <tr><td class="acct">Test 150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$4,500</td><td class="num">15</td><td class="num">150</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>5-day minimum:</strong> Even if you hit the profit target on day 1, you cannot pass Test until you have traded at least 5 separate sessions. Plan for a one-week minimum on Test, not a one-day sprint.</p>
+
+<h2 id="pro">PRO — simulated funded (intraday trail, no consistency)</h2>
+<p>You pass Test, pay the $130 activation fee, and you're funded into PRO. Three things change at this handoff:</p>
+<ul>
+  <li><strong>Trail type flips to intraday.</strong> The high-water mark now updates tick-by-tick on unrealized P&amp;L instead of once at session close. Letting winners breathe carries direct trail risk.</li>
+  <li><strong>Consistency rule drops.</strong> The 50% single-day cap that applied in Test is removed on PRO — your single-day P&amp;L can be any share of total profit without affecting payouts.</li>
+  <li><strong>Minimum activity becomes 1 trading day per calendar week.</strong> Miss a week and you risk losing the account for inactivity.</li>
+</ul>
+<p>Profit split on PRO is <strong>80/20</strong> in your favor. Payouts are <strong>daily</strong> once you've built a buffer above your starting balance, with a 7-day minimum between withdrawals and 1–2 business days processing.</p>
+
+<h2 id="proplus">PRO+ — live-funded promotion (EOD trail returns)</h2>
+<p>As of <strong>2026-03-18</strong>, PRO+ promotion is fully automatic — no application, no extra fee. TPT reviews your PRO account on internal consistency, risk, and execution metrics, and if you qualify you're moved to PRO+ silently.</p>
+<ul>
+  <li><strong>Trail type flips back to EOD.</strong> You're back to closing-balance-only HWM updates, the way Test worked. This is the second handoff most traders mismanage.</li>
+  <li><strong>Profit split improves to 90/10.</strong></li>
+  <li><strong>No reset on PRO+.</strong> If the account busts, it closes permanently — unlike Test or PRO, you cannot pay a reset fee to continue.</li>
+  <li>Consistency rule still does not apply.</li>
+</ul>
+
+<div class="alert"><strong>The PRO+ no-reset rule is non-obvious:</strong> on Test and PRO, a bust costs you the reset fee but you can keep trading. On PRO+, a single trailing-drawdown breach permanently closes that PRO+ account. Treat your PRO+ trail like the hardest stop you have.</div>
+
+<h2 id="trail">How TPT trailing drawdown actually works</h2>
+<p>The trail is a moving floor under your balance that starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, never down. Hit it and the account is breached. The decisive question is <strong>what counts as the HWM</strong>:</p>
+
+<h3>EOD trail (Test + PRO+)</h3>
+<p>The HWM updates <strong>once at session close</strong>, based on your closing balance. Intraday spikes don't move the trail — a winner that ran $1,200 then gave it back is invisible to next-day's trail. You still can't go below the current trail mid-session (it's enforced in real time), but the trail itself only ratchets at end-of-day.</p>
+
+<h3>Intraday trail (PRO)</h3>
+<p>The HWM updates <strong>tick-by-tick on unrealized P&amp;L</strong>. If you let a winner run +$1,500 on PRO 100K then it pulls back to +$200, the trail moved up by $1,500 even though you only realized $200. You're now $1,300 closer to the lock point with nothing to show for it. This is the same trap that catches Topstep Combine and Apex traders.</p>
+
+<div class="key-fact"><strong>Practical handoff playbook:</strong> on Test and PRO+ days, you can let winners breathe — the trail won't punish unrealized pullback. On PRO days, take profits cleanly, scale out, or use trailing stops, because every unrealized tick is a tick of trail movement against you tomorrow.</div>
+
+<h2 id="lock">When the trail locks (at the starting balance — no buffer)</h2>
+<p>The TPT trail stops following your HWM and becomes a fixed floor once your balance reaches the <strong>starting balance exactly</strong>. There is <em>no $100 safety buffer</em> the way Apex 4.0 or MyFundedFutures structure it — TPT's lock pattern is the same as Topstep's.</p>
+
+<p>So on a TPT Test 100K, that's:</p>
+<ul>
+  <li>Trail freezes once balance reaches <strong>$100,000</strong></li>
+  <li>Fixed loss-limit floor afterward: <strong>$97,000</strong></li>
+  <li>Buffer to floor at lock: <strong>$3,000</strong> (= the trailing drawdown amount)</li>
+</ul>
+
+<p>On Test 25K the lock floor is $23,500. On Test 50K it's $48,000. On Test 150K it's $145,500. Once locked, that floor never moves — but you also never get back the trailing-buffer "credit" Apex/MFFU traders get from the $100 cushion.</p>
+
+<h2 id="consistency">50% consistency rule (Test only)</h2>
+<p>TPT's Test phase enforces a <strong>50% consistency rule</strong>: no single day's net profit can be more than 50% of your cumulative profit at the time you pass Test. If your best day is &gt; 50% of your total, you need additional balanced trading days to reduce the ratio before TPT will mark Test as passed.</p>
+
+<p>The maximum profit you can take on a single day without breaking the rule:</p>
+
+<p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 50% &times; Total Profit &divide; (1 &minus; 50%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>1.0 &times; current Total</strong></p>
+
+<p>So on $3,000 cumulative profit toward your Test 50K target, your safe single-day ceiling is $3,000. TPT's 50% is the most lenient consistency rule among the major firms (Topstep = 50%, MFFU = 40%, Apex = 30%).</p>
+
+<p><strong>Important:</strong> consistency only applies to <em>passing Test</em>. Once you are on PRO or PRO+, the rule is dropped entirely — your funded payouts are not affected by single-day P&amp;L distribution. This is one of TPT's most trader-friendly features.</p>
+
+<h2 id="payouts">Payouts &amp; profit split</h2>
+<ul>
+  <li><strong>PRO profit split:</strong> 80% to trader / 20% to TPT.</li>
+  <li><strong>PRO+ profit split:</strong> 90% to trader / 10% to TPT.</li>
+  <li><strong>Payout cadence:</strong> Daily on PRO/PRO+ once your account is above its starting balance by the daily payout buffer. 7-day minimum between consecutive payouts. Processing 1–2 business days.</li>
+  <li><strong>Activation fee:</strong> $130 one-time fee when you move from Test to PRO. No further fees from PRO to PRO+.</li>
+  <li><strong>Platforms:</strong> NinjaTrader, Tradovate, TradingView, Rithmic.</li>
+  <li><strong>Max funded accounts:</strong> 5 funded accounts per trader (combination of PRO and PRO+).</li>
+</ul>
+
+<h2 id="restrictions">Other restrictions to know</h2>
+<ul>
+  <li><strong>No overnight positions</strong> on any phase. All positions must be flat by 5 PM ET, Mon–Fri.</li>
+  <li><strong>Daily loss limit removed firmwide January 2025.</strong> Trailing drawdown is the only hard-loss guardrail. No "you lost too much today, account paused" backstop — you can lose to the trail and bust in a single session.</li>
+  <li><strong>News restriction (PRO/PRO+ only):</strong> no trading 1 minute before / during / 1 minute after FOMC, NFP, and CPI releases. Violation can void payouts or close the account. Test phase is exempt.</li>
+</ul>
+
+<h2 id="tools">Free calculators we built for this</h2>
+<p>No login, no email — just punch in your numbers:</p>
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Visualize your TPT trail by phase. Models both EOD (Test/PRO+) and intraday (PRO) mechanics so you can see exactly how the handoff changes your exposure.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/trailing-drawdown-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Check your 50% TPT Test consistency ratio in seconds. Tells you the largest day P&amp;L allowed and the extra profit needed to safely close out Test on a big day.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/consistency-rule-calculator/">Open calculator &rarr;</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Tired of plugging numbers into a calculator after every trade?</h3>
+  <p>Aurafy is a futures trading journal built for prop-firm traders. It auto-tracks your trailing drawdown, lock distance, and consistency ratio in real time on TPT and other major firms — plus screen-records your sessions so you can replay your mistakes.</p>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">Free tier: last 30 days of trades, 1 account, 3 playbooks, no credit card. First 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&amp;utm_medium=tpt-landing&amp;utm_campaign=prop-firm-pages">See Aurafy</a>
+  <a class="btn ghost" href="https://app.aurafy.dev?utm_source=tools&amp;utm_medium=tpt-landing&amp;utm_campaign=prop-firm-pages">Start free</a>
+</div>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Why does TPT change trail type between phases?</summary>
+  <p>TPT's design philosophy is to let traders prove discipline under EOD (which is forgiving on intraday volatility) in Test, then enforce stricter intraday risk under PRO (which is closer to live-trading risk), then return to EOD on PRO+ as a reward. Whether you agree with the philosophy or not, the practical reality is you have to manage open positions differently in each phase. Most TPT blow-ups happen at the handoff days.</p>
+</details>
+<details>
+  <summary>Does TPT have a daily loss limit?</summary>
+  <p>No. TPT removed the daily loss limit firmwide in January 2025. The trailing drawdown is your only intraday floor — there is no backstop that closes your platform at a certain daily loss. This is a meaningful difference from Topstep and Apex EOD accounts.</p>
+</details>
+<details>
+  <summary>What happens when I bust on PRO+?</summary>
+  <p>The PRO+ account closes permanently. PRO+ is the one phase TPT does not allow reset on — there is no fee you can pay to reopen it. You can still pay for a new Test account and work your way back up to PRO+ again, but the specific busted account is gone for good.</p>
+</details>
+<details>
+  <summary>How does the PRO+ auto-promotion work?</summary>
+  <p>Since 2026-03-18, TPT promotes qualifying PRO accounts to PRO+ automatically. There is no application, no fee, and no notification before — TPT reviews your PRO account on internal consistency / risk / execution metrics, and if you qualify, your profit split changes from 80/20 to 90/10 and your trail returns to EOD. The first you notice is usually a payout that's larger than expected.</p>
+</details>
+<details>
+  <summary>Can I trade news on TPT?</summary>
+  <p>On Test, yes — the news restriction does not apply during evaluation. On PRO and PRO+, you cannot trade 1 minute before, during, or 1 minute after FOMC, NFP, or CPI releases. Violations can void payouts or close the account. Other releases are not explicitly restricted but consult the current TPT rulebook for edge cases.</p>
+</details>
+<details>
+  <summary>How does TPT compare to Apex or Topstep?</summary>
+  <p>TPT locks at starting balance exactly (same as Topstep, less generous than Apex/MFFU which add a $100 buffer). TPT has no DLL on any phase since Jan 2025 (Apex EOD has one; Topstep always does). TPT's consistency rule is 50% and Test-only (Topstep 50% applies on funded too; Apex 30% applies on funded; MFFU 40% Core-only on funded). And uniquely, TPT shifts trail type between phases (Apex and Topstep don't — each picks one mechanic and sticks with it).</p>
+</details>
+<details>
+  <summary>How fast can I get paid on PRO/PRO+?</summary>
+  <p>Daily — TPT runs daily payouts on funded accounts as long as your balance is above starting balance by the required buffer. Subsequent payouts have a 7-day minimum gap. Processing takes 1–2 business days from request to bank. This is one of the most flexible payout schedules in the industry.</p>
+</details>
+
+<footer>
+  <p>Take Profit Trader rules reference · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=tpt-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
+  This page is independently produced. Aurafy is not affiliated with or endorsed by Take Profit Trader.</p>
+</footer>
+
+</div>
+</body>
+</html>
