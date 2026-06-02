@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>How to Export Your Trades from Rithmic R|Trader Pro (2026) — Complete Statement Guide | Aurafy</title>
+<meta name="description" content="Step-by-step guide to exporting Rithmic R|Trader Pro statements in 2026. Where the Statements window lives, the multi-firm-one-login workflow, the 3 quiet pitfalls (partial-fill rows, account-ID mixing, R|Trader basic vs Pro), and how to clean the data for any prop-firm trading journal." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/guides/rithmic-rtrader-pro-export-trades/" />
+<meta property="og:title" content="How to Export Your Trades from Rithmic R|Trader Pro (2026)" />
+<meta property="og:description" content="Full guide — R|Trader Pro Statements export, multi-firm-one-login workflow, partial-fill pitfalls, account-ID separation, journal-ready clean-up steps." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:32px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  code{font-family:var(--mono);font-size:0.88em;background:var(--panel-2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:#d6dde6}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.92rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.col{font-family:var(--mono);font-weight:600;color:#fff;white-space:nowrap}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .step{display:flex;align-items:flex-start;gap:14px;margin:18px 0}
+  .step-num{flex-shrink:0;width:32px;height:32px;background:rgba(124,92,255,0.15);border:1px solid rgba(124,92,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#a890ff;font-family:var(--mono);font-size:0.95rem}
+  .step-body{flex:1}
+  .step-body strong{color:#fff;display:block;margin-bottom:6px;font-size:1rem}
+  .step-body p{font-size:0.93rem;color:#c4ccd6;margin:0 0 6px}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .pitfall{background:rgba(255,92,124,0.05);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:12px 0;font-size:0.92rem;color:#f5d6db}
+  .pitfall strong{color:#ff8fa3}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · R|Trader Pro desktop</span>
+  <h1>How to Export Your Trades from Rithmic R|Trader Pro (2026)</h1>
+  <p class="lede">Rithmic is the data feed and clearing route under most prop firms — Apex, MyFundedFutures, Take Profit Trader, Tradeify, Bulenox, and Earn2Trade all live on it. R|Trader Pro is the bare-bones execution UI that ships with it. It's also a real journal export source: the Statements window writes a clean per-fill CSV with millisecond timestamps, broken-out commissions, and exchange + clearing fees per row — the cleanest commission detail of any retail futures platform. The trap is that <em>one</em> R|Trader Pro login often spans <em>several</em> firm-issued accounts at once, and the export will silently mix them unless you separate by account ID first. Here's the clean path.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Independent reference, not Rithmic documentation.</strong> Aurafy is not affiliated with Rithmic, LLC or with Trading Technologies. Rithmic, R|Trader, and R|Trader Pro are trademarks of Rithmic, LLC. R|Trader Pro's UI varies by build, by firm-skin (Apex Trader, TPT, Bulenox, Tradeify, MFFU, and Earn2Trade each ship slightly different branded skins of the same client), and by what your FCM enables — the exact menu wording, export-dialog layout, and column order may differ on your install. Always verify against your current build before scripting against an export. We import the standard R|Trader Pro account-statement CSV; no Rithmic API connection, no credentials shared, nothing installed in R|Trader Pro.
+</div>
+
+<div class="toc">
+  <a href="#why">Why export trades</a>
+  <a href="#desktop">Export from R|Trader Pro Statements</a>
+  <a href="#multi-firm">Multi-firm on one login</a>
+  <a href="#columns">Column reference</a>
+  <a href="#pitfalls">3 common pitfalls</a>
+  <a href="#cleanup">Cleaning the CSV for any journal</a>
+  <a href="#import">Importing into Aurafy</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="why">Why you should export your trades (even though R|Trader Pro shows P&amp;L)</h2>
+
+<p>R|Trader Pro displays your fills and a running P&amp;L tape in its position panel. So why bother with a statement export?</p>
+
+<ul>
+  <li><strong>R|Trader Pro is a clearing record, not a journal.</strong> Each fill is a row — BUY or SELL, price, qty, commission, exchange fee, clearing fee, running net. There is no native concept of a round-turn trade with an entry, stop, exit, R-multiple, or setup tag. Reconstructing what was actually one trade versus three is on you.</li>
+  <li><strong>One R|Trader Pro fill is a partial, not a trade.</strong> A 5-lot entry filled in three pieces (2 + 2 + 1) and exited in two (3 + 2) shows as five separate rows in the statement. Until something pairs them into a round-turn, your "trade count" is roughly double what you actually took.</li>
+  <li><strong>No chart context.</strong> R|Trader Pro is execution-only — no charts, no replay, nothing visual past the DOM. Whichever chart you read when you took the trade (NinjaTrader, Sierra Chart, Quantower, MotiveWave, TradingView-with-Rithmic) lives in a separate window. The fill price in R|Trader Pro has no link back to it.</li>
+  <li><strong>Prop-firm rule tracking lives outside Rithmic.</strong> Rithmic knows your account ID and live balance. It does not know whether that account is a $50K Apex eval, a $100K MFFU funded, a TPT PRO+ scaling account, or a Tradeify Growth eval. The trail-DD floor, the consistency ratio, the daily-loss limit — none of that is in the statement, and Rithmic does not compute it.</li>
+  <li><strong>Cross-account comparison.</strong> An Apex 4.0 eval + an MFFU Core funded + a TPT PRO+ + a Tradeify Growth account can all run under one R|Trader Pro login. The statement covers them all in one export — but only if you split per account ID and apply the correct firm preset to each.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>Bottom line:</strong> R|Trader Pro has the best raw fill-and-commission data of any retail futures platform — exchange + clearing fees broken out per row. It is not a journal. That gap is exactly where a downstream tool earns its keep.
+</div>
+
+<h2 id="desktop">How to export trades from the R|Trader Pro Statements window</h2>
+
+<p>R|Trader Pro runs on Windows (Mac users go via Parallels, CrossOver, or a Windows VM). The export path is the same across the firm-skinned builds — Apex Trader, TPT-skinned, Bulenox-skinned, MFFU-skinned, Tradeify-skinned, Earn2Trade-skinned R|Trader Pro all expose the same Statements interface from the underlying Rithmic client. Here's the clean path:</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <strong>Open the Statements window.</strong>
+    <p>From the main R|Trader Pro toolbar: <em>Account &gt; Statements</em> (or the equivalent <em>Statements</em> button on the navigation bar in your build). On some firm-skinned builds the menu reads <em>Reports &gt; Statements</em>. The window has tabs along the top — typically <strong>Open Positions</strong>, <strong>Executions</strong> (or <strong>Trades</strong>), <strong>P&amp;L Summary</strong>, and <strong>Commission Summary</strong>. The Executions tab is the row-per-fill ledger and the one you export for a journal.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <strong>Filter by account, symbol, and date range.</strong>
+    <p>The Statements header has filter controls for <em>Account</em>, <em>Symbol</em>, and <em>Date Range</em>. <strong>Pick a single account from the dropdown, not "All Accounts."</strong> If you trade multiple firms under one R|Trader Pro login (Apex + MFFU + TPT, etc.), each is a separate account ID and you want one export per account ID — see the multi-firm section below. Set the date range to your evaluation window or payout cycle. The grid updates live as you change filters.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <strong>Right-click in the grid → "Export to CSV" (or use the toolbar Export icon).</strong>
+    <p>Most R|Trader Pro builds expose two export paths: the right-click context menu inside the grid (<em>Export to CSV…</em>) and the toolbar Export icon at the top of the Statements window. The right-click version respects the active tab and current filters. The toolbar version sometimes prompts for a tab and date range again — accept the same filters you set in step 2.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <strong>Pick CSV (not PDF) as the format.</strong>
+    <p>R|Trader Pro can export Statements as PDF or CSV. PDF is fine for tax archive; for any journal import, you want CSV. If your build only shows PDF in the dropdown, the CSV button is usually a separate icon — check the toolbar before settling. Re-exporting a PDF as CSV in a downstream tool is a quality loss vs. exporting CSV directly.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <strong>Open the file and confirm row count + account ID.</strong>
+    <p>Open the CSV (Excel, LibreOffice, or any text editor) and compare the row count against the Executions tab's total. Verify the <code>Account</code> column shows a single account ID — if it shows two or more, you selected "All Accounts" in step 2 and your firm rule tracking will silently get the wrong preset on the wrong rows. Re-export per account if so.</p>
+  </div>
+</div>
+
+<h2 id="multi-firm">The multi-firm-on-one-login workflow — Rithmic's unique shape</h2>
+
+<p>This is what makes Rithmic different from Tradovate, NinjaTrader, and Sierra Chart. A single R|Trader Pro login often spans <em>several firm-issued accounts at once</em> — an Apex 4.0 100K eval, an MFFU Core 50K funded, a TPT PRO+ 50K, and a Tradeify Growth 100K can all be active under the same Rithmic username + password. Each one is a different account ID, comes with a different rule set, and the statement export covers all of them in one file if you don't filter.</p>
+
+<ul>
+  <li><strong>Account IDs are firm-issued, not Rithmic-issued.</strong> Apex accounts look like <code>APEX-XXXXX</code> or <code>APXNNNNNN</code>; MFFU looks like <code>MFFNNNNN</code>; TPT looks like <code>TPTNNNNN</code>; Tradeify and Bulenox use their own prefixes. The Account column in the CSV is your firm-and-plan identity — that's what you key the firm preset on.</li>
+  <li><strong>One export per firm = cleanest path.</strong> Run step 2 once per account and export each one separately into its own CSV. Three accounts = three CSVs. Each CSV carries the rule context for its account and nothing else.</li>
+  <li><strong>Single combined export works too, with care.</strong> If you'd rather do one "All Accounts" export and split downstream, that's fine — but the split has to happen BEFORE any P&amp;L analysis, because the trail-DD math, consistency math, and DLL math are all per-account-per-firm and they're different formulas. Mixing accounts in one calc is the most common silent error in multi-firm journaling.</li>
+</ul>
+
+<div class="key-fact">
+  <strong>For Aurafy users:</strong> the Rithmic import handles this for you — assign a firm + plan preset to each account ID once at import (Apex 4.0 100K, MFFU Core 50K, TPT PRO+ 50K, Tradeify Growth 100K, etc.) and Aurafy applies the correct trail / DLL / consistency math per account from that point on. A single drag-and-drop of the all-accounts CSV ends up with three independent rule trackers, one per account.
+</div>
+
+<h2 id="columns">CSV column reference (Executions / Trades tab)</h2>
+
+<p>Column names and order vary by R|Trader Pro build and by firm-skin. These are the fields that consistently appear in the standard Executions export — verify yours and map them to whatever tool you import into.</p>
+
+<table>
+  <thead>
+    <tr><th>Column (typical name)</th><th>What it means</th><th>Why it matters</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="col">Trade Date / Time</td><td>Timestamp of the fill, in the timezone configured in R|Trader Pro <em>Settings &gt; General</em></td><td>R|Trader Pro defaults to your PC clock's local time on most installs but some firm-skinned builds default to US/Central (Rithmic's home timezone). Verify before importing or every overnight session looks one day off</td></tr>
+    <tr><td class="col">Account</td><td>The firm-issued account ID (<code>APEX-XXXXX</code>, <code>MFFNNNNN</code>, <code>TPTNNNNN</code>, etc.)</td><td>This is the column that decides which firm preset applies. Split the file by Account before any rule math</td></tr>
+    <tr><td class="col">Symbol</td><td>Rithmic symbol format: root + month code + 1-digit or 2-digit year (<code>ESM6</code>, <code>ESM26</code>, <code>NQU6</code>, <code>MESZ26</code>)</td><td>Rithmic's 1-digit-year format collides every decade (<code>ESM6</code> means both 2016 and 2026). Most modern builds emit 2-digit years; if yours doesn't, treat the year as ambiguous and key off Trade Date</td></tr>
+    <tr><td class="col">Side</td><td><code>B</code> / <code>S</code> or <code>BUY</code> / <code>SELL</code> at the fill level</td><td>Side at the fill level, not at the round-turn level — a Long round-turn shows as Buy entry fill(s) + Sell exit fill(s), not "Long" anywhere</td></tr>
+    <tr><td class="col">Qty</td><td>Contracts in the fill</td><td>For a 5-lot entry filled in 3 pieces (2 + 2 + 1), this is 2, then 2, then 1 on three separate rows. Aggregation to round-turn happens later</td></tr>
+    <tr><td class="col">Price / Fill Price</td><td>Actual fill price on the exchange</td><td>Rithmic does not separately report a "requested" price (R|Trader Pro is execution-only — the requested price lives in your charting platform, not here). Slippage analysis requires correlating the chart-side order against this fill price</td></tr>
+    <tr><td class="col">Commission</td><td>Per-fill commission charged by the FCM (your prop firm's clearing-side commission)</td><td>R|Trader Pro is the only retail futures platform that breaks this out per-fill rather than summing at the account level. Commission rates are firm-specific and can vary by program</td></tr>
+    <tr><td class="col">Exchange Fee</td><td>Per-fill exchange fee charged by CME / CBOT / NYMEX</td><td>Exchange fees are flat per contract and vary by product (ES vs MES vs CL vs NQ). They are not a percentage of P&amp;L — high-frequency strategies eat them disproportionately</td></tr>
+    <tr><td class="col">Clearing Fee</td><td>Per-fill clearing fee (often $0.04–$0.12 per side depending on FCM)</td><td>The third leg of the all-in cost stack. Sum Commission + Exchange + Clearing for true round-turn cost. Generic "$1.50/side" estimates undercount by 20–40% on most prop programs</td></tr>
+    <tr><td class="col">NFA Fee</td><td>National Futures Association regulatory fee (very small — typically $0.02 per side)</td><td>Present on most US-FCM-routed exports. Roll it into the all-in cost row; don't analyze separately</td></tr>
+    <tr><td class="col">P&amp;L / Net P&amp;L</td><td>Gross or net per-fill P&amp;L where Rithmic has computed it</td><td>Some builds emit per-fill P&amp;L (FIFO-matched server-side), some only emit a running net at the bottom. If yours doesn't compute round-turn P&amp;L, you'll compute it downstream from fill price + side + qty</td></tr>
+    <tr><td class="col">Order ID</td><td>Rithmic's internal order ID for the fill chain</td><td>Two fills with the same Order ID are partials of the same logical order — that's how you collapse a multi-fill 5-lot entry into one logical entry side. Round-turn pairing is FIFO across Order IDs within the same Account + Symbol</td></tr>
+  </tbody>
+</table>
+
+<div class="key-fact">
+  <strong>Quick test:</strong> open the file and filter to a single Account + single Symbol and sum (signed) Qty (BUY positive, SELL negative). The result should be zero for every day you closed flat. If it isn't, you either have open positions, your filter is wrong, or the export missed rows.
+</div>
+
+<h2 id="pitfalls">The three quiet pitfalls</h2>
+
+<p>Most "my Rithmic numbers don't match my journal" tickets trace back to one of these three.</p>
+
+<h3>1. Partial fills are each a row (and inflate your trade count)</h3>
+
+<p>Rithmic emits one row per <em>fill</em>, not one row per <em>order</em>. A 5-lot entry filled in three pieces and exited in two ends up as five rows in the CSV — that's one round-turn trade, not five. Naive journals (or your own Excel) that count rows as "trades" report your trade count and win rate badly wrong on any session where size or partial fills were involved.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> always group fills into round-turns before counting trades. Group by Account + Symbol, sort by Trade Date/Time, walk through the fills FIFO matching Buys to Sells (or shorts to covers) until the net position returns to zero — that's one round-turn. Aurafy's Rithmic import does this automatically with FIFO matching per Account + Symbol. If you're scripting it yourself, the key invariant is: round-turn closes when cumulative signed Qty hits zero.
+</div>
+
+<h3>2. "All Accounts" exports silently mix firm presets</h3>
+
+<p>R|Trader Pro's Account filter defaults to "All Accounts" on most builds. Exporting with that default produces a CSV that mixes — for example — your Apex 4.0 eval, your MFFU Core funded, your TPT PRO+, and your Tradeify Growth into one file with the Account column as the only differentiator. Every downstream analysis that doesn't split by Account first applies the wrong firm rules to the wrong rows: Apex's 30% consistency to MFFU rows, MFFU's no-DLL assumption to Apex rows, TPT's phase-shifting trail mechanic to a Tradeify Growth eval. The math comes out clean and silently wrong.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> in step 2 of the export, pick a specific Account from the dropdown — one export per Account is the safest workflow. If you do an "All Accounts" export, the very first step downstream must be splitting the CSV by the Account column into one file per account before any rule math runs. Aurafy handles this automatically (you tag each Account ID with its firm preset once at import) — the manual split is only needed if you're working in Excel or another generic journal.
+</div>
+
+<h3>3. R|Trader (basic) and R|Trader Pro are different — the basic version may not expose Statements export</h3>
+
+<p>Rithmic ships two desktop clients with confusingly similar names: <strong>R|Trader</strong> (the older, lighter-weight version) and <strong>R|Trader Pro</strong> (the modern, full-featured version with Statements, multi-account, and the full export workflow). Some FCMs default-install R|Trader on a new account; some firm-skinned builds (Apex Trader, TPT Web, MFFU's R|Trader Pro skin) only ship R|Trader Pro. If your install doesn't have a Statements window with an Executions tab, you're probably on the basic R|Trader and need to install or request R|Trader Pro through your firm.</p>
+
+<div class="pitfall">
+  <strong>Fix:</strong> open the application's About dialog (Help &gt; About) and verify the build is <em>R|Trader Pro</em>, not <em>R|Trader</em>. If it's basic R|Trader, your firm's support team can install Pro free for funded traders — every Rithmic-routed prop firm we've researched (Apex, MFFU, TPT, Tradeify, Bulenox, Earn2Trade) makes R|Trader Pro available. Don't try to extract trade data from basic R|Trader for any period longer than a single day; the statement view is too limited.
+</div>
+
+<h2 id="cleanup">Cleaning the file before import</h2>
+
+<p>R|Trader Pro CSVs go in cleaner than NinjaTrader's or Sierra Chart's — there's no Modify/Cancel noise, no separate Orders/Trades/Executions tabs to reconcile, and the commission columns are already broken out per row. The cleanup is mostly account-splitting and round-turn pairing:</p>
+
+<ol>
+  <li><strong>Split by Account.</strong> If the export covers more than one Account ID, split into one CSV per Account. Every subsequent step is per-account.</li>
+  <li><strong>Verify the timezone.</strong> Open the file, pick a fill you remember taking, and check the timestamp matches what you remember. R|Trader Pro's default timezone varies by build — verify before assuming local time.</li>
+  <li><strong>Pair fills into round-turns.</strong> Sort by Trade Date/Time within each Account + Symbol, walk through fills FIFO, close a round-turn each time cumulative signed Qty returns to zero. Compute the round-turn P&amp;L from volume-weighted entry vs volume-weighted exit, signed by direction.</li>
+  <li><strong>Sum all three cost columns.</strong> All-in cost per round-turn = Commission + Exchange Fee + Clearing Fee + NFA Fee (if present), summed across all fills in the round-turn. Net round-turn P&amp;L = Gross round-turn P&amp;L − All-in cost.</li>
+  <li><strong>Normalize the timestamp.</strong> Convert Trade Date/Time to ISO 8601 with an explicit timezone offset (<code>2026-06-02T13:30:00-05:00</code>). Especially important when the export crosses DST boundaries.</li>
+  <li><strong>Map symbol to root.</strong> Add a <code>root</code> column derived from the symbol (<code>ESM26</code> → <code>ES</code>, <code>MESZ26</code> → <code>MES</code>). All cross-quarter analysis groups by root.</li>
+  <li><strong>Don't lose the raw rows.</strong> Keep the original R|Trader Pro CSV archived alongside the cleaned round-turn file. The fill-level data is what you'll need for any future slippage or partial-fill audit, and it's what your firm's compliance side may also reference if there's a payout dispute.</li>
+</ol>
+
+<div class="cta" id="import">
+  <h3>Or skip all of that — drop the file into Aurafy</h3>
+  <p>Aurafy's Rithmic / R|Trader Pro importer reads the standard Executions CSV (single-account or all-accounts), splits by Account ID, pairs fills into round-turns using FIFO matching per Account + Symbol, sums commission + exchange + clearing + NFA fees into one all-in cost per round-turn, normalizes the timezone, maps Rithmic symbols to roots, and applies the correct firm preset per account (Apex 4.0, MFFU Core/Rapid/Pro, TPT, Tradeify Growth/Select, Bulenox Option 1/2, Earn2Trade). The trail-DD floor, consistency-rule ratio, and DLL headroom compute independently per account from there. Free tier — 1 account, 30 days of history, no card required.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=rithmic-export-guide&amp;utm_content=primary-cta">Start importing free</a>
+  <a class="btn ghost" href="https://aurafy.dev/brokers/rithmic/?utm_source=tools&amp;utm_medium=rithmic-export-guide&amp;utm_content=rithmic-landing">More on Aurafy + Rithmic</a>
+</div>
+
+<h2>While you're cleaning up the data — track the rules too</h2>
+
+<p>Once your Rithmic trades are in a journal, a few free Aurafy tools layer prop-firm rule math on top of any trade history — no signup required:</p>
+
+<ul>
+  <li><a href="../../tools/trailing-drawdown-calculator/?utm_source=tools&amp;utm_medium=rithmic-export-guide">Trailing Drawdown Calculator</a> — model Apex 4.0 + MFFU + Topstep + Tradeify + Bulenox trail mechanics on a sequence of P&amp;L days from your Rithmic export.</li>
+  <li><a href="../../tools/consistency-rule-calculator/?utm_source=tools&amp;utm_medium=rithmic-export-guide">Consistency-Rule Calculator</a> — check Apex 30% / MFFU 40% / TPT / Earn2Trade thresholds against your actual P&amp;L distribution.</li>
+  <li><a href="../../tools/futures-pnl-calculator/?utm_source=tools&amp;utm_medium=rithmic-export-guide">Futures P&amp;L / Tick-Value Calculator</a> — exact tick-value math for any contract Rithmic routes (ES, NQ, MES, MNQ, CL, MCL, GC, MGC, ZB, 6E, MBT, and 18 more).</li>
+</ul>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Does R|Trader Pro have a built-in journal so I don't need an export?</summary>
+  <p>The P&amp;L Summary and Commission Summary tabs in the Statements window give you account-level totals — gross, commissions, net — but they don't tag setups, don't compute R-multiples, don't show charts, and don't track prop-firm rules. For account-balance monitoring it's fine; for learning your edge across months, it's not enough.</p>
+</details>
+
+<details>
+  <summary>What R|Trader Pro build do I need to export Statements?</summary>
+  <p>Any modern R|Trader Pro build (any release in the last few years) has the Statements window with Executions / Trades / P&amp;L Summary tabs. If your install doesn't, check Help &gt; About — you may be on the older R|Trader (basic), not R|Trader Pro. Every firm we've researched (Apex, MFFU, TPT, Tradeify, Bulenox, Earn2Trade) makes R|Trader Pro available free for funded traders — request it through your firm support if needed.</p>
+</details>
+
+<details>
+  <summary>Can I export via the Rithmic API instead of the CSV?</summary>
+  <p>Yes — Rithmic's API supports execution history pulls and is what every prop-firm-side reporting dashboard uses under the hood. For one-off journal exports the CSV is the right path (no API key, no credentials shared, takes 30 seconds). For automated nightly exports into a long-term database, the API is the right answer but it's overkill for any individual trader. Aurafy and most journals import the standard CSV — not API-pulled data — so the two flows don't compete.</p>
+</details>
+
+<details>
+  <summary>Why does my exported P&amp;L not match what my prop firm's dashboard shows?</summary>
+  <p>Three reasons usually. First: prop-firm dashboards apply the firm-specific commission rate (which is in the R|Trader Pro CSV — but the firm's dashboard may be using a different cached rate from your account-setup-time vs the live rate). Second: the firm dashboard may include or exclude swap/funding fees that R|Trader Pro reports separately. Third: time-of-day cutoff differences — the firm's "trading day" may end at 4:00 PM CT while Rithmic timestamps the fills in your local zone. None of these are bugs; they're reconciliation gaps you fix downstream.</p>
+</details>
+
+<details>
+  <summary>What about firm-skinned R|Trader Pro — Apex Trader, TPT Trader, Bulenox Trader, MFFU Trader?</summary>
+  <p>All of these are the same underlying Rithmic client with a firm-issued skin (different logo, different color scheme, sometimes a custom landing page). The Statements export path is the same across all of them. The Account column will show the firm-issued account ID, which is the same one your firm dashboard uses. If your firm-skinned build's menus look slightly different, the export is still under <em>Account &gt; Statements</em> or <em>Reports &gt; Statements</em> — Rithmic doesn't let skins move that menu.</p>
+</details>
+
+<details>
+  <summary>Does the export include cancelled or rejected orders?</summary>
+  <p>The Executions tab is fills only — Rithmic does not log cancels or rejects there. If you want order-level activity (cancels, modifies, rejects), the Orders tab in R|Trader Pro is a separate view, and it's screen-only on most builds (no CSV export). For journaling you only want fills, so this is the right shape; for bracket-discipline audits you'd watch in real-time or use your front-end platform's order log.</p>
+</details>
+
+<details>
+  <summary>Can I include chart screenshots or trade notes in the export?</summary>
+  <p>No. R|Trader Pro's Statements export is column data only — no screenshots, no chart annotations, no notes. If you need screenshots tied to trades, capture them outside R|Trader Pro (Aurafy's recorder is one path) and key them by entry timestamp in your journal.</p>
+</details>
+
+<details>
+  <summary>What if I'm front-ending Rithmic with NinjaTrader, Sierra Chart, Quantower, or MotiveWave?</summary>
+  <p>You have two valid import paths — the platform-side CSV (NinjaTrader 8's Trade Performance export, Sierra Chart's Trade Activity Log, Quantower's or MotiveWave's positions export) or the R|Trader Pro Statements CSV. Both contain the same fills. Most multi-firm traders prefer the R|Trader Pro statement because one export covers every account on the platform. Single-firm traders often find their charting platform's CSV cleaner because it has chart-side context (timeframe, setup tag if you added one). Either is fine; pick the one your downstream tool reads more cleanly. See our <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> and <a href="../sierra-chart-export-trades/">Sierra Chart export guide</a> for the platform-side paths.</p>
+</details>
+
+<details>
+  <summary>What about Topstep traders — does this apply?</summary>
+  <p>No. Topstep moved off Rithmic in 2024 — Topstep funded accounts run on TopstepX (web platform) or NinjaTrader 8 with the TopstepX DLL, not on R|Trader Pro. If you're Topstep, the <a href="../tradovate-export-trades/">Tradovate export guide</a> covers TopstepX (which uses Tradovate-style fills) and the <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> covers the NT8-DLL path. See our <a href="../../brokers/rithmic/">Rithmic broker page</a> for the multi-firm-on-Rithmic-NOT-including-Topstep workflow.</p>
+</details>
+
+<div class="cta">
+  <h3>Free trading journal that actually reads R|Trader Pro statements cleanly</h3>
+  <p>Aurafy imports the standard R|Trader Pro Executions CSV (single-account or all-accounts), splits by Account ID, pairs fills into round-turns with FIFO matching, sums commission + exchange + clearing + NFA into one all-in cost per round-turn, normalizes the timezone, maps Rithmic symbols to roots, and applies the correct firm preset per account. Apex / MFFU / TPT / Tradeify / Bulenox / Earn2Trade rule tracking included. Free tier — 1 account, 30 days history, no card.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=rithmic-export-guide&amp;utm_content=final-cta">Start free — no card</a>
+  <a class="btn ghost" href="https://aurafy.dev/pricing/?utm_source=tools&amp;utm_medium=rithmic-export-guide&amp;utm_content=pricing">See pricing</a>
+</div>
+
+<footer>
+  Independent guide by Aurafy — a futures trading journal for prop-firm traders.
+  Not affiliated with Rithmic, LLC, Trading Technologies, Apex Trader Funding, MyFundedFutures, Take Profit Trader, Tradeify, Bulenox, or Earn2Trade.
+  Rithmic, R|Trader, and R|Trader Pro are trademarks of Rithmic, LLC. R|Trader Pro's UI varies by build and firm-skin;
+  verify menu labels and column names against your current install.
+  <br><br>
+  <a href="https://aurafy.dev/">Aurafy home</a> ·
+  <a href="../tradovate-export-trades/">Tradovate export guide</a> ·
+  <a href="../ninjatrader-export-trades/">NinjaTrader 8 export guide</a> ·
+  <a href="../sierra-chart-export-trades/">Sierra Chart export guide</a> ·
+  <a href="../../prop-firms/">Prop-firm rules hub</a> ·
+  <a href="../../brokers/">Broker journal guides</a> ·
+  <a href="../../tools/trailing-drawdown-calculator/">Trail calculator</a>
+</footer>
+
+</div>
+</body>
+</html>

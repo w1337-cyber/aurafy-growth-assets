@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>How to Export Your Trades — Broker Export Guides for Futures Traders (2026) | Aurafy</title>
-<meta name="description" content="Independent, step-by-step CSV export guides for futures + prop-firm traders. Tradovate, NinjaTrader 8, Sierra Chart — exact export path, column reference, the quiet pitfalls, and a journal-ready cleanup checklist for each platform." />
+<meta name="description" content="Independent, step-by-step CSV export guides for futures + prop-firm traders. Tradovate, NinjaTrader 8, Sierra Chart, Rithmic R|Trader Pro — exact export path, column reference, the quiet pitfalls, and a journal-ready cleanup checklist for each platform." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://aurafy.dev/guides/" />
 <meta property="og:title" content="How to Export Your Trades — Broker Export Guides (2026)" />
-<meta property="og:description" content="Independent CSV export guides for Tradovate, NinjaTrader 8, and Sierra Chart — exact paths, column references, pitfalls, and cleanup steps." />
+<meta property="og:description" content="Independent CSV export guides for Tradovate, NinjaTrader 8, Sierra Chart, and Rithmic R|Trader Pro — exact paths, column references, pitfalls, and cleanup steps." />
 <meta property="og:type" content="article" />
 <style>
   *,*::before,*::after{box-sizing:border-box}
@@ -115,10 +115,10 @@
 
 <div class="decision"><strong>I trade Apex / MFFU / TPT on TradingView, Quantower, or MotiveWave</strong>Your front-end is one of these but the fills still route through Tradovate, NinjaTrader, or Rithmic underneath. Pick the guide that matches the actual order route. Tradovate web is the cleanest fallback if your charting platform's own CSV is patchy.</div>
 
-<div class="decision"><strong>I have multiple firm accounts under one Rithmic R|Trader Pro login</strong>The export comes from R|Trader Pro itself — covered in the upcoming <em>Rithmic R|Trader Pro export guide</em> (this page will link it once shipped). In the meantime: the <a href="/brokers/rithmic/">Rithmic broker page</a> describes the multi-firm-on-one-login workflow and the import path.</div>
+<div class="decision"><strong>I have multiple firm accounts under one Rithmic R|Trader Pro login</strong>The export comes from R|Trader Pro itself — read the <a href="/guides/rithmic-rtrader-pro-export-trades/">Rithmic R|Trader Pro export guide</a>. It covers Account &gt; Statements export, the multi-firm-one-login workflow, and how to split Apex / MFFU / TPT / Tradeify / Bulenox / Earn2Trade accounts by Account ID so each gets the correct firm preset.</div>
 
 <h2 id="guides">The export guides</h2>
-<p>Three guides, three audience profiles. Each one covers the exact export menu path, the full CSV column reference for that platform, the platform-specific pitfalls, and a 6-step cleanup checklist before import.</p>
+<p>Four guides, four audience profiles. Each one covers the exact export menu path, the full CSV column reference for that platform, the platform-specific pitfalls, and a cleanup checklist before import.</p>
 
 <div class="guide-grid">
 
@@ -146,12 +146,12 @@
     <a class="go" href="/guides/sierra-chart-export-trades/">Read the Sierra Chart guide →</a>
   </div>
 
-  <div class="guide-card" style="opacity:0.62">
-    <div class="role">Coming soon · multi-firm prop traders</div>
-    <h3>Rithmic R|Trader Pro Export Guide</h3>
-    <p class="summary">For traders with 2-3 funded accounts across Apex / MFFU / TPT / Tradeify / Bulenox under one R|Trader Pro login. Covers the multi-firm statement, account separation, and Rithmic-side commission reconciliation. Pairs with the existing Rithmic broker page workflow.</p>
-    <div class="wedge"><strong>Why it's the next one:</strong> Rithmic is the data feed + clearing route under most prop firms. One R|Trader login often spans multiple firms — the multi-firm import workflow is the unsolved problem this guide will solve.</div>
-    <a class="go" href="/brokers/rithmic/">For now — read the Rithmic broker page →</a>
+  <div class="guide-card">
+    <div class="role">Multi-firm prop traders · data feed + clearing route</div>
+    <h3>Rithmic R|Trader Pro Export Guide (2026)</h3>
+    <p class="summary">Account &gt; Statements → Executions tab → right-click → Export to CSV. The multi-firm-on-one-login workflow (Apex + MFFU + TPT + Tradeify + Bulenox + Earn2Trade under one Rithmic login). 11-column reference with the broken-out commission / exchange-fee / clearing-fee / NFA columns. 3 pitfalls (partial fills inflating trade count, "All Accounts" silently mixing firm presets, R|Trader basic vs R|Trader Pro confusion).</p>
+    <div class="wedge"><strong>Platform-specific wedge:</strong> the only platform where one login spans multiple firm-issued account IDs at once. The Account column is the firm-preset key — split per Account ID before any rule math, or trail-DD / consistency formulas get applied to the wrong rows.</div>
+    <a class="go" href="/guides/rithmic-rtrader-pro-export-trades/">Read the Rithmic R|Trader Pro guide →</a>
   </div>
 
 </div>
@@ -257,7 +257,7 @@
 
 <details>
   <summary>What's coming next in this guide series?</summary>
-  <p>Rithmic R|Trader Pro export guide (the multi-firm-on-one-login workflow) is the next one — it's the data feed + clearing route under Apex / MFFU / TPT / Tradeify / Bulenox, and a single R|Trader login often spans multiple firms. After that, firm-specific import paths (Topstep TopstepX export, Apex import workflow, MFFU Core / Expert program-aware imports). Each new guide will appear in the grid above when it ships — bookmark this page if you want notified-by-RSS-equivalent.</p>
+  <p>The <a href="/guides/rithmic-rtrader-pro-export-trades/">Rithmic R|Trader Pro guide</a> just shipped — that closes the four-platform set covering Tradovate, NinjaTrader 8, Sierra Chart, and Rithmic. Next on the queue: firm-specific import paths (Topstep TopstepX export, Apex import workflow, MFFU Core / Expert program-aware imports) and front-end-platform CSVs (Quantower, MotiveWave, TradingView-with-Rithmic). Each new guide will appear in the grid above when it ships — bookmark this page if you want notified-by-RSS-equivalent.</p>
 </details>
 
 <footer>
