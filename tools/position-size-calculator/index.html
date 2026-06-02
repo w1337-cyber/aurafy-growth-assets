@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Position Size Calculator for Prop Firm Futures Traders (Topstep, Apex 4.0, MFFU) | Aurafy</title>
-<meta name="description" content="Free position size calculator for prop-firm futures traders. Pick Topstep / Apex 4.0 / MFFU + your stop in ticks + risk per trade — see max contracts, $ risk, % of account, distance to drawdown floor + DLL, and how many of these losses in a row blow the account. No login." />
+<title>Position Size Calculator for Prop Firm Futures Traders (Topstep, Apex 4.0, MFFU, TPT, Tradeify, Bulenox, Earn2Trade) | Aurafy</title>
+<meta name="description" content="Free position size calculator for prop-firm futures traders. Pick Topstep / Apex 4.0 / MFFU / TPT / Tradeify / Bulenox / Earn2Trade + your stop in ticks + risk per trade — see max contracts, $ risk, % of account, distance to drawdown floor + DLL, and how many of these losses in a row blow the account. No login." />
 <meta name="robots" content="index,follow" />
 <link rel="canonical" href="https://aurafy.dev/tools/position-size-calculator/" />
-<meta property="og:title" content="Position Size Calculator — Prop-Firm Aware (Topstep, Apex 4.0, MFFU)" />
+<meta property="og:title" content="Position Size Calculator — Prop-Firm Aware (Topstep, Apex 4.0, MFFU, TPT, Tradeify, Bulenox, Earn2Trade)" />
 <meta property="og:description" content="The only futures position-size calculator that checks your trail-DD buffer + daily loss limit per trade. Free. No login." />
 <meta property="og:type" content="website" />
 <style>
@@ -114,6 +114,12 @@
         <option value="apex" selected>Apex 4.0</option>
         <option value="mffu_core">MFFU Core (50K, EOD, 40% consistency)</option>
         <option value="mffu_rapid">MFFU Rapid (intraday, no consistency)</option>
+        <option value="tpt_test">TPT Test (EOD eval, no DLL)</option>
+        <option value="tradeify_growth">Tradeify Growth (EOD, has eval DLL)</option>
+        <option value="tradeify_select">Tradeify Select (EOD, no DLL)</option>
+        <option value="bulenox_opt1">Bulenox Option 1 (intraday, no DLL)</option>
+        <option value="bulenox_opt2">Bulenox Option 2 (EOD, has DLL)</option>
+        <option value="earn2trade_gau">Earn2Trade GAU (EOD eval, has DLL)</option>
         <option value="custom">Custom (no firm rules)</option>
       </select>
     </div>
@@ -252,6 +258,10 @@
     <li><strong>Topstep:</strong> trail tracks intraday equity HWM (Combine) or daily EOD balance (XFA), and <em>locks</em> at the starting balance once HWM = SB + drawdown amount. Funded account = $0 net P&amp;L is your floor permanently.</li>
     <li><strong>Apex 4.0:</strong> trail locks at <em>starting balance + $100</em> (the "safety net"). E.g. 100K → lock at $103,100. Both EOD and intraday options exist; the $ floor is the same.</li>
     <li><strong>MFFU Core / Rapid:</strong> same SB+$100 lock as Apex. Core is EOD; Rapid is intraday.</li>
+    <li><strong>TPT Test:</strong> SB lock (same as Topstep). EOD trail during the Test phase. PRO shifts to intraday and PRO+ shifts back to EOD — same $ drawdown numbers, only the trigger timing differs (use Test preset for funded-phase math too). No DLL firmwide since Jan 2025 — trail is the only hard guardrail.</li>
+    <li><strong>Tradeify Growth / Select:</strong> SB+$100 lock (same archetype as Apex/MFFU). EOD trail across all programs. Growth has an evaluation DLL; Select does not. Lightning (instant-funded, not listed) follows the same lock pattern with its own DD numbers.</li>
+    <li><strong>Bulenox Option 1 / Option 2:</strong> SB+$100 lock. Option 1 = intraday HWM trail, no DLL; Option 2 = EOD trail with DLL. The choice between them is <em>permanent at signup</em> — you cannot switch.</li>
+    <li><strong>Earn2Trade GAU:</strong> SB lock (same archetype as Topstep family). EOD-only trail. Has DLL during evaluation. Drawdown numbers diverge slightly from Topstep at 100K+ — use the preset, don't reuse Topstep numbers.</li>
     <li><strong>Custom:</strong> no firm rules — the calc only shows $ risk per trade and % of balance.</li>
   </ul>
   <p><strong>Buffer to trail floor</strong> = current balance − trail floor (the floor depends on your HWM if not yet locked).</p>
@@ -286,7 +296,7 @@
 </div>
 
 <footer>
-  Built by <a href="https://aurafy.dev?utm_source=tools&utm_medium=position-size-calc&utm_campaign=footer">Aurafy</a> · not affiliated with Topstep, Apex Trader Funding, or MyFundedFutures · prop-firm rules change — verify before relying on this for live trading
+  Built by <a href="https://aurafy.dev?utm_source=tools&utm_medium=position-size-calc&utm_campaign=footer">Aurafy</a> · not affiliated with Topstep, Apex Trader Funding, MyFundedFutures, Take Profit Trader, Tradeify, Bulenox, or Earn2Trade · prop-firm rules change — verify before relying on this for live trading
 </footer>
 
 </div>
@@ -330,6 +340,69 @@ const FIRMS = {
       "50K":  { sb:50000,  dd:2000, dll:null },
       "100K": { sb:100000, dd:4000, dll:null },
       "150K": { sb:150000, dd:6000, dll:null },
+    }
+  },
+  tpt_test: {
+    name: "TPT Test",
+    locks: "sb",             // trail locks at starting balance (same as Topstep)
+    accts: {
+      "25K":  { sb:25000,  dd:1500, dll:null },
+      "50K":  { sb:50000,  dd:2000, dll:null },
+      "75K":  { sb:75000,  dd:2500, dll:null },
+      "100K": { sb:100000, dd:3000, dll:null },
+      "150K": { sb:150000, dd:4500, dll:null },
+    }
+  },
+  tradeify_growth: {
+    name: "Tradeify Growth",
+    locks: "sb_plus_100",
+    accts: {
+      "25K":  { sb:25000,  dd:1000, dll:600  },
+      "50K":  { sb:50000,  dd:2000, dll:1250 },
+      "100K": { sb:100000, dd:3500, dll:2500 },
+      "150K": { sb:150000, dd:5000, dll:3750 },
+    }
+  },
+  tradeify_select: {
+    name: "Tradeify Select",
+    locks: "sb_plus_100",
+    accts: {
+      "25K":  { sb:25000,  dd:1000, dll:null },
+      "50K":  { sb:50000,  dd:2000, dll:null },
+      "100K": { sb:100000, dd:3000, dll:null },
+      "150K": { sb:150000, dd:4500, dll:null },
+    }
+  },
+  bulenox_opt1: {
+    name: "Bulenox Option 1",
+    locks: "sb_plus_100",
+    accts: {
+      "25K":  { sb:25000,  dd:1500, dll:null },
+      "50K":  { sb:50000,  dd:2500, dll:null },
+      "100K": { sb:100000, dd:3000, dll:null },
+      "150K": { sb:150000, dd:4500, dll:null },
+      "250K": { sb:250000, dd:5500, dll:null },
+    }
+  },
+  bulenox_opt2: {
+    name: "Bulenox Option 2",
+    locks: "sb_plus_100",
+    accts: {
+      "25K":  { sb:25000,  dd:1500, dll:500  },
+      "50K":  { sb:50000,  dd:2500, dll:1100 },
+      "100K": { sb:100000, dd:3000, dll:2200 },
+      "150K": { sb:150000, dd:4500, dll:3300 },
+      "250K": { sb:250000, dd:5500, dll:4500 },
+    }
+  },
+  earn2trade_gau: {
+    name: "Earn2Trade GAU",
+    locks: "sb",             // trail locks at starting balance (same as Topstep family)
+    accts: {
+      "50K":  { sb:50000,  dd:2000, dll:1100 },
+      "100K": { sb:100000, dd:3500, dll:2200 },
+      "150K": { sb:150000, dd:4500, dll:3300 },
+      "200K": { sb:200000, dd:6000, dll:4400 },
     }
   },
   custom: {
