@@ -127,6 +127,8 @@
 
 <div class="alert"><strong>The lifecycle landmines:</strong> the first day on PRO (EOD → intraday handoff) and the first day on PRO+ (intraday → EOD handoff). Most TPT blow-ups happen at these transitions, not deep into a phase. Plan your sizing and trade-management style explicitly for the trail type you're operating under that day.</div>
 
+<p><strong>Deep dive →</strong> <a href="/blog/apex-4-0-eod-vs-intraday-2026/">Apex 4.0 EOD vs intraday: the canonical EOD-vs-intraday playbook</a> — TPT shifts between both mechanics across its lifecycle, so the same playbook traders use to pick the right Apex 4.0 plan applies directly to TPT phase transitions. The post walks through how unrealized P&amp;L moves an intraday trail tick-by-tick (the PRO trap) versus how EOD updates only at session close (the Test + PRO+ behavior), with worked examples of trades that pass one mechanic and bust the other. Read it once and you stop mismanaging the PRO handoff.</p>
+
 <h2 id="test">Test — the evaluation phase (EOD trail, 50% consistency)</h2>
 <p>Test is TPT's evaluation: five sizes available, end-of-day trailing drawdown, a 50% single-day consistency rule, and a minimum of 5 trading days before you can pass. There is <strong>no daily loss limit</strong> on any TPT phase — the trail is your only floor.</p>
 
