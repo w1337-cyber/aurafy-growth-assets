@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Futures P&L Calculator — Tick Value, Points, Net P&L (ES, NQ, CL, GC) | Aurafy</title>
+<meta name="description" content="Free futures P&L calculator. Pick a contract (ES, NQ, MES, MNQ, CL, GC, ZB, 6E, MBT…), drop in entry, exit, stop and contracts — see ticks, points, gross + net P&L, $ risk, and R-multiple. No login." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/tools/futures-pnl-calculator/" />
+<meta property="og:title" content="Futures P&L Calculator — Tick Value, Points, Net P&L" />
+<meta property="og:description" content="Free. No login. ES/NQ/CL/GC and 25+ contracts preloaded with correct tick values. See gross, net, $ risk and R-multiple instantly." />
+<meta property="og:type" content="website" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-size:1.55rem;margin:0 0 6px;letter-spacing:-0.01em}
+  header p.lede{color:var(--muted);margin:0 0 22px;font-size:0.98rem}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:640px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:1fr 1fr 1fr}}
+  label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+  select,input[type=number],input[type=text]{
+    width:100%;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);border-radius:8px;
+    padding:11px 12px;font-size:1rem;font-family:var(--mono);
+    -webkit-appearance:none;appearance:none;
+  }
+  select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .seg{display:flex;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px}
+  .seg button{flex:1 1 0;background:transparent;color:var(--muted);border:0;padding:10px 8px;border-radius:6px;font-size:0.94rem;cursor:pointer;font-weight:500}
+  .seg button.on{background:var(--accent);color:#fff}
+  .info-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border);font-size:0.93rem}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{font-family:var(--mono);font-weight:600}
+  .result-card{
+    background:linear-gradient(135deg,#171c25 0%,#13171c 100%);
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .big{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em}
+  .big.pos{color:var(--green)}
+  .big.neg{color:var(--red)}
+  .big.warn{color:var(--amber)}
+  .sub{color:var(--muted);font-size:0.86rem;margin-top:2px}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.76rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
+  .badge.pass{background:rgba(61,220,151,0.12);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+  .badge.fail{background:rgba(255,92,124,0.12);color:var(--red);border:1px solid rgba(255,92,124,0.3)}
+  .badge.warn{background:rgba(255,180,84,0.12);color:var(--amber);border:1px solid rgba(255,180,84,0.3)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:12px 14px;color:#f0d4a8;font-size:0.86rem;margin-bottom:18px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:18px;margin-top:22px}
+  .cta h3{margin:0 0 6px;font-size:1.05rem}
+  .cta p{margin:0 0 10px;color:var(--muted);font-size:0.93rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-weight:600;font-size:0.92rem}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  details{margin-top:18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.95rem}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  details ul{font-size:0.91rem;color:#c4ccd6;margin:8px 0;padding-left:20px}
+  details li{margin:4px 0}
+  footer{margin-top:34px;text-align:center;color:var(--muted);font-size:0.85rem}
+  .spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;font-size:0.9rem;margin-top:4px}
+  @media(min-width:640px){.spec-grid{grid-template-columns:repeat(4,1fr)}}
+  .spec-grid .k{color:var(--muted);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.04em}
+  .spec-grid .v{font-family:var(--mono);font-weight:600;color:var(--text)}
+  optgroup{font-style:normal;font-weight:600;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Futures P&amp;L Calculator</h1>
+  <p class="lede">Pick a contract, enter your trade — see ticks, points, gross P&amp;L, commissions, net, $ risk and R-multiple. 25+ presets with correct tick values.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with your broker/exchange.</strong> Contract specs occasionally change. Treat this as a planning tool, not advice. Commissions and exchange fees vary by broker and account type.
+</div>
+
+<div class="panel">
+  <div class="grid cols-2">
+    <div>
+      <label for="contract">Contract</label>
+      <select id="contract">
+        <optgroup label="Equity Index — E-mini">
+          <option value="ES">ES — E-mini S&amp;P 500</option>
+          <option value="NQ">NQ — E-mini Nasdaq 100</option>
+          <option value="RTY">RTY — E-mini Russell 2000</option>
+          <option value="YM">YM — E-mini Dow</option>
+        </optgroup>
+        <optgroup label="Equity Index — Micro">
+          <option value="MES">MES — Micro S&amp;P 500</option>
+          <option value="MNQ">MNQ — Micro Nasdaq 100</option>
+          <option value="M2K">M2K — Micro Russell 2000</option>
+          <option value="MYM">MYM — Micro Dow</option>
+        </optgroup>
+        <optgroup label="Energy">
+          <option value="CL">CL — WTI Crude Oil</option>
+          <option value="MCL">MCL — Micro WTI Crude</option>
+          <option value="NG">NG — Natural Gas</option>
+          <option value="QM">QM — E-mini Crude Oil</option>
+          <option value="RB">RB — RBOB Gasoline</option>
+        </optgroup>
+        <optgroup label="Metals">
+          <option value="GC">GC — Gold</option>
+          <option value="MGC">MGC — Micro Gold</option>
+          <option value="SI">SI — Silver</option>
+          <option value="SIL">SIL — Micro Silver</option>
+          <option value="HG">HG — Copper</option>
+        </optgroup>
+        <optgroup label="Rates / Bonds">
+          <option value="ZB">ZB — 30-Yr T-Bond</option>
+          <option value="ZN">ZN — 10-Yr T-Note</option>
+          <option value="ZF">ZF — 5-Yr T-Note</option>
+          <option value="ZT">ZT — 2-Yr T-Note</option>
+        </optgroup>
+        <optgroup label="FX">
+          <option value="6E">6E — Euro FX</option>
+          <option value="6B">6B — British Pound</option>
+          <option value="6J">6J — Japanese Yen</option>
+          <option value="6A">6A — Australian Dollar</option>
+        </optgroup>
+        <optgroup label="Crypto">
+          <option value="BTC">BTC — Bitcoin (5 BTC)</option>
+          <option value="MBT">MBT — Micro Bitcoin (0.1 BTC)</option>
+          <option value="MET">MET — Micro Ether (0.1 ETH)</option>
+        </optgroup>
+        <optgroup label="Agriculture">
+          <option value="ZC">ZC — Corn</option>
+          <option value="ZS">ZS — Soybeans</option>
+          <option value="ZW">ZW — Wheat</option>
+        </optgroup>
+        <optgroup label="Custom">
+          <option value="CUSTOM">Custom — enter your own tick size / value</option>
+        </optgroup>
+      </select>
+    </div>
+    <div>
+      <label>Side</label>
+      <div class="seg" id="sideSeg" role="tablist">
+        <button type="button" data-side="LONG" class="on">Long</button>
+        <button type="button" data-side="SHORT">Short</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spec-grid" id="specGrid" aria-live="polite"></div>
+
+  <div id="customBlock" style="display:none;margin-top:14px">
+    <div class="grid cols-3">
+      <div>
+        <label for="customTickSize">Tick size</label>
+        <input id="customTickSize" type="number" inputmode="decimal" step="any" placeholder="0.25" />
+      </div>
+      <div>
+        <label for="customTickValue">Tick value ($)</label>
+        <input id="customTickValue" type="number" inputmode="decimal" step="any" placeholder="12.50" />
+      </div>
+      <div>
+        <label for="customSymbol">Symbol</label>
+        <input id="customSymbol" type="text" placeholder="MY1" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="grid cols-3">
+    <div>
+      <label for="entry">Entry price</label>
+      <input id="entry" type="number" inputmode="decimal" step="any" placeholder="5000.00" />
+    </div>
+    <div>
+      <label for="exit">Exit price</label>
+      <input id="exit" type="number" inputmode="decimal" step="any" placeholder="5005.00" />
+    </div>
+    <div>
+      <label for="contracts">Contracts</label>
+      <input id="contracts" type="number" inputmode="numeric" step="1" min="1" value="1" />
+    </div>
+  </div>
+  <div class="grid cols-3" style="margin-top:14px">
+    <div>
+      <label for="stop">Stop price <span style="text-transform:none;color:var(--muted)">(optional, for $ risk + R)</span></label>
+      <input id="stop" type="number" inputmode="decimal" step="any" placeholder="4998.00" />
+    </div>
+    <div>
+      <label for="commPerSide">Commission/side $ <span style="text-transform:none;color:var(--muted)">(per contract)</span></label>
+      <input id="commPerSide" type="number" inputmode="decimal" step="any" placeholder="0" value="0" />
+    </div>
+    <div>
+      <label for="feesPerSide">Exchange + NFA fees/side $</label>
+      <input id="feesPerSide" type="number" inputmode="decimal" step="any" placeholder="0" value="0" />
+    </div>
+  </div>
+</div>
+
+<div class="result-card">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;margin-bottom:6px">
+    <div>
+      <div class="sub" style="margin-top:0">Net P&amp;L</div>
+      <div class="big" id="netPnl">—</div>
+    </div>
+    <div id="netBadge"></div>
+  </div>
+  <div class="info-row"><span class="k">Gross P&amp;L</span><span class="v" id="grossPnl">—</span></div>
+  <div class="info-row"><span class="k">Total commissions + fees (round trip)</span><span class="v" id="totalCosts">—</span></div>
+  <div class="info-row"><span class="k">Ticks moved (your direction)</span><span class="v" id="ticksMoved">—</span></div>
+  <div class="info-row"><span class="k">Points moved</span><span class="v" id="pointsMoved">—</span></div>
+  <div class="info-row"><span class="k">$ per tick (current size)</span><span class="v" id="dollarsPerTick">—</span></div>
+  <div class="info-row"><span class="k">$ risk to stop</span><span class="v" id="dollarRisk">—</span></div>
+  <div class="info-row"><span class="k">R-multiple</span><span class="v" id="rMultiple">—</span></div>
+</div>
+
+<div class="cta">
+  <h3>Stop calculating trade by trade.</h3>
+  <p>Aurafy auto-logs every futures trade (Tradovate, NinjaTrader, Sierra Chart, Rithmic) with correct tick values, fees, MFE/MAE, R-multiples — plus screen recording so you can watch your own decisions back.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=futures-pnl-calc" rel="noopener">Try Aurafy free →</a>
+</div>
+
+<details>
+  <summary>How this is calculated</summary>
+  <p><strong>Ticks moved</strong> = (exit − entry) ÷ tick size, then signed by your direction (long: positive when price rises; short: positive when price falls).</p>
+  <p><strong>Gross P&amp;L</strong> = ticks moved × tick value × contracts.</p>
+  <p><strong>Net P&amp;L</strong> = gross − (commission + fees) × 2 sides × contracts. So if commission is $1.20/side and fees are $0.50/side, that's $3.40 round-trip per contract.</p>
+  <p><strong>$ per tick</strong> = tick value × contracts. Useful for sizing: "1 tick of slippage costs me $X."</p>
+  <p><strong>$ risk to stop</strong> = |stop − entry| ÷ tick size × tick value × contracts. Costs are <em>not</em> included in $ risk — just price risk.</p>
+  <p><strong>R-multiple</strong> = net P&amp;L ÷ $ risk. A +1R win nets the same as you risked; a +2R win nets twice your risk; -1R = full stop loss hit. Anchor your edge to R, not dollars.</p>
+</details>
+
+<details>
+  <summary>Contract specs reference (tick size · tick value · 1 point)</summary>
+  <ul>
+    <li><strong>ES</strong> · 0.25 · $12.50 · $50/pt</li>
+    <li><strong>NQ</strong> · 0.25 · $5.00 · $20/pt</li>
+    <li><strong>RTY</strong> · 0.10 · $5.00 · $50/pt</li>
+    <li><strong>YM</strong> · 1.00 · $5.00 · $5/pt</li>
+    <li><strong>MES / MNQ / M2K / MYM</strong> · 1/10 of the E-mini (MES $1.25/tick, MNQ $0.50/tick, M2K $0.50/tick, MYM $0.50/tick)</li>
+    <li><strong>CL</strong> · 0.01 · $10.00 · $1,000/pt &nbsp; · &nbsp; <strong>MCL</strong> · 0.01 · $1.00 · $100/pt</li>
+    <li><strong>NG</strong> · 0.001 · $10.00 &nbsp; · &nbsp; <strong>RB</strong> · 0.0001 · $4.20</li>
+    <li><strong>GC</strong> · 0.10 · $10.00 · $100/pt &nbsp; · &nbsp; <strong>MGC</strong> · 0.10 · $1.00 · $10/pt</li>
+    <li><strong>SI</strong> · 0.005 · $25.00 &nbsp; · &nbsp; <strong>SIL</strong> · 0.005 · $5.00 &nbsp; · &nbsp; <strong>HG</strong> · 0.0005 · $12.50</li>
+    <li><strong>ZB</strong> · 1/32 (0.03125) · $31.25 &nbsp; · &nbsp; <strong>ZN</strong> · 1/64 (0.015625) · $15.625</li>
+    <li><strong>ZF</strong> · 1/128 (0.0078125) · $7.8125 &nbsp; · &nbsp; <strong>ZT</strong> · 1/256 · $7.8125</li>
+    <li><strong>6E / 6B / 6A</strong> · 0.0001 · $12.50 each (6E historically 0.00005/$6.25 — check broker for half-tick)</li>
+    <li><strong>6J</strong> · 0.0000005 · $6.25</li>
+    <li><strong>BTC</strong> · 5 · $25 (5 BTC) &nbsp; · &nbsp; <strong>MBT</strong> · 5 · $0.50 (0.1 BTC) &nbsp; · &nbsp; <strong>MET</strong> · 0.25 · $0.025</li>
+    <li><strong>ZC / ZS / ZW</strong> · 0.25 · $12.50 (¼-cent ticks, $50/pt)</li>
+  </ul>
+  <p style="color:var(--muted);font-size:0.85rem">Source: CME contract specs (public). Confirm with your broker — minimums and half-ticks vary.</p>
+</details>
+
+<footer>
+  Built by <a href="https://aurafy.dev/?utm_source=tools&amp;utm_medium=futures-pnl-calc">Aurafy</a> — the futures trading journal that logs this stuff for you. Free forever.
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+// Contract specs — { tickSize, tickValue, currency, name }
+// Tick value is in USD unless noted.
+const SPECS = {
+  // Equity index — E-mini (0.25 tick)
+  ES:  { tickSize:0.25,    tickValue:12.50,   name:"E-mini S&P 500" },
+  NQ:  { tickSize:0.25,    tickValue:5.00,    name:"E-mini Nasdaq 100" },
+  RTY: { tickSize:0.10,    tickValue:5.00,    name:"E-mini Russell 2000" },
+  YM:  { tickSize:1.00,    tickValue:5.00,    name:"E-mini Dow" },
+  // Micros
+  MES: { tickSize:0.25,    tickValue:1.25,    name:"Micro S&P 500" },
+  MNQ: { tickSize:0.25,    tickValue:0.50,    name:"Micro Nasdaq 100" },
+  M2K: { tickSize:0.10,    tickValue:0.50,    name:"Micro Russell 2000" },
+  MYM: { tickSize:1.00,    tickValue:0.50,    name:"Micro Dow" },
+  // Energy
+  CL:  { tickSize:0.01,    tickValue:10.00,   name:"WTI Crude Oil" },
+  MCL: { tickSize:0.01,    tickValue:1.00,    name:"Micro WTI Crude" },
+  NG:  { tickSize:0.001,   tickValue:10.00,   name:"Natural Gas" },
+  QM:  { tickSize:0.025,   tickValue:12.50,   name:"E-mini Crude Oil" },
+  RB:  { tickSize:0.0001,  tickValue:4.20,    name:"RBOB Gasoline" },
+  // Metals
+  GC:  { tickSize:0.10,    tickValue:10.00,   name:"Gold" },
+  MGC: { tickSize:0.10,    tickValue:1.00,    name:"Micro Gold" },
+  SI:  { tickSize:0.005,   tickValue:25.00,   name:"Silver" },
+  SIL: { tickSize:0.005,   tickValue:5.00,    name:"Micro Silver" },
+  HG:  { tickSize:0.0005,  tickValue:12.50,   name:"Copper" },
+  // Rates
+  ZB:  { tickSize:1/32,    tickValue:31.25,   name:"30-Yr T-Bond" },
+  ZN:  { tickSize:1/64,    tickValue:15.625,  name:"10-Yr T-Note" },
+  ZF:  { tickSize:1/128,   tickValue:7.8125,  name:"5-Yr T-Note" },
+  ZT:  { tickSize:1/256,   tickValue:7.8125,  name:"2-Yr T-Note" },
+  // FX
+  "6E":{ tickSize:0.0001,  tickValue:12.50,   name:"Euro FX" },
+  "6B":{ tickSize:0.0001,  tickValue:6.25,    name:"British Pound" },
+  "6J":{ tickSize:0.0000005,tickValue:6.25,   name:"Japanese Yen" },
+  "6A":{ tickSize:0.0001,  tickValue:10.00,   name:"Australian Dollar" },
+  // Crypto
+  BTC: { tickSize:5,       tickValue:25.00,   name:"Bitcoin (5 BTC)" },
+  MBT: { tickSize:5,       tickValue:0.50,    name:"Micro Bitcoin (0.1 BTC)" },
+  MET: { tickSize:0.25,    tickValue:0.025,   name:"Micro Ether (0.1 ETH)" },
+  // Ags
+  ZC:  { tickSize:0.25,    tickValue:12.50,   name:"Corn" },
+  ZS:  { tickSize:0.25,    tickValue:12.50,   name:"Soybeans" },
+  ZW:  { tickSize:0.25,    tickValue:12.50,   name:"Wheat" },
+};
+
+const $ = (id) => document.getElementById(id);
+const fmt$ = (n) => {
+  if (!isFinite(n)) return "—";
+  const sign = n < 0 ? "-" : "";
+  const abs = Math.abs(n);
+  return sign + "$" + abs.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+};
+const fmtNum = (n, d=4) => {
+  if (!isFinite(n)) return "—";
+  return Number(n).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:d});
+};
+
+let side = "LONG";
+
+function getSpec(){
+  const sym = $("contract").value;
+  if (sym === "CUSTOM") {
+    const ts = parseFloat($("customTickSize").value);
+    const tv = parseFloat($("customTickValue").value);
+    const name = $("customSymbol").value.trim() || "Custom";
+    if (!isFinite(ts) || ts <= 0 || !isFinite(tv) || tv <= 0) return null;
+    return { tickSize: ts, tickValue: tv, name: name, sym: name };
+  }
+  const s = SPECS[sym];
+  if (!s) return null;
+  return { ...s, sym };
+}
+
+function renderSpec(){
+  const s = getSpec();
+  const g = $("specGrid");
+  if (!s) { g.innerHTML = ""; return; }
+  const pointVal = s.tickValue / s.tickSize;
+  g.innerHTML =
+    `<div><div class="k">Symbol</div><div class="v">${s.sym}</div></div>` +
+    `<div><div class="k">Tick size</div><div class="v">${fmtNum(s.tickSize,7)}</div></div>` +
+    `<div><div class="k">Tick value</div><div class="v">$${fmtNum(s.tickValue,4)}</div></div>` +
+    `<div><div class="k">1 point</div><div class="v">$${fmtNum(pointVal,2)}</div></div>`;
+}
+
+function compute(){
+  const s = getSpec();
+  const entry = parseFloat($("entry").value);
+  const exit  = parseFloat($("exit").value);
+  const stop  = parseFloat($("stop").value);
+  const contracts = Math.max(1, Math.floor(parseFloat($("contracts").value) || 1));
+  const commPerSide = parseFloat($("commPerSide").value) || 0;
+  const feesPerSide = parseFloat($("feesPerSide").value) || 0;
+
+  // $ per tick is always renderable if spec is valid
+  if (s) $("dollarsPerTick").textContent = "$" + fmtNum(s.tickValue * contracts, 2);
+  else   $("dollarsPerTick").textContent = "—";
+
+  if (!s || !isFinite(entry) || !isFinite(exit)) {
+    $("netPnl").textContent = "—";
+    $("netPnl").className = "big";
+    $("grossPnl").textContent = "—";
+    $("totalCosts").textContent = "—";
+    $("ticksMoved").textContent = "—";
+    $("pointsMoved").textContent = "—";
+    $("netBadge").innerHTML = "";
+  } else {
+    const rawDelta = exit - entry;                      // price delta
+    const dirDelta = side === "LONG" ? rawDelta : -rawDelta;
+    const ticks = dirDelta / s.tickSize;
+    const points = dirDelta;
+    const gross = ticks * s.tickValue * contracts;
+    const costs = (commPerSide + feesPerSide) * 2 * contracts;
+    const net = gross - costs;
+
+    $("ticksMoved").textContent = fmtNum(ticks, 2);
+    $("pointsMoved").textContent = fmtNum(points, 4);
+    $("grossPnl").textContent = fmt$(gross);
+    $("totalCosts").textContent = costs > 0 ? "-" + fmt$(costs).replace("-","") : "$0.00";
+    $("netPnl").textContent = fmt$(net);
+    $("netPnl").className = "big " + (net > 0 ? "pos" : net < 0 ? "neg" : "");
+    $("netBadge").innerHTML = net > 0
+      ? '<span class="badge pass">Win</span>'
+      : net < 0
+        ? '<span class="badge fail">Loss</span>'
+        : '<span class="badge warn">Scratch</span>';
+  }
+
+  // Risk + R
+  if (s && isFinite(entry) && isFinite(stop)) {
+    const stopDist = Math.abs(entry - stop);
+    const riskTicks = stopDist / s.tickSize;
+    const dollarRisk = riskTicks * s.tickValue * contracts;
+    $("dollarRisk").textContent = fmt$(dollarRisk);
+    if (isFinite(exit) && dollarRisk > 0) {
+      const rawDelta = exit - entry;
+      const dirDelta = side === "LONG" ? rawDelta : -rawDelta;
+      const ticks = dirDelta / s.tickSize;
+      const gross = ticks * s.tickValue * contracts;
+      const costs = (commPerSide + feesPerSide) * 2 * contracts;
+      const net = gross - costs;
+      const r = net / dollarRisk;
+      $("rMultiple").textContent = (r >= 0 ? "+" : "") + fmtNum(r, 2) + "R";
+    } else {
+      $("rMultiple").textContent = "—";
+    }
+  } else {
+    $("dollarRisk").textContent = "—";
+    $("rMultiple").textContent = "—";
+  }
+}
+
+// Side toggle
+document.querySelectorAll("#sideSeg button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("#sideSeg button").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    side = b.dataset.side;
+    compute();
+  });
+});
+
+// Contract change
+$("contract").addEventListener("change", () => {
+  $("customBlock").style.display = $("contract").value === "CUSTOM" ? "block" : "none";
+  renderSpec();
+  compute();
+});
+
+// Recompute on any input change
+["entry","exit","stop","contracts","commPerSide","feesPerSide","customTickSize","customTickValue","customSymbol"]
+  .forEach(id => $(id).addEventListener("input", () => { renderSpec(); compute(); }));
+
+// Initial render
+renderSpec();
+compute();
+</script>
+</body>
+</html>
