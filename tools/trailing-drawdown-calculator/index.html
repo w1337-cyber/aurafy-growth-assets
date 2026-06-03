@@ -173,6 +173,17 @@
   <p><strong>Why this calc matters:</strong> traders blow funded accounts on rules, not strategy. Knowing the exact line — and the exact equity that locks it — turns the trailing drawdown from a black box into a number you trade against.</p>
 </details>
 
+<details>
+  <summary>Firm-by-firm trailing drawdown notes (June 2026)</summary>
+  <ul>
+    <li><strong><a href="/prop-firms/topstep/?utm_source=tools&amp;utm_medium=trailing-drawdown-calc&amp;utm_campaign=firm-notes">Topstep</a> (Combine vs XFA):</strong> Combine uses <strong>intraday</strong> trailing (live equity); Express Funded uses <strong>EOD</strong> trailing and locks the drawdown line at your starting balance once HWM hits balance + drawdown — permanently. DLL is enforced on Combine.</li>
+    <li><strong><a href="/prop-firms/apex-trader-funding/?utm_source=tools&amp;utm_medium=trailing-drawdown-calc&amp;utm_campaign=firm-notes">Apex Trader Funding 4.0</a>:</strong> choose Intraday or EOD trail at purchase. EOD is calculated once at 4:59:59pm ET. Trailing stops permanently once the EOD threshold reaches Starting Balance + $100 — the locked line sits <strong>$100 above</strong> your start. DLL only applies on EOD-style accounts in 4.0.</li>
+    <li><strong><a href="/prop-firms/earn2trade/?utm_source=tools&amp;utm_medium=trailing-drawdown-calc&amp;utm_campaign=firm-notes">Earn2Trade</a> Gauntlet Mini:</strong> <strong>EOD-only</strong> trailing — the line updates once per day at session close. Locks at your starting balance once HWM hits Starting Balance + DD (same archetype as Topstep XFA). DLL applies on every account size and persists through LiveSim and Live funded states.</li>
+    <li><strong>Other firms:</strong> Tradeify, Bulenox, MyFundedFutures and TPT follow related trail mechanics — verify each in their current rulebook before sizing presets here. Rules change; this calc reflects public info as of June 2026.</li>
+  </ul>
+  <p>Always confirm the live rule with your firm. Aurafy is not affiliated with any prop firm.</p>
+</details>
+
 <div class="cta">
   <h3>Track this automatically in Aurafy</h3>
   <p>Aurafy logs your trades, calculates trailing drawdown per account in real time, and screen-records your sessions so you can review the moments you almost gave the line back. Pro is $49/mo — first 50 founders lock in <strong>$19/mo for life</strong>.</p>
