@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Apex Trader Funding 4.0 Rules Explained (2026) | Aurafy</title>
+<meta name="description" content="Apex 4.0 rules explained for 2026: trailing drawdown (intraday or EOD), $100 safety net lock, profit targets, consistency, payout cycle. Plus free calculators." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/prop-firms/apex-trader-funding/" />
+<meta property="og:title" content="Apex Trader Funding 4.0 Rules Explained (2026)" />
+<meta property="og:description" content="The complete guide to the 2026 Apex 4.0 rules — drawdown, trail type, lock, payouts. With free calculators built for traders." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Apex 4.0</span>
+  <h1>Apex Trader Funding 4.0 Rules Explained</h1>
+  <p class="lede">The complete plain-English guide to Apex 4.0 — what changed in 2026, how the trailing drawdown actually works, when it locks, and how the consistency &amp; payout rules apply. With free calculators.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with Apex.</strong> Prop firm rules change. Numbers below reflect Apex Trader Funding 4.0 as of June 2026 — always confirm the current rulebook on the Apex member portal before you trade. This is a planning resource, not advice.
+</div>
+
+<div class="toc">
+  <a href="#whats-new">What's new in 4.0</a>
+  <a href="#sizes">Account sizes &amp; targets</a>
+  <a href="#trail">Trailing drawdown</a>
+  <a href="#lock">$100 safety net lock</a>
+  <a href="#consistency">Consistency &amp; payouts</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="whats-new">What changed with Apex 4.0 (March 2026)</h2>
+<p>Apex 4.0 was rolled out in March 2026 and is the version you're trading under today. The three changes that matter most to a funded trader:</p>
+<ul>
+  <li><strong>You pick the trail type at purchase.</strong> 4.0 accounts can be <em>Intraday</em> or <em>End of Day</em> (EOD). Earlier Apex was intraday by default — the EOD option is the headline 4.0 feature.</li>
+  <li><strong>The drawdown locks at Starting Balance + $100.</strong> A small but meaningful buffer that didn't exist in older Apex rules.</li>
+  <li><strong><a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">Daily Loss Limit</a> is separate, and only applies to EOD accounts.</strong> If you go EOD you trade with both a DLL and the trail; intraday accounts only have the trail.</li>
+</ul>
+
+<div class="key-fact"><strong>Why traders care:</strong> the EOD option is a big psychological change. On an intraday-trail account every open-trade swing eats your headroom in real time. On EOD it's calculated once at 4:59:59pm ET and locked in until the next session.</div>
+
+<h2 id="sizes">Account sizes, targets &amp; drawdown</h2>
+<p>The four eval-account sizes and their core numbers:</p>
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target (eval)</th><th>Trailing Drawdown</th><th>Lock Point</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,000</td><td class="num">$25,100</td></tr>
+    <tr><td class="acct">50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,000</td><td class="num">$50,100</td></tr>
+    <tr><td class="acct">100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,000</td><td class="num">$100,100</td></tr>
+    <tr><td class="acct">150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$4,000</td><td class="num">$150,100</td></tr>
+  </tbody>
+</table>
+<p class="key-fact"><strong>The "safety net" formula:</strong> Lock Point = Starting Balance + $100. The trail follows your high-water mark up until your balance reaches that lock point — then it freezes there for good.</p>
+
+<h2 id="trail">How the trailing drawdown actually works</h2>
+<p>The <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">trailing drawdown</a> is a moving floor under your balance. It starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, but never moves down. Hit it and the account is breached.</p>
+
+<h3>Intraday trail</h3>
+<p>Your HWM updates <strong>tick-by-tick</strong> on unrealized P&amp;L. Every time price ticks in your favor on an open position, your HWM moves up — and so does your trail. The painful corollary: if you let a winner run +$1,200 then it pulls back to +$300, the trail still moved up by $1,200, eating most of your buffer.</p>
+
+<h3>End-of-Day (EOD) trail</h3>
+<p>The HWM is calculated once at <strong>4:59:59pm ET</strong> based on your closing balance. Intraday swings don't move the trail. This is enforced in real time — you can't go below the current trail mid-session — but the trail itself only updates daily.</p>
+
+<div class="key-fact">EOD is generally easier to manage for swing-style traders or anyone who lets winners run. Intraday is unforgiving but locks faster if you take small consistent wins and don't give them back.</div>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/apex-4-0-eod-vs-intraday-2026/">Apex 4.0 EOD vs intraday: which trail to pick in 2026</a> — when EOD's extra DLL is worth it, when intraday's tick-by-tick burn is actually fine, and worked examples of both.</p>
+
+<h2 id="lock">When the trail locks (the $100 safety net)</h2>
+<p>Once your <em>EOD</em> balance reaches Starting Balance + $100, the trail stops moving. Permanently. From that point you have a fixed floor at <em>Starting Balance &minus; Trailing Drawdown</em> — your full drawdown is restored as a static buffer.</p>
+<p>On a 100K Apex account that's:</p>
+<ul>
+  <li>Trail freezes once EOD balance reaches <strong>$100,100</strong></li>
+  <li>Fixed loss-limit floor afterward: <strong>$97,000</strong></li>
+  <li>Buffer to that floor: <strong>$3,100</strong></li>
+</ul>
+<p>Important: the lock check is on the <strong>EOD balance</strong>, not on an intraday HWM. Spiking to $102k mid-session and giving it all back at close does <em>not</em> lock the trail.</p>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/apex-vs-tradeify-2026/">Apex vs Tradeify 2026: lock cousins, mirror wedges</a> — Apex and Tradeify share the rare SB+$100 lock archetype, but Apex forces the EOD-vs-intraday <em>trail-type</em> choice at purchase while Tradeify forces the consistency-rule archetype at signup. Same lock family, opposite-axis landmine.</p>
+
+<h2 id="consistency">Consistency &amp; payout cycle</h2>
+<p>Apex 4.0 funded accounts have a <strong>30% <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">consistency rule</a></strong> on payouts: no single day's net profit can exceed 30% of your total payable profit. If it does, the payout amount is capped accordingly until the ratio is back in line.</p>
+<p>Quick formula: to safely add a big winning day without breaking the rule, the maximum profit you can take that day is:</p>
+<p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 30% &times; Total Profit &divide; (1 &minus; 30%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>0.4286 &times; current Total</strong></p>
+<p>So on a $4,000 cumulative funded profit, your safe ceiling for a single new day is roughly <strong>$1,714</strong>. Go higher and you cap the payout.</p>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/apex-vs-topstep-2026/">Apex vs Topstep 2026: 30% vs 50% consistency, side by side</a> — Apex's 30% is the tightest consistency rule among major firms; Topstep's 50% is the loosest. Same rule mechanic, opposite-end thresholds — worked examples of how the same trader's max-safe-day and payout look under each.</p>
+
+<h2 id="tools">Free calculators we built for this</h2>
+<p>No login, no email — just punch in your numbers:</p>
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Where your drawdown line is right now, headroom remaining, and how far you are from the $100 lock — for both intraday and EOD trail.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/trailing-drawdown-calculator/?firm=apex">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Daily Loss Limit Calculator</h4>
+    <p>Apex 4.0 is trail-forked on DLL: EOD-trail accounts have one, Intraday-trail accounts don't — the choice is permanent at signup. Cushion-remaining answer for EOD or a clear no-DLL notice for Intraday so you don't trade against a rule you don't have.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/daily-loss-limit-calculator/?firm=apex">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Check your 30% Apex consistency ratio in seconds. Tells you the largest day P&amp;L allowed and extra profit needed to safely cash a big day.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/consistency-rule-calculator/?firm=apex">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator</h4>
+    <p>Apex 4.0 preset built in (SB+$100 lock floor + DLL). Punch in your stop in ticks and risk per trade — get max contracts, % of account, and how many losses in a row blow the account.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/position-size-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L Calculator</h4>
+    <p>30+ futures contracts preloaded. Entry / exit / stop → ticks moved, gross + net P&amp;L, $ risk, R-multiple. Cross-check your Apex statement after the trade.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/futures-pnl-calculator/">Open calculator &rarr;</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Tired of plugging numbers into a calculator after every trade?</h3>
+  <p>Aurafy is a futures trading journal built for prop-firm traders. It auto-tracks your trailing drawdown, lock distance, and consistency ratio in real time — plus screen-records your sessions so you can <a href="../../blog/trade-replay-vs-screen-recording/">replay your mistakes</a>.</p>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">Free tier: last 30 days of trades, 1 account, 3 playbooks, no credit card. First 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&amp;utm_medium=apex-landing&amp;utm_campaign=prop-firm-pages">See Aurafy</a>
+  <a class="btn ghost" href="https://app.aurafy.dev?utm_source=tools&amp;utm_medium=apex-landing&amp;utm_campaign=prop-firm-pages">Start free</a>
+</div>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Can I switch from Intraday to EOD trail mid-eval?</summary>
+  <p>No. The trail type is chosen at purchase and is fixed for the life of the account. If you want EOD, buy an EOD account; you can't convert an intraday account afterward.</p>
+</details>
+<details>
+  <summary>Does the trail still move if I'm not in a trade?</summary>
+  <p>The trail only moves when your balance / HWM moves. Flat = trail stays where it is. Intraday accounts: unrealized P&amp;L on an open position counts as HWM movement. EOD accounts: only closing balance counts.</p>
+</details>
+<details>
+  <summary>What's the Daily Loss Limit on EOD accounts?</summary>
+  <p>EOD funded accounts also have a Daily Loss Limit set by Apex (separate from the trail). It's a hard intraday cap. Intraday-trail accounts do not have a DLL — the trail itself is the cap.</p>
+</details>
+<details>
+  <summary>What happens after the trail locks?</summary>
+  <p>The trailing drawdown stops following your HWM and becomes a fixed floor at Starting Balance &minus; Trailing Drawdown. Your full original drawdown is restored as a static buffer for the rest of the account's life.</p>
+</details>
+<details>
+  <summary>How is this different from Topstep?</summary>
+  <p><a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/topstep/">Topstep</a> funded accounts lock at the Starting Balance exactly (no $100 buffer) and only offer intraday trail. Topstep also uses a 50% consistency rule on payouts vs Apex's 30%.</p>
+</details>
+<details>
+  <summary>How does Apex 4.0 compare to TPT, Tradeify, Bulenox, or Earn2Trade?</summary>
+  <p>Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/take-profit-trader/">TPT</a>: TPT's trail mechanic shifts EOD &rarr; intraday &rarr; EOD across phases; Apex picks intraday or EOD at purchase and locks it for the account's life. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/tradeify/">Tradeify</a>: same SB+$100 lock family, but Tradeify isolates trail and consistency per program (Growth / Select / Lightning) and supports Tradovate but not NinjaTrader 8 &mdash; Apex supports both. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/bulenox/">Bulenox</a>: same SB+$100 lock family, but Bulenox's Option 1 vs Option 2 choice is permanent at signup and bundles trail type, DLL, and contract scaling into one decision &mdash; Apex bundles trail choice only. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/earn2trade/">Earn2Trade</a>: opposite lock family (Earn2Trade locks at SB exact, no buffer), and Earn2Trade defers the activation fee until first withdrawal while Apex collects monthly subscription upfront.</p>
+</details>
+
+<footer>
+  <p>Apex Trader Funding 4.0 reference guide · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=apex-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
+  This page is independently produced. Aurafy is not affiliated with or endorsed by Apex Trader Funding.</p>
+</footer>
+
+</div>
+</body>
+</html>
