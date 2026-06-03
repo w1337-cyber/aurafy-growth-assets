@@ -288,7 +288,7 @@
 
 <details>
   <summary>Why isn't TopstepX listed as its own firm?</summary>
-  <p>TopstepX is Topstep's proprietary trading platform, not a separate firm. Topstep launched it in 2024 as an alternative to NinjaTrader 8 / Tradovate. Same firm, same rules, but TopstepX removed the default daily loss limit in August 2024 — meaning the same Topstep account behaves differently on TopstepX vs NinjaTrader. The Topstep page covers this; the <a href="/brokers/ninjatrader/">NinjaTrader broker page</a> covers the platform-side DLL difference.</p>
+  <p>TopstepX is Topstep's proprietary trading platform, not a separate firm. Topstep launched it in 2024 as an alternative to NinjaTrader 8 / Tradovate. Same firm, same rules, but TopstepX removed the <a href="/blog/daily-loss-limit-explained-2026/">default daily loss limit</a> in August 2024 — meaning the same Topstep account behaves differently on TopstepX vs NinjaTrader. The Topstep page covers this; the <a href="/brokers/ninjatrader/">NinjaTrader broker page</a> covers the platform-side DLL difference.</p>
 </details>
 
 <details>
@@ -302,12 +302,12 @@
 </details>
 
 <details>
-  <summary>How does the trailing-drawdown lock differ between firms?</summary>
+  <summary>How does the <a href="/blog/trailing-drawdown-explained-2026/#lock">trailing-drawdown lock</a> differ between firms?</summary>
   <p>Three different lock points, three different activation-day risk profiles. Topstep locks at Starting Balance — meaning $100,000 on a 100K funded account becomes the permanent floor once the trail reaches it. Apex 4.0 and MFFU both lock at SB + $100, meaning $100 of permanent buffer above starting balance (e.g. $103,100 on Apex 100K). The $100 doesn't sound like much, but in practice it covers most single-loss-on-activation-day scenarios. The <a href="/tools/trailing-drawdown-calculator/">trailing-drawdown calculator</a> shows the math for any of the three.</p>
 </details>
 
 <details>
-  <summary>Is the consistency rule the same on eval and on funded?</summary>
+  <summary>Is the <a href="/blog/consistency-rule-explained-2026/">consistency rule</a> the same on eval and on funded?</summary>
   <p>No — and this is where most traders get burned. Topstep applies 50% consistency on the Combine eval only; no consistency rule on funded payouts. Apex 4.0 applies 30% consistency on funded payouts only (not eval). MFFU Core applies 40% consistency on BOTH eval AND funded (the strictest setup of the three). The <a href="/tools/consistency-rule-calculator/">consistency calculator</a> lets you check eligibility under each firm's rule. The strategic implication is in the <a href="/blog/best-prop-firms-2026/">comparison hub</a>: pick the firm whose consistency-application matches the phase you spend most of your time in.</p>
 </details>
 
