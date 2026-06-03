@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Prop Firm Daily Loss Limit Calculator (2026) — Topstep, Apex, Bulenox, Earn2Trade, Tradeify | Aurafy</title>
+<meta name="description" content="Free daily loss limit calculator for Topstep, Apex 4.0, Bulenox Option 2, Earn2Trade, Tradeify and other futures prop firms. Enter today's realized P&L + worst open unrealized — see your DLL cushion in real terms, or get a clear 'no DLL on this account' answer. No login." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/tools/daily-loss-limit-calculator/" />
+<meta property="og:title" content="Prop Firm Daily Loss Limit Calculator (2026)" />
+<meta property="og:description" content="Free. No login. Topstep + Apex EOD + Bulenox Option 2 + Earn2Trade + Tradeify presets. Plus clear 'this account has no DLL' notices for TPT, MFFU, Apex Intraday, Topstep TopstepX, Bulenox Option 1, Tradeify Select." />
+<meta property="og:type" content="website" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+  header h1{font-size:1.55rem;margin:0 0 6px;letter-spacing:-0.01em}
+  header p.lede{color:var(--muted);margin:0 0 22px;font-size:0.98rem}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  @media(min-width:640px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:1fr 1fr 1fr}}
+  label{display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+  select,input[type=number],input[type=text]{
+    width:100%;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);border-radius:8px;
+    padding:11px 12px;font-size:1rem;font-family:var(--mono);
+    -webkit-appearance:none;appearance:none;
+  }
+  select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .info-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px dashed var(--border);font-size:0.93rem}
+  .info-row:last-child{border-bottom:0}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{font-family:var(--mono);font-weight:600}
+  .result-card{
+    background:linear-gradient(135deg,#171c25 0%,#13171c 100%);
+    border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .big{font-family:var(--mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em}
+  .big.pos{color:var(--green)}
+  .big.neg{color:var(--red)}
+  .big.warn{color:var(--amber)}
+  .sub{color:var(--muted);font-size:0.86rem;margin-top:2px}
+  .status-bar{height:8px;border-radius:4px;background:#1e242c;overflow:hidden;margin-top:14px}
+  .status-bar > div{height:100%;transition:width 0.25s ease}
+  .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.76rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase}
+  .badge.pass{background:rgba(61,220,151,0.12);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+  .badge.fail{background:rgba(255,92,124,0.12);color:var(--red);border:1px solid rgba(255,92,124,0.3)}
+  .badge.warn{background:rgba(255,180,84,0.12);color:var(--amber);border:1px solid rgba(255,180,84,0.3)}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:12px 14px;color:#f0d4a8;font-size:0.86rem;margin-bottom:18px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:18px;margin-top:22px}
+  .cta h3{margin:0 0 6px;font-size:1.05rem}
+  .cta p{margin:0 0 10px;color:var(--muted);font-size:0.93rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 16px;border-radius:8px;font-weight:600;font-size:0.92rem}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  details{margin-top:18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.95rem}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  details ul{font-size:0.91rem;color:#c4ccd6;margin:8px 0;padding-left:20px}
+  details li{margin:4px 0}
+  footer{margin-top:30px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.6}
+  .note-firm{font-size:0.84rem;color:var(--muted);margin-top:8px;padding:10px 12px;background:var(--panel-2);border-radius:8px;border-left:3px solid var(--accent-2)}
+  h2{font-size:1.05rem;margin:0 0 14px;letter-spacing:-0.005em}
+  .hint{font-size:0.78rem;color:var(--muted);margin-top:6px;font-style:italic}
+
+  /* Headline metric block */
+  .metric-grid{display:grid;gap:14px;grid-template-columns:1fr}
+  @media(min-width:640px){.metric-grid{grid-template-columns:1fr 1fr}}
+  .metric{padding:14px 16px;background:var(--panel-2);border:1px solid var(--border);border-radius:10px}
+  .metric .k{font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+  .metric .v{font-family:var(--mono);font-size:1.15rem;font-weight:600}
+  .metric .v.pos{color:var(--green)}
+  .metric .v.neg{color:var(--red)}
+  .metric .v.warn{color:var(--amber)}
+
+  /* No-DLL panel */
+  .no-dll-card{
+    background:linear-gradient(135deg,rgba(91,141,239,0.06),rgba(124,92,255,0.04));
+    border:1px solid rgba(91,141,239,0.35);
+    border-radius:var(--radius);padding:22px;margin-bottom:14px;
+  }
+  .no-dll-card h3{margin:0 0 10px;font-size:1.1rem;color:var(--accent-2)}
+  .no-dll-card p{margin:0 0 10px;font-size:0.95rem}
+  .no-dll-card .why{color:var(--muted);font-size:0.88rem;margin-bottom:14px}
+  .no-dll-card .alt-link{display:inline-block;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-weight:600;font-size:0.92rem}
+  .hidden{display:none}
+  .size-row{display:none}
+  .size-row.show{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Prop Firm Daily Loss Limit Calculator</h1>
+  <p class="lede">How much cushion do you have left today before the DLL locks the account? Pick your firm + account size, drop in today's realized P&amp;L and worst open position — see your remaining buffer. Or get a clear "this account has no DLL" answer (3 of the 7 biggest firms killed the rule in 2026). New here? Read our <a href="/blog/daily-loss-limit-explained-2026/">DLL explainer</a> &rarr;</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with your firm.</strong> Daily-loss-limit amounts and lock/breach behavior change. These presets reflect public info as of June 2026 — always confirm the exact DLL with your firm before you trade. This is a planning tool, not advice.
+</div>
+
+<section class="panel">
+  <h2>1. Your firm + account</h2>
+  <div class="grid cols-2">
+    <div>
+      <label for="firm">Prop firm + variant</label>
+      <select id="firm">
+        <optgroup label="Has a daily loss limit">
+          <option value="topstep-nt">Topstep — NinjaTrader (Combine + XFA)</option>
+          <option value="apex-eod">Apex Trader Funding 4.0 — EOD trail</option>
+          <option value="tradeify-growth-eval">Tradeify Growth — Evaluation</option>
+          <option value="tradeify-lightning">Tradeify Lightning</option>
+          <option value="bulenox-2">Bulenox Option 2 (EOD trail)</option>
+          <option value="earn2trade-gau">Earn2Trade Gauntlet Mini (GAU)</option>
+          <option value="earn2trade-tcp">Earn2Trade Trader Career Path (TCP)</option>
+        </optgroup>
+        <optgroup label="No DLL — read the notice">
+          <option value="topstep-tx">Topstep — TopstepX (no DLL since Aug 2024)</option>
+          <option value="apex-intra">Apex 4.0 — Intraday trail (no DLL)</option>
+          <option value="mffu">MyFundedFutures — any plan (no DLL)</option>
+          <option value="tpt">Take Profit Trader — all phases (no DLL since Jan 2025)</option>
+          <option value="bulenox-1">Bulenox Option 1 (intraday, no DLL)</option>
+          <option value="tradeify-growth-funded">Tradeify Growth — Funded (no DLL)</option>
+          <option value="tradeify-select">Tradeify Select (no DLL on any stage)</option>
+        </optgroup>
+        <option value="custom">Custom DLL</option>
+      </select>
+    </div>
+    <div class="size-row" id="size-row">
+      <label for="size">Account size</label>
+      <select id="size"></select>
+    </div>
+  </div>
+  <div id="firm-note" class="note-firm"></div>
+</section>
+
+<div id="no-dll-block" class="no-dll-card hidden">
+  <h3 id="nodll-title">This account has no daily loss limit.</h3>
+  <p id="nodll-body"></p>
+  <div class="why" id="nodll-why"></div>
+  <a class="alt-link" href="/tools/trailing-drawdown-calculator/">Use the Trailing Drawdown Calculator instead &rarr;</a>
+</div>
+
+<div id="dll-block">
+
+<section class="panel">
+  <h2>2. Today's session</h2>
+  <div class="grid cols-3">
+    <div>
+      <label for="dll">Daily loss limit</label>
+      <input type="number" id="dll" step="any" min="0" value="2000" />
+      <p class="hint">Auto-loaded from your firm + size. Override if your account differs.</p>
+    </div>
+    <div>
+      <label for="realized">Today's realized P&amp;L</label>
+      <input type="number" id="realized" step="any" value="0" placeholder="-500 for a 500 loss" />
+      <p class="hint">Negative for losses, positive for gains. Closed trades only.</p>
+    </div>
+    <div>
+      <label for="unrealized">Worst open unrealized</label>
+      <input type="number" id="unrealized" step="any" max="0" value="0" placeholder="-300" />
+      <p class="hint">Floating loss on currently-open positions. Use 0 if flat.</p>
+    </div>
+  </div>
+</section>
+
+<div class="result-card">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+    <span id="status-badge" class="badge pass">Safe</span>
+    <span class="sub" id="rule-summary">DLL $2,000 / used 0%</span>
+  </div>
+  <div class="big" id="cushion-display">$2,000</div>
+  <div class="sub" id="cushion-sub">Cushion left before DLL lock</div>
+  <div class="status-bar"><div id="cushion-bar" style="width:0%;background:var(--green)"></div></div>
+</div>
+
+<section class="panel">
+  <h2>Breakdown</h2>
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="k">DLL (today's floor)</div>
+      <div class="v" id="m-dll">$0</div>
+    </div>
+    <div class="metric">
+      <div class="k">Today's effective P&amp;L (realized + worst unrealized)</div>
+      <div class="v" id="m-eff">$0</div>
+    </div>
+    <div class="metric">
+      <div class="k">Cushion remaining ($)</div>
+      <div class="v" id="m-cushion">$0</div>
+    </div>
+    <div class="metric">
+      <div class="k">% of DLL used</div>
+      <div class="v" id="m-pct">0%</div>
+    </div>
+  </div>
+  <div style="margin-top:14px" id="advice-row"></div>
+</section>
+
+</div>
+
+<div class="cta">
+  <h3>Track DLL cushion automatically in Aurafy</h3>
+  <p>Aurafy imports every fill from Tradovate, NinjaTrader, Sierra Chart and Rithmic — your realized P&amp;L, open positions and DLL cushion all update live as you trade. No spreadsheets, no manual math at 9:31am ET.</p>
+  <a class="btn" href="https://aurafy.dev/?utm_source=tools&utm_medium=dll-calc&utm_campaign=prop-firm-tools">See Aurafy &rarr;</a>
+</div>
+
+<details>
+  <summary>How the daily loss limit actually works</summary>
+  <p>The DLL is a per-session floor: the most you can lose <em>today</em> before the firm forces you flat or locks you out for the rest of the session. Unlike trailing drawdown (which is the account's lifetime floor and never resets), the DLL resets every trading day.</p>
+  <p><strong>The math:</strong> cushion = DLL − |today's realized loss| − |worst open unrealized loss|. Firms enforce on equity (realized + unrealized), not just closed P&amp;L — that's why one open trade with -$500 floating + -$1,500 already realized can hit a $2,000 DLL even though you haven't closed the losing trade.</p>
+  <p><strong>What happens when you hit it:</strong> in this cluster (Topstep, Apex EOD, Tradeify, Bulenox Option 2, Earn2Trade), DLL behavior is "lock and flatten" — the platform closes open positions and blocks new orders for the rest of the day, but does NOT breach the account. You come back tomorrow. The trailing drawdown is what ends accounts; the DLL is what ends days.</p>
+  <p><strong>Why 3 of the 7 biggest firms killed it:</strong> TPT removed firmwide in January 2025, MFFU never adopted it on any 2026 plan, and Topstep removed the default DLL on TopstepX in August 2024 (NinjaTrader users still get one). The argument: trailing drawdown already does the work, and a per-session floor mostly hurts disciplined traders who take a -$500 morning then want to fade the afternoon. Read the <a href="/blog/daily-loss-limit-explained-2026/">full explainer</a> for the four archetypes (NONE firmwide / platform-dependent / forked at signup / both stages).</p>
+</details>
+
+<details>
+  <summary>Firm-by-firm DLL notes (June 2026)</summary>
+  <ul>
+    <li><strong>Topstep — NinjaTrader:</strong> default DLL still enforced. 50K Combine $1,000, 100K $2,000, 150K $3,000. XFA funded accounts inherit the same defaults on NinjaTrader. <em>Switch to TopstepX and the default DLL is removed.</em></li>
+    <li><strong>Topstep — TopstepX:</strong> default DLL was removed for both Combine and XFA in August 2024. Trailing drawdown is the only hard-loss floor.</li>
+    <li><strong>Apex 4.0 — EOD trail:</strong> EOD-trail accounts have a DLL (separate from the trail). Amount varies by account size and rulebook revision — verify your specific number with Apex. (We've left the field editable so you can plug in your account's published value.)</li>
+    <li><strong>Apex 4.0 — Intraday trail:</strong> no DLL on intraday-trail accounts. Trailing drawdown is the only floor.</li>
+    <li><strong>MyFundedFutures (MFFU):</strong> no DLL on any 2026 plan (Core, Rapid, Pro). Trailing drawdown is the only hard-loss floor.</li>
+    <li><strong>Take Profit Trader (TPT):</strong> DLL removed firmwide January 2025. Test, PRO and PRO+ are all DLL-free; only the trailing drawdown enforces risk.</li>
+    <li><strong>Tradeify Growth:</strong> DLL on evaluation only — 50K $1,250, 100K $2,500, 150K $3,000. Funded stage has no DLL.</li>
+    <li><strong>Tradeify Select:</strong> no DLL on any stage.</li>
+    <li><strong>Tradeify Lightning:</strong> DLL on funded — 50K $1,250, 100K $2,500, 150K $3,000. (25K plans have no DLL.)</li>
+    <li><strong>Bulenox Option 1:</strong> intraday trail, no DLL. Permanent choice at signup — you can't switch to Option 2 later.</li>
+    <li><strong>Bulenox Option 2:</strong> EOD trail with DLL. 25K $400, 50K $500, 100K $1,100, 150K $2,200, 250K $3,300, 300K $4,500. <em>Important quirk:</em> once your funded account reaches 6% profit, the DLL increases to match the trailing-drawdown amount on the next session.</li>
+    <li><strong>Earn2Trade Gauntlet Mini (GAU):</strong> 50K $1,100, 100K $2,200, 150K $3,300, 250K $4,400. Same DLL on evaluation and funded.</li>
+    <li><strong>Earn2Trade Trader Career Path (TCP):</strong> 50K $550, 100K $1,100, 150K $2,200. Same DLL on evaluation and funded.</li>
+    <li><strong>Custom:</strong> override the DLL field with your firm's published number.</li>
+  </ul>
+  <p>Always confirm the live rule. Aurafy is not affiliated with any prop firm.</p>
+</details>
+
+<footer>
+  Built by <a href="https://aurafy.dev/?utm_source=tools&utm_medium=dll-calc&utm_campaign=footer">Aurafy</a> — the futures trading journal that handles consistency, drawdown and DLL cushion in one tool.<br/>
+  Free forever. No login required for this calculator.
+</footer>
+
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  // Firms-with-DLL: sizes + per-size DLL.
+  // null preset = let user enter (e.g. apex EOD, where amount isn't publicly fixed).
+  const FIRMS_WITH_DLL = {
+    "topstep-nt": {
+      label: "Topstep (NinjaTrader)",
+      sizes: [["50K",1000],["100K",2000],["150K",3000]],
+      note: "Topstep default DLL still applies on NinjaTrader (Combine + XFA). Switch to TopstepX and the default DLL is removed."
+    },
+    "apex-eod": {
+      label: "Apex 4.0 (EOD trail)",
+      sizes: [["25K", null],["50K", null],["75K", null],["100K", null],["150K", null],["250K", null],["300K", null]],
+      note: "Apex 4.0 EOD-trail accounts have a DLL — amount varies and isn't published in a single fixed table; verify with your account's rulebook and enter the value in the DLL field."
+    },
+    "tradeify-growth-eval": {
+      label: "Tradeify Growth (eval)",
+      sizes: [["25K",0],["50K",1250],["100K",2500],["150K",3000]],
+      note: "Tradeify Growth: DLL applies on evaluation only. (Funded stage has no DLL — pick 'Tradeify Growth — Funded' if you've passed.) 25K eval has no DLL."
+    },
+    "tradeify-lightning": {
+      label: "Tradeify Lightning",
+      sizes: [["25K",0],["50K",1250],["100K",2500],["150K",3000]],
+      note: "Tradeify Lightning is instant-funded. DLL applies; 25K plan has no DLL."
+    },
+    "bulenox-2": {
+      label: "Bulenox Option 2 (EOD)",
+      sizes: [["25K",400],["50K",500],["100K",1100],["150K",2200],["250K",3300],["300K",4500]],
+      note: "Bulenox Option 2: EOD trail + DLL. Hitting DLL locks the session and auto-flattens open positions (does NOT breach). Once funded account reaches 6% profit, DLL increases to match trailing-drawdown amount next session."
+    },
+    "earn2trade-gau": {
+      label: "Earn2Trade GAU",
+      sizes: [["50K",1100],["100K",2200],["150K",3300],["250K",4400]],
+      note: "Earn2Trade Gauntlet Mini: same DLL on evaluation and funded."
+    },
+    "earn2trade-tcp": {
+      label: "Earn2Trade TCP",
+      sizes: [["50K",550],["100K",1100],["150K",2200]],
+      note: "Earn2Trade Trader Career Path: same DLL on evaluation and funded. Scales further if you reach $200K/$400K tiers — verify those numbers with Earn2Trade."
+    },
+    "custom": {
+      label: "Custom",
+      sizes: [],
+      note: "Custom DLL — enter your firm's published number directly in the DLL field."
+    }
+  };
+
+  // Firms without DLL: each has a tailored "why" so the no-DLL answer is the actual answer, not a dead end.
+  const NO_DLL = {
+    "topstep-tx": {
+      body: "Topstep removed the default daily loss limit on TopstepX in August 2024 — for both Combine and XFA. Trailing drawdown is your only hard-loss floor on this platform.",
+      why: "If you trade on NinjaTrader instead of TopstepX, the default DLL still applies. Switch the firm selector to 'Topstep — NinjaTrader' to see those numbers."
+    },
+    "apex-intra": {
+      body: "Apex 4.0 Intraday-trail accounts have no daily loss limit. The intraday trailing drawdown moves with your unrealized P&L peak — that's the only floor.",
+      why: "If you picked EOD trail at signup, you DO have a DLL — switch the firm selector to 'Apex 4.0 — EOD trail'. The intraday vs EOD choice is permanent at purchase."
+    },
+    "mffu": {
+      body: "MyFundedFutures has no daily loss limit on any 2026 plan — Core, Rapid, or Pro. Trailing drawdown is the only hard-loss floor.",
+      why: "MFFU's drawdown locks at starting balance + $100 (same archetype as Apex 4.0 and Tradeify). Use the trailing-drawdown calculator to size that floor instead."
+    },
+    "tpt": {
+      body: "Take Profit Trader removed the daily loss limit firmwide in January 2025 — Test, PRO and PRO+ are all DLL-free. Trailing drawdown is the only enforcement.",
+      why: "TPT's defining quirk is that the trail TYPE shifts between phases (EOD → Intraday → EOD). With no DLL, the trail is doing all the work — use the trailing-drawdown calc and toggle EOD/intraday per phase."
+    },
+    "bulenox-1": {
+      body: "Bulenox Option 1 has no daily loss limit — intraday HWM trail is the only floor. Permanent choice at signup; you cannot switch to Option 2 later.",
+      why: "If you signed up for Option 2 instead, you DO have a DLL — switch the firm selector to 'Bulenox Option 2 (EOD trail)'."
+    },
+    "tradeify-growth-funded": {
+      body: "Tradeify Growth funded accounts have no daily loss limit — the DLL only applies during the evaluation phase. Once you're funded, trailing drawdown is the only floor.",
+      why: "If you're still on the evaluation, pick 'Tradeify Growth — Evaluation' to see the DLL preset for your size."
+    },
+    "tradeify-select": {
+      body: "Tradeify Select has no DLL on any stage. Trailing drawdown is the only hard-loss floor. (Select inverts Tradeify's consistency rule too — 40% on eval, no rule on funded.)",
+      why: "If you actually have a Growth or Lightning account, switch the firm selector — both of those have DLL on at least one stage."
+    }
+  };
+
+  const fmt = (n) => {
+    if (!isFinite(n)) return '—';
+    const sign = n < 0 ? '-' : '';
+    const abs = Math.abs(n);
+    return sign + '$' + abs.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  };
+  const fmtPct = (n) => {
+    if (!isFinite(n)) return '—';
+    return n.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1}) + '%';
+  };
+
+  const firmSel = $('firm');
+  const sizeSel = $('size');
+  const sizeRow = $('size-row');
+  const firmNote = $('firm-note');
+  const dllInput = $('dll');
+  const realInput = $('realized');
+  const unrealInput = $('unrealized');
+  const dllBlock = $('dll-block');
+  const noDllBlock = $('no-dll-block');
+  const nodllBody = $('nodll-body');
+  const nodllWhy = $('nodll-why');
+  const nodllTitle = $('nodll-title');
+
+  let userTouchedDll = false;
+
+  function applyFirm() {
+    const v = firmSel.value;
+    // No-DLL branch
+    if (NO_DLL[v]) {
+      noDllBlock.classList.remove('hidden');
+      dllBlock.classList.add('hidden');
+      sizeRow.classList.remove('show');
+      firmNote.textContent = "No daily loss limit on this firm/variant — see panel below.";
+      const variantLabel = firmSel.options[firmSel.selectedIndex].textContent;
+      nodllTitle.textContent = variantLabel.split(' (no DLL')[0].split(' — ')[0] + ' has no daily loss limit.';
+      nodllBody.textContent = NO_DLL[v].body;
+      nodllWhy.textContent = NO_DLL[v].why;
+      return;
+    }
+    // Has-DLL branch
+    noDllBlock.classList.add('hidden');
+    dllBlock.classList.remove('hidden');
+    const f = FIRMS_WITH_DLL[v];
+    if (!f) return;
+    firmNote.textContent = f.note;
+    // Repopulate size dropdown
+    sizeSel.innerHTML = '';
+    if (f.sizes.length === 0) {
+      sizeRow.classList.remove('show');
+    } else {
+      sizeRow.classList.add('show');
+      f.sizes.forEach(([label, dll], i) => {
+        const opt = document.createElement('option');
+        opt.value = String(i);
+        opt.textContent = label + (dll === 0 ? ' (no DLL)' : dll === null ? ' (verify amount)' : ' — DLL ' + fmt(dll));
+        sizeSel.appendChild(opt);
+      });
+      sizeSel.selectedIndex = Math.min(1, f.sizes.length - 1); // default to second size if present (usually 50K or 100K)
+    }
+    applySize();
+  }
+
+  function applySize() {
+    const v = firmSel.value;
+    const f = FIRMS_WITH_DLL[v];
+    if (!f || f.sizes.length === 0) {
+      userTouchedDll = false;
+      compute();
+      return;
+    }
+    const idx = Number(sizeSel.value) || 0;
+    const dll = f.sizes[idx]?.[1];
+    if (!userTouchedDll && dll !== null && dll !== undefined) {
+      dllInput.value = dll;
+    }
+    compute();
+  }
+
+  function compute() {
+    const dll = Math.max(0, Number(dllInput.value) || 0);
+    const realized = Number(realInput.value) || 0;
+    let unreal = Number(unrealInput.value) || 0;
+    // Enforce unrealized as <= 0 (floating loss). If user enters positive, treat as 0 for cushion math.
+    if (unreal > 0) unreal = 0;
+
+    // Effective today P&L = realized + worst unrealized (both signed).
+    const eff = realized + unreal;
+    // Loss magnitude that counts against DLL:
+    const lossMag = eff < 0 ? -eff : 0;
+    const cushion = Math.max(0, dll - lossMag);
+    const usedPct = dll > 0 ? Math.min(100, (lossMag / dll) * 100) : 0;
+    const breached = dll > 0 && lossMag >= dll;
+
+    $('m-dll').textContent = dll > 0 ? fmt(dll) : 'No DLL set';
+    $('m-eff').textContent = fmt(eff);
+    $('m-eff').className = 'v ' + (eff > 0 ? 'pos' : eff < 0 ? 'neg' : '');
+    $('m-cushion').textContent = dll > 0 ? fmt(cushion) : '—';
+    $('m-cushion').className = 'v ' + (breached ? 'neg' : cushion > 0 ? 'pos' : 'warn');
+    $('m-pct').textContent = dll > 0 ? fmtPct(usedPct) : '—';
+
+    const bar = $('cushion-bar');
+    const cushionDisp = $('cushion-display');
+    const cushionSub = $('cushion-sub');
+    const badge = $('status-badge');
+    const ruleSummary = $('rule-summary');
+    const adviceRow = $('advice-row');
+
+    if (dll <= 0) {
+      bar.style.width = '0%';
+      cushionDisp.textContent = '—';
+      cushionDisp.className = 'big';
+      cushionSub.textContent = 'Enter your DLL to see cushion';
+      badge.className = 'badge warn';
+      badge.textContent = 'No DLL entered';
+      ruleSummary.textContent = '';
+      adviceRow.innerHTML = '';
+      return;
+    }
+
+    ruleSummary.textContent = 'DLL ' + fmt(dll) + ' / used ' + fmtPct(usedPct);
+    bar.style.width = usedPct + '%';
+
+    if (breached) {
+      cushionDisp.textContent = fmt(0);
+      cushionDisp.className = 'big neg';
+      cushionSub.textContent = 'DLL hit — most firms auto-flatten + lock the session here';
+      badge.className = 'badge fail';
+      badge.textContent = 'Breached';
+      bar.style.background = 'var(--red)';
+      adviceRow.innerHTML = '<div class="info-row"><span class="k">Status</span><span class="v" style="color:var(--red)">Session locked — back tomorrow (DLL does not breach the account in this cluster)</span></div>';
+    } else if (usedPct >= 75) {
+      cushionDisp.textContent = fmt(cushion);
+      cushionDisp.className = 'big warn';
+      cushionSub.textContent = 'Inside the last 25% of cushion — one more bad trade can hit DLL';
+      badge.className = 'badge warn';
+      badge.textContent = 'Caution';
+      bar.style.background = 'var(--amber)';
+      adviceRow.innerHTML = '<div class="info-row"><span class="k">Suggested action</span><span class="v" style="color:var(--amber)">Cut size or stop for the session — cushion is tight</span></div>';
+    } else {
+      cushionDisp.textContent = fmt(cushion);
+      cushionDisp.className = 'big pos';
+      cushionSub.textContent = 'Cushion left before DLL lock';
+      badge.className = 'badge pass';
+      badge.textContent = 'Safe';
+      bar.style.background = 'var(--green)';
+      adviceRow.innerHTML = '<div class="info-row"><span class="k">Headroom for the rest of the session</span><span class="v" style="color:var(--green)">' + fmt(cushion) + ' of total loss tolerance left</span></div>';
+    }
+  }
+
+  firmSel.addEventListener('change', () => {
+    userTouchedDll = false;
+    applyFirm();
+  });
+  sizeSel.addEventListener('change', () => {
+    userTouchedDll = false;
+    applySize();
+  });
+  dllInput.addEventListener('input', () => {
+    userTouchedDll = true;
+    compute();
+  });
+  realInput.addEventListener('input', compute);
+  unrealInput.addEventListener('input', compute);
+
+  // Init: default to Topstep NT 100K → DLL 2000.
+  applyFirm();
+})();
+</script>
+</body>
+</html>
