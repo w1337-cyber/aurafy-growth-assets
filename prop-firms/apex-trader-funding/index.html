@@ -98,7 +98,7 @@
 <ul>
   <li><strong>You pick the trail type at purchase.</strong> 4.0 accounts can be <em>Intraday</em> or <em>End of Day</em> (EOD). Earlier Apex was intraday by default — the EOD option is the headline 4.0 feature.</li>
   <li><strong>The drawdown locks at Starting Balance + $100.</strong> A small but meaningful buffer that didn't exist in older Apex rules.</li>
-  <li><strong>Daily Loss Limit is separate, and only applies to EOD accounts.</strong> If you go EOD you trade with both a DLL and the trail; intraday accounts only have the trail.</li>
+  <li><strong><a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">Daily Loss Limit</a> is separate, and only applies to EOD accounts.</strong> If you go EOD you trade with both a DLL and the trail; intraday accounts only have the trail.</li>
 </ul>
 
 <div class="key-fact"><strong>Why traders care:</strong> the EOD option is a big psychological change. On an intraday-trail account every open-trade swing eats your headroom in real time. On EOD it's calculated once at 4:59:59pm ET and locked in until the next session.</div>
@@ -119,7 +119,7 @@
 <p class="key-fact"><strong>The "safety net" formula:</strong> Lock Point = Starting Balance + $100. The trail follows your high-water mark up until your balance reaches that lock point — then it freezes there for good.</p>
 
 <h2 id="trail">How the trailing drawdown actually works</h2>
-<p>The trail is a moving floor under your balance. It starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, but never moves down. Hit it and the account is breached.</p>
+<p>The <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">trailing drawdown</a> is a moving floor under your balance. It starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, but never moves down. Hit it and the account is breached.</p>
 
 <h3>Intraday trail</h3>
 <p>Your HWM updates <strong>tick-by-tick</strong> on unrealized P&amp;L. Every time price ticks in your favor on an open position, your HWM moves up — and so does your trail. The painful corollary: if you let a winner run +$1,200 then it pulls back to +$300, the trail still moved up by $1,200, eating most of your buffer.</p>
@@ -144,7 +144,7 @@
 <p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/apex-vs-tradeify-2026/">Apex vs Tradeify 2026: lock cousins, mirror wedges</a> — Apex and Tradeify share the rare SB+$100 lock archetype, but Apex forces the EOD-vs-intraday <em>trail-type</em> choice at purchase while Tradeify forces the consistency-rule archetype at signup. Same lock family, opposite-axis landmine.</p>
 
 <h2 id="consistency">Consistency &amp; payout cycle</h2>
-<p>Apex 4.0 funded accounts have a <strong>30% consistency rule</strong> on payouts: no single day's net profit can exceed 30% of your total payable profit. If it does, the payout amount is capped accordingly until the ratio is back in line.</p>
+<p>Apex 4.0 funded accounts have a <strong>30% <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=apex&amp;utm_campaign=inline-concept">consistency rule</a></strong> on payouts: no single day's net profit can exceed 30% of your total payable profit. If it does, the payout amount is capped accordingly until the ratio is back in line.</p>
 <p>Quick formula: to safely add a big winning day without breaking the rule, the maximum profit you can take that day is:</p>
 <p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 30% &times; Total Profit &divide; (1 &minus; 30%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>0.4286 &times; current Total</strong></p>
 <p>So on a $4,000 cumulative funded profit, your safe ceiling for a single new day is roughly <strong>$1,714</strong>. Go higher and you cap the payout.</p>
@@ -215,6 +215,8 @@
   <summary>How does Apex 4.0 compare to TPT, Tradeify, Bulenox, or Earn2Trade?</summary>
   <p>Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/take-profit-trader/">TPT</a>: TPT's trail mechanic shifts EOD &rarr; intraday &rarr; EOD across phases; Apex picks intraday or EOD at purchase and locks it for the account's life. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/tradeify/">Tradeify</a>: same SB+$100 lock family, but Tradeify isolates trail and consistency per program (Growth / Select / Lightning) and supports Tradovate but not NinjaTrader 8 &mdash; Apex supports both. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/bulenox/">Bulenox</a>: same SB+$100 lock family, but Bulenox's Option 1 vs Option 2 choice is permanent at signup and bundles trail type, DLL, and contract scaling into one decision &mdash; Apex bundles trail choice only. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/earn2trade/">Earn2Trade</a>: opposite lock family (Earn2Trade locks at SB exact, no buffer), and Earn2Trade defers the activation fee until first withdrawal while Apex collects monthly subscription upfront.</p>
 </details>
+
+<p style="margin-top:14px"><strong>Compare side-by-side &rarr;</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/#compare">All 21 prop-firm head-to-heads in one matrix</a> &mdash; Apex sits in the SB+$100 lock family with MFFU, Bulenox, and Tradeify; the matrix groups every pairing by lock family so you can see which decisions are calibration vs which are bigger structural picks.</p>
 
 <footer>
   <p>Apex Trader Funding 4.0 reference guide · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=apex-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
