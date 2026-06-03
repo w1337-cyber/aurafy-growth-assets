@@ -130,7 +130,7 @@
 <p><strong>Deep dive →</strong> <a href="/blog/apex-4-0-eod-vs-intraday-2026/">Apex 4.0 EOD vs intraday: the canonical EOD-vs-intraday playbook</a> — TPT shifts between both mechanics across its lifecycle, so the same playbook traders use to pick the right Apex 4.0 plan applies directly to TPT phase transitions. The post walks through how unrealized P&amp;L moves an intraday trail tick-by-tick (the PRO trap) versus how EOD updates only at session close (the Test + PRO+ behavior), with worked examples of trades that pass one mechanic and bust the other. Read it once and you stop mismanaging the PRO handoff.</p>
 
 <h2 id="test">Test — the evaluation phase (EOD trail, 50% consistency)</h2>
-<p>Test is TPT's evaluation: five sizes available, end-of-day trailing drawdown, a 50% single-day consistency rule, and a minimum of 5 trading days before you can pass. There is <strong>no daily loss limit</strong> on any TPT phase — the trail is your only floor.</p>
+<p>Test is TPT's evaluation: five sizes available, end-of-day trailing drawdown, a 50% single-day consistency rule, and a minimum of 5 trading days before you can pass. There is <strong>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=take-profit-trader&amp;utm_campaign=inline-concept">daily loss limit</a></strong> on any TPT phase — the trail is your only floor.</p>
 
 <table>
   <thead>
@@ -168,7 +168,7 @@
 <div class="alert"><strong>The PRO+ no-reset rule is non-obvious:</strong> on Test and PRO, a bust costs you the reset fee but you can keep trading. On PRO+, a single trailing-drawdown breach permanently closes that PRO+ account. Treat your PRO+ trail like the hardest stop you have.</div>
 
 <h2 id="trail">How TPT trailing drawdown actually works</h2>
-<p>The trail is a moving floor under your balance that starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, never down. Hit it and the account is breached. The decisive question is <strong>what counts as the HWM</strong>:</p>
+<p>The <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=take-profit-trader&amp;utm_campaign=inline-concept">trailing drawdown</a> is a moving floor under your balance that starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, never down. Hit it and the account is breached. The decisive question is <strong>what counts as the HWM</strong>:</p>
 
 <h3>EOD trail (Test + PRO+)</h3>
 <p>The HWM updates <strong>once at session close</strong>, based on your closing balance. Intraday spikes don't move the trail — a winner that ran $1,200 then gave it back is invisible to next-day's trail. You still can't go below the current trail mid-session (it's enforced in real time), but the trail itself only ratchets at end-of-day.</p>
@@ -193,13 +193,15 @@
 <p><strong>Deep dive →</strong> <a href="/blog/topstep-vs-tpt-2026/">Topstep vs TPT 2026: same lock family, opposite trail trajectory</a> — both firms lock the funded trail at exactly the Starting Balance (no $100 buffer like Apex / MFFU / Bulenox / Tradeify), and both drop the consistency rule on the funded phase. The split is the trail mechanic across the lifecycle: Topstep stays on EOD trail the whole way, TPT flips EOD → intraday → EOD. Worked examples of where the same trade history passes one firm and busts the other, plus which trader profile each firm actually rewards.</p>
 
 <h2 id="consistency">50% consistency rule (Test only)</h2>
-<p>TPT's Test phase enforces a <strong>50% consistency rule</strong>: no single day's net profit can be more than 50% of your cumulative profit at the time you pass Test. If your best day is &gt; 50% of your total, you need additional balanced trading days to reduce the ratio before TPT will mark Test as passed.</p>
+<p>TPT's Test phase enforces a <strong>50% <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=take-profit-trader&amp;utm_campaign=inline-concept">consistency rule</a></strong>: no single day's net profit can be more than 50% of your cumulative profit at the time you pass Test. If your best day is &gt; 50% of your total, you need additional balanced trading days to reduce the ratio before TPT will mark Test as passed.</p>
 
 <p>The maximum profit you can take on a single day without breaking the rule:</p>
 
 <p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 50% &times; Total Profit &divide; (1 &minus; 50%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>1.0 &times; current Total</strong></p>
 
 <p>So on $3,000 cumulative profit toward your Test 50K target, your safe single-day ceiling is $3,000. TPT's 50% is the most lenient consistency rule among the major firms (Topstep = 50%, MFFU = 40%, Apex = 30%).</p>
+
+<p><strong>Deep dive →</strong> <a href="/blog/tpt-vs-earn2trade-2026/#consistency">TPT vs Earn2Trade 2026: same eval-only scope, opposite threshold strictness</a> — Earn2Trade is the firm missing from the cluster enumeration above: it sits at 30%, tied with Apex 4.0 on the number, but the scope archetype is identical to TPT (eval-only, drops on the funded phase — same as Topstep). TPT's 50% loose-eval rewards a one-big-day breakout profile; Earn2Trade's 30% tight-eval rewards a steady-grinder profile; both firms forget about the rule entirely once you're funded. Worked examples of the same trade record clearing TPT Test at 50% but failing Earn2Trade Eval at 30% — same scope, different binding strictness, different trader profile fit.</p>
 
 <p><strong>Important:</strong> consistency only applies to <em>passing Test</em>. Once you are on PRO or PRO+, the rule is dropped entirely — your funded payouts are not affected by single-day P&amp;L distribution. This is one of TPT's most trader-friendly features.</p>
 
