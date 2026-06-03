@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Tradeify Rules Explained — Growth, Select &amp; Lightning (2026) | Aurafy</title>
+<meta name="description" content="Tradeify rules in plain English: how the consistency rule INVERTS between Growth (eval-free / funded 35%) and Select (eval 40% / funded-free), EOD trail uniform across all programs, lock at SB+$100, no NinjaTrader support, news trading permitted. Plus free calculators preset for Tradeify." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/prop-firms/tradeify/" />
+<meta property="og:title" content="Tradeify Rules Explained — Growth, Select &amp; Lightning (2026)" />
+<meta property="og:description" content="The 2026 guide to Tradeify — the only major firm whose consistency rule INVERTS between programs. Growth = eval-free / funded 35%. Select = eval 40% / funded-free. Lightning = progressive 20→25→30%. Plus free calculators." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .alert{background:rgba(255,92,124,0.06);border-left:3px solid var(--red);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#f8d6dd}
+  .phase-grid{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:720px){.phase-grid{grid-template-columns:1fr 1fr 1fr}}
+  .phase-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .phase-card h4{margin:0 0 8px;font-size:1rem;color:#fff}
+  .phase-card .tag{display:inline-block;font-size:0.7rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:2px 8px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px}
+  .phase-card ul{padding-left:18px;margin:6px 0 0;font-size:0.88rem;color:#c4ccd6}
+  .phase-card ul li{margin-bottom:4px}
+  .invert-vis{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;font-family:var(--mono);font-size:0.9rem;display:grid;gap:10px}
+  @media(min-width:640px){.invert-vis{grid-template-columns:1fr 1fr}}
+  .invert-row{padding:12px;border-radius:6px;background:var(--bg);border:1px solid var(--border)}
+  .invert-row .label{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px}
+  .invert-row .eval-on{color:#ffc878;font-weight:700}
+  .invert-row .funded-on{color:#ff5c7c;font-weight:700}
+  .invert-row .none{color:#7ce8b4;font-weight:700}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · Tradeify Growth + Select + Lightning</span>
+  <h1>Tradeify Rules Explained — Growth, Select &amp; Lightning</h1>
+  <p class="lede">Tradeify is the only major prop firm whose consistency rule <em>inverts</em> between programs. Growth has no consistency rule on evaluation but enforces 35% on funded. Select is the exact opposite — 40% on evaluation, zero on funded. Pick the wrong program for your trading style and you trip a different rule than the one you prepared for. This is the plain-English 2026 guide to all three programs, the uniform EOD trail, the SB+$100 lock, and the platform gotcha most NinjaTrader users miss.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with Tradeify.</strong> Prop firm rules change. Numbers below reflect Tradeify's public rules as of June 2026 — always confirm against the current Tradeify rulebook before you trade. This is a planning resource, not advice.
+</div>
+
+<div class="toc">
+  <a href="#invert">The inverse consistency gotcha</a>
+  <a href="#growth">Growth (1-step)</a>
+  <a href="#select">Select (1-step)</a>
+  <a href="#lightning">Lightning (instant)</a>
+  <a href="#trail">Trail mechanics (EOD)</a>
+  <a href="#lock">Lock point (SB+$100)</a>
+  <a href="#platforms">Platforms (no NT8)</a>
+  <a href="#payouts">Payouts &amp; split</a>
+  <a href="#restrictions">Other restrictions</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="invert">The thing competitors bury — Tradeify's consistency rule INVERTS between programs</h2>
+<p>Every other major prop firm picks one consistency philosophy and applies it consistently across phases. Tradeify does the opposite — the rule flips depending on which program you signed up for, and the flip is structural, not a footnote.</p>
+
+<div class="invert-vis">
+  <div class="invert-row">
+    <div class="label">Growth program</div>
+    Eval:&nbsp;<span class="none">no consistency</span><br/>
+    Funded:&nbsp;<span class="funded-on">35% cap</span>
+  </div>
+  <div class="invert-row">
+    <div class="label">Select program</div>
+    Eval:&nbsp;<span class="eval-on">40% cap</span><br/>
+    Funded:&nbsp;<span class="none">no consistency</span>
+  </div>
+</div>
+
+<p>If you're a swing-style trader who books occasional big days and lots of small ones, Growth lets you blow past the 40% ratio during evaluation that would lock Select — but then you're stuck under a 35% funded cap for life. If you're a steady scalper who would breeze through Select's 40% eval but want unbounded freedom on funded payouts, Select rewards you and Growth penalises you. Pick the wrong program for your style and you trip a different rule than the one you prepared for.</p>
+
+<div class="alert"><strong>Lifecycle landmine:</strong> Lightning, Tradeify's instant-funded program, adds a third archetype — a progressive consistency rule that <em>tightens</em> with each payout (20% → 25% → 30% from payout 3 onward). Three programs, three consistency archetypes. There is no Tradeify-wide rule of thumb — you have to read the program you actually bought.</div>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/mffu-vs-tradeify-2026/">MFFU vs Tradeify 2026: sibling lock, different forks</a> — both firms share the SB+$100 lock archetype <em>and</em> both fork the rule set at signup, but on different shapes. Tradeify isolates the consistency archetype (Growth ≠ Select ≠ Lightning) while keeping the trail uniformly EOD; MFFU does the opposite — bundles the trail mechanic with the consistency rule into one plan-pick (Core vs Rapid vs Pro), so picking the plan locks both at once. Worked examples of which trader profile each coupling shape rewards.</p>
+
+<h2 id="growth">Growth — 1-step eval, EOD trail, no eval consistency</h2>
+<p>Growth is Tradeify's cheapest path to a funded account. Single-step evaluation, end-of-day trailing drawdown, just one minimum trading day, and crucially <strong>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">consistency rule</a> during evaluation</strong> — your best day can be 100% of total profit and you still pass. Once funded, a 35% single-day consistency cap kicks in on payouts.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing DD</th><th>Eval DLL</th><th>Max Minis</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Growth 25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,000</td><td class="num">$600</td><td class="num">1</td></tr>
+    <tr><td class="acct">Growth 50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,000</td><td class="num">$1,250</td><td class="num">4</td></tr>
+    <tr><td class="acct">Growth 100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,500</td><td class="num">$2,500</td><td class="num">8</td></tr>
+    <tr><td class="acct">Growth 150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$5,000</td><td class="num">$3,750</td><td class="num">12</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Growth challenge cost:</strong> $99–$369 depending on size. <strong>Minimum eval days:</strong> 1. You can technically pass Growth in a single session — but you still have to make it through onboarding and activation before trading funded.</p>
+
+<h2 id="select">Select — 1-step eval, EOD trail, 40% eval consistency, no funded consistency</h2>
+<p>Select is the inverse archetype of Growth. The evaluation enforces a <strong>40% single-day consistency rule</strong>, requires a <strong>minimum of 3 trading days</strong>, and has <strong>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">daily loss limit</a></strong> on evaluation accounts (the trail is your only floor). Funded payouts are then free of any consistency requirement — your best day on funded can be 100% of your total profit without affecting your payout.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing DD</th><th>Max Minis</th><th>Max Micros</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Select 25K</td><td class="num">$25,000</td><td class="num">$1,500</td><td class="num">$1,000</td><td class="num">1</td><td class="num">10</td></tr>
+    <tr><td class="acct">Select 50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,000</td><td class="num">4</td><td class="num">40</td></tr>
+    <tr><td class="acct">Select 100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$3,000</td><td class="num">8</td><td class="num">80</td></tr>
+    <tr><td class="acct">Select 150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$4,500</td><td class="num">12</td><td class="num">120</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Select challenge cost:</strong> $109–$369. <strong>Optional payout upgrades:</strong> +$1,500 one-time for daily payouts, or +$4,000 for the flex plan (otherwise defaults to 5-day cadence). Compare against the activation-fee model at Apex/MFFU and the $130 PRO activation at TPT.</p>
+
+<p>Note that Select's funded trailing drawdown is smaller than Growth's at the 100K and 150K sizes ($3,000 vs $3,500 at 100K; $4,500 vs $5,000 at 150K). Pair that with no consistency rule on funded and Select tends to favour traders who hit the target through steady evaluation discipline and then want freedom to swing on payouts.</p>
+
+<h2 id="lightning">Lightning — instant funded, progressive consistency</h2>
+<p>Lightning is Tradeify's instant-funded program. No evaluation, no profit target — you pay the program fee and you're funded on day one. The trade-off is a <strong>progressive consistency rule</strong> that tightens with each payout: 20% on your first payout, 25% on the second, 30% from the third onward.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Trailing DD</th><th>DLL</th><th>Max Minis</th><th>Max Micros</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Lightning 25K</td><td class="num">$25,000</td><td class="num">$1,000</td><td class="num">—</td><td class="num">1</td><td class="num">10</td></tr>
+    <tr><td class="acct">Lightning 50K</td><td class="num">$50,000</td><td class="num">$2,000</td><td class="num">$1,250</td><td class="num">4</td><td class="num">40</td></tr>
+    <tr><td class="acct">Lightning 100K</td><td class="num">$100,000</td><td class="num">$4,000</td><td class="num">$2,500</td><td class="num">8</td><td class="num">80</td></tr>
+    <tr><td class="acct">Lightning 150K</td><td class="num">$150,000</td><td class="num">$5,250</td><td class="num">$3,000</td><td class="num">12</td><td class="num">120</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Lightning program cost:</strong> $345–$796. The progressive consistency rule means traders building toward larger payouts must reduce their max-day P&amp;L as a share of total profit each payout cycle — a structurally different mental model from Growth (one fixed cap) or Select (no funded cap at all).</p>
+
+<h2 id="trail">How Tradeify trailing drawdown works (EOD across all programs)</h2>
+<p>Unlike TPT (which shifts trail type by phase), Tradeify uses <strong>end-of-day <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">trailing drawdown</a> across all three programs — Growth, Select, and Lightning</strong>. The trail floor is set at <em>Starting Balance &minus; Trailing Drawdown</em> at account open, and updates <strong>once per session at close</strong> based on your closing balance.</p>
+
+<p>Concretely on Growth 100K: floor starts at $96,500, and only ratchets up when your closing balance prints above your prior high-water mark. A trade that ran +$2,000 unrealized during the session and closed +$300 only moves the trail by $300 — the unrealized spike is invisible to next-day's trail.</p>
+
+<div class="key-fact"><strong>What this rewards:</strong> intraday volatility tolerance. You can sit through deep unrealized heat without the trail tightening against you, as long as you close clean. The downside is you can still bust mid-session — the trail's current floor is enforced in real time, even if it only ratchets at close.</div>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/tpt-vs-tradeify-2026/">TPT vs Tradeify 2026: both shift the rules on you — in opposite directions</a> — TPT shifts the <em>trail mechanic</em> as you move Test → PRO → PRO+, while Tradeify keeps the trail uniform but inverts the <em>consistency rule</em> between Growth and Select. Same lifecycle-landmine pattern, opposite axis, with worked give-back examples on both.</p>
+
+<h2 id="lock">When the trail locks — SB+$100 (same as Apex / MFFU)</h2>
+<p>Tradeify's trail stops ratcheting and becomes a fixed floor once your equity reaches <strong>Starting Balance + Trailing Drawdown + $100</strong>. The $100 buffer makes Tradeify the same archetype as Apex 4.0 and MyFundedFutures — <em>not</em> Topstep or TPT, which lock at the starting balance exactly with no buffer.</p>
+
+<p>Worked on Growth 50K with $2,000 trailing drawdown:</p>
+<ul>
+  <li>Account opens with trail floor at <strong>$48,000</strong></li>
+  <li>Trail ratchets EOD as closing balance prints new HWMs above $50,000</li>
+  <li>Lock trigger fires once balance reaches <strong>$52,100</strong> (= 50,000 + 2,000 + 100)</li>
+  <li>Trail freezes at fixed floor <strong>$50,100</strong> after lock</li>
+  <li>You now have a $100 cushion above starting balance permanently</li>
+</ul>
+
+<p>On Select 100K ($3,000 trail) the lock triggers at $103,100 and the floor freezes at $100,100. On Lightning 150K ($5,250 trail) the lock fires at $155,350 and the floor settles at $150,100.</p>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/apex-vs-tradeify-2026/">Apex vs Tradeify 2026: lock cousins, mirror wedges</a> — both firms share the SB+$100 lock archetype but build their lifecycle landmine on opposite axes. Apex forces the EOD-vs-intraday <em>trail-type</em> choice at purchase; Tradeify forces the consistency-rule archetype at signup. Worked examples on both.</p>
+
+<h2 id="platforms">The platform gotcha — no NinjaTrader, no TradingView, no MetaTrader</h2>
+<p>Tradeify does <strong>not</strong> support NinjaTrader, TradingView, or MetaTrader. Your platform options are limited to:</p>
+<ul>
+  <li><strong>Tradesea</strong> (Tradeify's own platform on the Rithmic data feed)</li>
+  <li><strong>Tradovate</strong> (the same Tradovate environment Topstep and Apex traders are used to)</li>
+  <li><strong>WealthCharts</strong> (a less common but supported option)</li>
+</ul>
+
+<div class="alert"><strong>NinjaTrader 8 users:</strong> if NT8 + Rithmic is your default execution stack — the way it is for most Apex 4.0 and MyFundedFutures funded traders — you cannot bring that workflow to Tradeify. You'll need to either learn Tradesea, switch to Tradovate, or pick a different firm. This is the most-missed gotcha when comparing firms on rules alone.</div>
+
+<h2 id="payouts">Payouts &amp; profit split</h2>
+<ul>
+  <li><strong>Activation fee:</strong> $0 on all programs — none of the $130 (TPT) / $85+ (Apex) activation toll that other firms charge to move from evaluation to funded.</li>
+  <li><strong>Profit split:</strong> 90% / 10% in your favour <em>after</em> your first $15,000 in profits on Simulated Funded (Growth/Select/Lightning). 80% / 20% applies on Elite Live accounts.</li>
+  <li><strong>Default cadence:</strong> 5-day payout cycle. 60-minute guaranteed processing window.</li>
+  <li><strong>Select daily-payout upgrade:</strong> $1,500 one-time to unlock daily payouts on Select. Flex plan upgrade is $4,000.</li>
+  <li><strong>Account limits:</strong> 5 funded accounts maximum per trader, $1M total funded size across all accounts.</li>
+  <li><strong>DLL bump on funded:</strong> when a funded account reaches a 6% profit threshold, the daily loss limit increases to match the trailing drawdown amount on the next session — a quiet bonus for traders who push past 6% from the starting balance.</li>
+</ul>
+
+<h2 id="restrictions">Other restrictions to know</h2>
+<ul>
+  <li><strong>News trading: PERMITTED.</strong> Tradeify explicitly allows news-event trading on all programs. This is a meaningful difference from TPT (which bans FOMC / NFP / CPI on PRO and PRO+) and a notable freedom for traders whose edge is news-driven.</li>
+  <li><strong>Microscalping floor.</strong> Over 50% of your trades and over 50% of your profit must come from trades held longer than <strong>10 seconds</strong>. Pure tape-scalping under 10-second holds is restricted. This rule is unique to Tradeify among the firms covered in this cluster.</li>
+  <li><strong>Hedging prohibited.</strong> No simultaneous long/short on the same instrument across accounts.</li>
+  <li><strong>All flat by 5 PM ET.</strong> Tradeify enforces a 5:00 PM ET flat-out daily; positions cannot be held through the 5:00–6:00 PM ET daily maintenance window or over weekends.</li>
+  <li><strong>Funded reset on pass.</strong> When evaluation ends, the funded account starts at the base size regardless of how far above target you finished evaluation. The cushion you built doesn't carry over — plan accordingly.</li>
+</ul>
+
+<h2 id="tools">Free calculators we built for this</h2>
+<p>No login, no email — just punch in your numbers:</p>
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>Visualise your Tradeify trail across Growth, Select, or Lightning. EOD-mode is correct for all three programs. Shows the SB+$100 lock trigger and the resulting fixed floor.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/trailing-drawdown-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Daily Loss Limit Calculator</h4>
+    <p>Tradeify's DLL is forked by product and stage: Growth eval + Lightning have one ($1,250 / $2,500 / $3,000 by 50K/100K/150K size); Growth funded + Select don't. Get a cushion-remaining answer or a clear no-DLL notice for the exact variant you're in.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/daily-loss-limit-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Check your 40% Select eval ratio, 35% Growth funded ratio, or Lightning's progressive 20→25→30% cap. Tells you the maximum day P&amp;L allowed and the extra balanced profit needed to safely close out.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/consistency-rule-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator</h4>
+    <p>Tradeify Growth + Select presets built in (SB+$100 lock floor; Growth eval has a DLL, Select doesn't). Punch in your stop in ticks and risk per trade — get max contracts, % of account, and how many losses in a row blow the account.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/position-size-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L Calculator</h4>
+    <p>30+ futures contracts preloaded. Entry / exit / stop &rarr; ticks moved, gross + net P&amp;L, $ risk, R-multiple. Cross-check your Tradeify statement across Growth, Select, or Lightning — works for all three programs.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/futures-pnl-calculator/">Open calculator &rarr;</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Tired of running rule math for every Tradeify trade?</h3>
+  <p>Aurafy is a futures trading journal built for prop-firm traders. It auto-tracks your trailing drawdown, lock distance, and consistency ratio in real time on Tradeify, Apex, Topstep, MFFU, and TPT — plus screen-records your sessions so you can <a href="../../blog/trade-replay-vs-screen-recording/">replay your mistakes</a>.</p>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">Free tier: last 30 days of trades, 1 account, 3 playbooks, no credit card. First 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&amp;utm_medium=tradeify-landing&amp;utm_campaign=prop-firm-pages">See Aurafy</a>
+  <a class="btn ghost" href="https://app.aurafy.dev?utm_source=tools&amp;utm_medium=tradeify-landing&amp;utm_campaign=prop-firm-pages">Start free</a>
+</div>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Which Tradeify program should I pick?</summary>
+  <p>It depends on whether your evaluation style or your funded style is the higher-variance one. If you tend to make most of your eval profit in one or two big days, Growth lets you pass without a consistency rule but then locks you under a 35% funded cap. If you trade steady on eval but want freedom to swing big on funded payouts, Select rewards you with no funded consistency at all but enforces 40% on the way in. Lightning is for traders who want to skip evaluation entirely and are willing to live under a progressive 20→25→30% rule that tightens each payout.</p>
+</details>
+<details>
+  <summary>Is Tradeify the same as Apex or MFFU on drawdown mechanics?</summary>
+  <p>Mostly yes — Tradeify locks the trail at Starting Balance + Trailing Drawdown + $100, which is the same archetype as Apex 4.0 and MyFundedFutures. The $100 buffer means you keep a small cushion above your starting balance after lock. This is structurally different from Topstep and TPT, which lock at the starting balance exactly with no buffer.</p>
+</details>
+<details>
+  <summary>Can I use NinjaTrader with Tradeify?</summary>
+  <p>No. Tradeify does not support NinjaTrader 8, TradingView, or MetaTrader. Your only platform options are Tradesea (Tradeify's in-house platform on Rithmic), Tradovate, and WealthCharts. If NT8 is your default execution platform, you'll need to switch workflows to use Tradeify — or pick a firm that supports NT8 (Apex, MFFU, TPT, and Topstep all do).</p>
+</details>
+<details>
+  <summary>Is news trading allowed on Tradeify?</summary>
+  <p>Yes. Tradeify explicitly permits news trading across all programs and all phases. This is a meaningful freedom compared to TPT, which bans trading 1 minute before / during / 1 minute after FOMC, NFP, and CPI releases on PRO and PRO+ accounts. If your edge is event-driven trading, Tradeify removes a friction other firms add.</p>
+</details>
+<details>
+  <summary>What's the microscalping floor?</summary>
+  <p>More than 50% of your trades AND more than 50% of your profit must come from trades held longer than 10 seconds. Pure sub-10-second scalping is restricted. This rule is unique to Tradeify among the firms in this cluster — Apex, Topstep, MFFU, and TPT do not impose a minimum hold time.</p>
+</details>
+<details>
+  <summary>What happens to my cushion when I pass evaluation?</summary>
+  <p>The funded account starts at the base size regardless of where you ended evaluation. If you passed Growth 50K finishing at $54,500, your funded balance opens at $50,000 — the extra $4,500 does not carry over. Plan your sizing around the base size, not the eval-ending balance.</p>
+</details>
+<details>
+  <summary>How does the 6% DLL bump work?</summary>
+  <p>On funded accounts, once your balance reaches 6% above the starting balance, your daily loss limit increases on the next session to match the trailing drawdown amount. On a Growth 100K (SB $100,000, trail $3,500), reaching $106,000 unlocks a DLL bump to $3,500 on subsequent sessions — giving you more intraday breathing room as a reward for building a cushion.</p>
+</details>
+<details>
+  <summary>How does Tradeify compare to Apex, Topstep, MFFU, and TPT?</summary>
+  <p>Lock mechanic: same as <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/apex-trader-funding/">Apex 4.0</a> and <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/myfundedfutures/">MFFU</a> (SB + $100 buffer; <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/bulenox/">Bulenox</a> is the 4th member of this lock family). Trail type: EOD uniform across all programs, unlike <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/take-profit-trader/">TPT</a> which shifts EOD → intraday → EOD between phases. Consistency rule: structurally inverse between Growth (35% funded) and Select (40% eval), unlike every other firm which keeps consistency directionally consistent across phases. Platforms: more restrictive than any other firm in this cluster (no NT8, no TradingView, no MetaTrader). News trading: most permissive of the firms covered here (TPT restricts FOMC / NFP / CPI on funded; Tradeify does not). Activation fee: $0 (cheapest of any firm here — Apex / TPT both charge).</p>
+</details>
+
+<footer>
+  <p>Tradeify rules reference · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=tradeify-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
+  This page is independently produced. Aurafy is not affiliated with or endorsed by Tradeify.</p>
+</footer>
+
+</div>
+</body>
+</html>
