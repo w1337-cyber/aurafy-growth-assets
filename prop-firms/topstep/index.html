@@ -96,7 +96,7 @@
 <h2 id="combine-vs-xfa">Combine vs Express Funded Account — the key distinction</h2>
 <p>Topstep has two stages and they use <em>different</em> trail mechanics. This is the single biggest source of confusion for new Topstep traders:</p>
 <ul>
-  <li><strong>Combine (the evaluation):</strong> <em>Intraday</em> trailing drawdown. Your high-water mark moves tick-by-tick on unrealized P&amp;L. Every favorable tick on an open position pushes the trail up.</li>
+  <li><strong>Combine (the evaluation):</strong> <em>Intraday</em> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=topstep&amp;utm_campaign=inline-concept">trailing drawdown</a>. Your high-water mark moves tick-by-tick on unrealized P&amp;L. Every favorable tick on an open position pushes the trail up.</li>
   <li><strong>Express Funded Account (XFA / funded):</strong> <em>End-of-Day</em> trailing drawdown. The trail only updates at session close, based on your closing balance — intraday swings don't move it.</li>
 </ul>
 
@@ -142,7 +142,7 @@
 <p>Important: the lock check is on the <strong>EOD balance</strong>, not on an intraday HWM. Spiking to $101k mid-day and giving it back at close does <em>not</em> lock the trail.</p>
 
 <h2 id="consistency">The 50% consistency rule on payouts</h2>
-<p>Topstep funded accounts use a <strong>50% consistency rule</strong> on payouts: no single day's net profit can be more than 50% of your total profit on the payout. If your "best day" exceeds 50% of the total, your payout is capped at <em>2&times; your best day</em> until you trade enough more days to balance it out.</p>
+<p>Topstep funded accounts use a <strong>50% <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=topstep&amp;utm_campaign=inline-concept">consistency rule</a></strong> on payouts: no single day's net profit can be more than 50% of your total profit on the payout. If your "best day" exceeds 50% of the total, your payout is capped at <em>2&times; your best day</em> until you trade enough more days to balance it out.</p>
 <p>Quick formula: to safely add a big winning day without breaking the rule, the maximum profit you can take on a single day is:</p>
 <p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 50% &times; Total Profit &divide; (1 &minus; 50%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>1.00 &times; current Total</strong></p>
 <p>So on a $4,000 cumulative payable profit, the safe ceiling for a single new day is roughly <strong>$4,000</strong> — Topstep's 50% rule is the most lenient of the major firms (Apex is 30%, MFFU is 40%).</p>
@@ -194,7 +194,7 @@
 </details>
 <details>
   <summary>Does Topstep have a daily loss limit?</summary>
-  <p>Yes. The DLL is a hard intraday floor, separate from the trail. On a 100K it's $2,000. It resets each session — touch it once and the day is over (the account isn't necessarily breached, but the day's done).</p>
+  <p>Yes. The <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=topstep&amp;utm_campaign=inline-concept">daily loss limit</a> (DLL) is a hard intraday floor, separate from the trail. On a 100K it's $2,000. It resets each session — touch it once and the day is over (the account isn't necessarily breached, but the day's done).</p>
 </details>
 <details>
   <summary>Does the trail still move if I'm not in a trade?</summary>
