@@ -135,7 +135,7 @@
 <p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/mffu-vs-tradeify-2026/">MFFU vs Tradeify 2026: sibling lock, different forks</a> — both firms share the SB+$100 lock archetype <em>and</em> both fork the rule set at signup, but on different shapes. Tradeify isolates the consistency archetype (Growth ≠ Select ≠ Lightning) while keeping the trail uniformly EOD; MFFU does the opposite — bundles the trail mechanic with the consistency rule into one plan-pick (Core vs Rapid vs Pro), so picking the plan locks both at once. Worked examples of which trader profile each coupling shape rewards.</p>
 
 <h2 id="growth">Growth — 1-step eval, EOD trail, no eval consistency</h2>
-<p>Growth is Tradeify's cheapest path to a funded account. Single-step evaluation, end-of-day trailing drawdown, just one minimum trading day, and crucially <strong>no consistency rule during evaluation</strong> — your best day can be 100% of total profit and you still pass. Once funded, a 35% single-day consistency cap kicks in on payouts.</p>
+<p>Growth is Tradeify's cheapest path to a funded account. Single-step evaluation, end-of-day trailing drawdown, just one minimum trading day, and crucially <strong>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">consistency rule</a> during evaluation</strong> — your best day can be 100% of total profit and you still pass. Once funded, a 35% single-day consistency cap kicks in on payouts.</p>
 
 <table>
   <thead>
@@ -152,7 +152,7 @@
 <p class="key-fact"><strong>Growth challenge cost:</strong> $99–$369 depending on size. <strong>Minimum eval days:</strong> 1. You can technically pass Growth in a single session — but you still have to make it through onboarding and activation before trading funded.</p>
 
 <h2 id="select">Select — 1-step eval, EOD trail, 40% eval consistency, no funded consistency</h2>
-<p>Select is the inverse archetype of Growth. The evaluation enforces a <strong>40% single-day consistency rule</strong>, requires a <strong>minimum of 3 trading days</strong>, and has <strong>no daily loss limit</strong> on evaluation accounts (the trail is your only floor). Funded payouts are then free of any consistency requirement — your best day on funded can be 100% of your total profit without affecting your payout.</p>
+<p>Select is the inverse archetype of Growth. The evaluation enforces a <strong>40% single-day consistency rule</strong>, requires a <strong>minimum of 3 trading days</strong>, and has <strong>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">daily loss limit</a></strong> on evaluation accounts (the trail is your only floor). Funded payouts are then free of any consistency requirement — your best day on funded can be 100% of your total profit without affecting your payout.</p>
 
 <table>
   <thead>
@@ -188,7 +188,7 @@
 <p class="key-fact"><strong>Lightning program cost:</strong> $345–$796. The progressive consistency rule means traders building toward larger payouts must reduce their max-day P&amp;L as a share of total profit each payout cycle — a structurally different mental model from Growth (one fixed cap) or Select (no funded cap at all).</p>
 
 <h2 id="trail">How Tradeify trailing drawdown works (EOD across all programs)</h2>
-<p>Unlike TPT (which shifts trail type by phase), Tradeify uses <strong>end-of-day trailing drawdown across all three programs — Growth, Select, and Lightning</strong>. The trail floor is set at <em>Starting Balance &minus; Trailing Drawdown</em> at account open, and updates <strong>once per session at close</strong> based on your closing balance.</p>
+<p>Unlike TPT (which shifts trail type by phase), Tradeify uses <strong>end-of-day <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=tradeify&amp;utm_campaign=inline-concept">trailing drawdown</a> across all three programs — Growth, Select, and Lightning</strong>. The trail floor is set at <em>Starting Balance &minus; Trailing Drawdown</em> at account open, and updates <strong>once per session at close</strong> based on your closing balance.</p>
 
 <p>Concretely on Growth 100K: floor starts at $96,500, and only ratchets up when your closing balance prints above your prior high-water mark. A trade that ran +$2,000 unrealized during the session and closed +$300 only moves the trail by $300 — the unrealized spike is invisible to next-day's trail.</p>
 
@@ -240,6 +240,8 @@
   <li><strong>All flat by 5 PM ET.</strong> Tradeify enforces a 5:00 PM ET flat-out daily; positions cannot be held through the 5:00–6:00 PM ET daily maintenance window or over weekends.</li>
   <li><strong>Funded reset on pass.</strong> When evaluation ends, the funded account starts at the base size regardless of how far above target you finished evaluation. The cushion you built doesn't carry over — plan accordingly.</li>
 </ul>
+
+<p style="margin-top:14px"><strong>Deep dive →</strong> <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/earn2trade-vs-tradeify-2026/">Earn2Trade vs Tradeify 2026: pick your restriction vs pick your endgame</a> — the microscalping floor is the single binding rule in this cluster that fires hardest on tape-scalpers — and Earn2Trade is the cleanest comparison point because it has <em>no analogous</em> &gt;10-second-hold rule on any program at any stage. Tradeify forces the structural commitment at signup (Growth vs Select vs Lightning, three inverted consistency archetypes); Earn2Trade defers everything to post-eval (LiveSim default 94.77%-stay vs optional Live 5.23%-convert). Plus opposite lock families (Tradeify SB+$100 vs Earn2Trade SB-exact), opposite cost models (Tradeify one-time $99–$796 challenge vs Earn2Trade monthly + activation-deferred-to-first-withdrawal), and opposite platform stacks (Tradeify <em>no</em> NinjaTrader/TradingView vs Earn2Trade NinjaTrader+TradingView+Tradovate+R|Trader+Finamark). Worked examples of which micro-rule binds hardest on a real funded equity curve.</p>
 
 <h2 id="tools">Free calculators we built for this</h2>
 <p>No login, no email — just punch in your numbers:</p>
