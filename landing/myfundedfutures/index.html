@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MyFundedFutures (MFFU) Rules Explained — Core, Rapid &amp; Pro Plans (2026) | Aurafy</title>
+<meta name="description" content="MyFundedFutures rules in plain English: Core vs Rapid vs Pro plans, EOD vs intraday trailing drawdown, 40% consistency on Core, no daily loss limit, payout cadence. Plus free calculators preset for MFFU." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://aurafy.dev/prop-firms/myfundedfutures/" />
+<meta property="og:title" content="MyFundedFutures (MFFU) Rules Explained — Core, Rapid &amp; Pro Plans (2026)" />
+<meta property="og:description" content="The complete 2026 guide to MFFU — Core, Rapid and Pro trail mechanics, lock at SB+$100, 40% consistency on Core, no DLL, payouts every 5 days. With free calculators." />
+<meta property="og:type" content="article" />
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#181d24;
+    --border:#222932;
+    --text:#e8edf2;
+    --muted:#8a94a3;
+    --accent:#7c5cff;
+    --accent-2:#5b8def;
+    --green:#3ddc97;
+    --amber:#ffb454;
+    --red:#ff5c7c;
+    --radius:12px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:1.85rem;margin:0 0 8px;letter-spacing:-0.015em;line-height:1.25}
+  header p.lede{color:var(--muted);margin:0 0 20px;font-size:1rem}
+  .stamp{display:inline-block;font-size:0.74rem;color:var(--muted);background:var(--panel-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:14px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+  h2{font-size:1.18rem;margin:28px 0 12px;letter-spacing:-0.005em;color:#fff}
+  h3{font-size:1rem;margin:18px 0 8px;color:#fff}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  strong{color:#fff}
+  table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:0.93rem}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:500;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.04em;background:var(--panel-2)}
+  td.num{font-family:var(--mono);font-weight:600;text-align:right}
+  td.acct{font-family:var(--mono);font-weight:700}
+  .disclaim{background:rgba(255,180,84,0.06);border:1px solid rgba(255,180,84,0.25);border-radius:8px;padding:14px 16px;color:#f0d4a8;font-size:0.88rem;margin-bottom:22px}
+  .cta{background:linear-gradient(135deg,rgba(124,92,255,0.08),rgba(91,141,239,0.06));border:1px solid rgba(124,92,255,0.3);border-radius:var(--radius);padding:22px;margin:24px 0}
+  .cta h3{margin:0 0 8px;font-size:1.08rem;color:#fff}
+  .cta p{margin:0 0 14px;color:#c4ccd6;font-size:0.95rem}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;font-size:0.94rem;margin-right:8px;margin-bottom:6px}
+  .cta a.btn:hover{text-decoration:none;background:#6a4dee}
+  .cta a.btn.ghost{background:transparent;border:1px solid var(--accent);color:#a890ff}
+  .cta a.btn.ghost:hover{background:rgba(124,92,255,0.08)}
+  .tool-row{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:640px){.tool-row{grid-template-columns:1fr 1fr}}
+  .tool-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .tool-card h4{margin:0 0 6px;font-size:0.98rem;color:#fff}
+  .tool-card p{margin:0 0 10px;color:var(--muted);font-size:0.88rem}
+  .tool-card a{font-size:0.9rem;font-weight:600}
+  details{margin:10px 0;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+  details summary{cursor:pointer;font-weight:600;font-size:0.96rem;color:#fff}
+  details[open] summary{margin-bottom:10px}
+  details p{font-size:0.91rem;color:#c4ccd6;margin:8px 0}
+  .key-fact{background:var(--panel-2);border-left:3px solid var(--accent-2);padding:12px 14px;border-radius:6px;margin:10px 0;font-size:0.92rem;color:#d6dde6}
+  .plan-grid{display:grid;gap:12px;margin:14px 0}
+  @media(min-width:720px){.plan-grid{grid-template-columns:1fr 1fr 1fr}}
+  .plan-card{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px}
+  .plan-card h4{margin:0 0 8px;font-size:1rem;color:#fff}
+  .plan-card .tag{display:inline-block;font-size:0.7rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:2px 8px;border-radius:999px;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px}
+  .plan-card ul{padding-left:18px;margin:6px 0 0;font-size:0.88rem;color:#c4ccd6}
+  .plan-card ul li{margin-bottom:4px}
+  footer{margin-top:40px;color:var(--muted);font-size:0.82rem;text-align:center;line-height:1.7;border-top:1px solid var(--border);padding-top:20px}
+  .toc{font-size:0.9rem;color:var(--muted);margin:14px 0 8px}
+  .toc a{color:#a890ff;margin-right:12px;display:inline-block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="stamp">Updated June 2026 · MFFU Core + Rapid + Pro</span>
+  <h1>MyFundedFutures (MFFU) Rules Explained — Core, Rapid &amp; Pro</h1>
+  <p class="lede">Plain-English guide to MFFU in 2026: three plans with very different mechanics, how the EOD vs intraday trail works on each, the SB+$100 lock point, the 40% Core consistency rule, payouts every 5 days, and the gotcha most traders miss — there's no daily loss limit, so the trail is your only floor.</p>
+</header>
+
+<div class="disclaim">
+  <strong>Verify with MyFundedFutures.</strong> Prop firm rules change. Numbers below reflect MFFU's public rules as of June 2026 — always confirm against the current MFFU rulebook before you trade. This is a planning resource, not advice.
+</div>
+
+<div class="toc">
+  <a href="#plans">The three plans</a>
+  <a href="#core">Core</a>
+  <a href="#rapid">Rapid</a>
+  <a href="#pro">Pro</a>
+  <a href="#trail">Trail mechanics</a>
+  <a href="#lock">Lock point (SB+$100)</a>
+  <a href="#consistency">40% consistency</a>
+  <a href="#payouts">Payouts</a>
+  <a href="#tools">Free calculators</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<h2 id="plans">The three MFFU plans at a glance</h2>
+<p>MyFundedFutures sells three distinct plan tracks. Pick one before you pay — the trail type, consistency rule, and account-size options are all locked at purchase:</p>
+
+<div class="plan-grid">
+  <div class="plan-card">
+    <h4>Core</h4>
+    <span class="tag">EOD trail · 40% consistency</span>
+    <ul>
+      <li>One size: 50K only</li>
+      <li>$3,000 target, $1,500 trailing DD</li>
+      <li>40% consistency in eval <em>and</em> funded</li>
+      <li>Lower contract sizing limits</li>
+    </ul>
+  </div>
+  <div class="plan-card">
+    <h4>Rapid</h4>
+    <span class="tag">Intraday trail · No consistency</span>
+    <ul>
+      <li>50K / 100K / 150K available</li>
+      <li>Standard targets, larger DD per size</li>
+      <li>No consistency rule on payouts</li>
+      <li>Most flexible plan for active traders</li>
+    </ul>
+  </div>
+  <div class="plan-card">
+    <h4>Pro</h4>
+    <span class="tag">EOD trail · Instant funding</span>
+    <ul>
+      <li>50K / 100K / 150K available</li>
+      <li>No evaluation — funded immediately</li>
+      <li>$100K total payout cap across all Pro accounts</li>
+      <li>Higher monthly fee, no eval friction</li>
+    </ul>
+  </div>
+</div>
+
+<div class="key-fact"><strong>The decisive question:</strong> are you happy with EOD trail and consistency on a smaller account (Core), do you want intraday trail freedom (Rapid), or do you want to skip evaluation entirely with a payout cap (Pro)? The plan is the choice — sizes inside the plan are secondary.</div>
+
+<p class="key-fact"><strong>Deep dive →</strong> <a href="/blog/apex-4-0-eod-vs-intraday-2026/">Apex 4.0: EOD vs Intraday trailing drawdown explained (2026)</a> — the Core-vs-Rapid choice you're staring at on MFFU is the same EOD-vs-intraday math Apex 4.0 forces at purchase. The explainer breaks down exactly how each trail type behaves on a runner that gives back, why intraday punishes unrealized highs even on a flat day, and which trading styles each shape rewards. Worth reading before you pick a plan that locks the trail-type for the lifetime of the account.</p>
+
+<h2 id="core">Core — the strict evaluation track</h2>
+<p>Core is MFFU's headline product: a single 50K plan with end-of-day trail and a 40% consistency rule that applies to <em>both</em> evaluation and funded payouts. This is strict by design — Core is meant for traders who want a serious risk-managed track.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing Drawdown</th><th>Daily Loss Limit</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Core 50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$1,500</td><td class="num">None</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Heads up:</strong> Core has <em>no <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/daily-loss-limit-explained-2026/?utm_source=landing&amp;utm_medium=mffu&amp;utm_campaign=inline-concept">daily loss limit</a></em>. The only floor is the trailing drawdown — if it gets within $1,500 of your balance, that's the entire risk envelope for the day. Many traders underestimate this on Core because they're used to firms with a DLL backstop.</p>
+
+<h2 id="rapid">Rapid — intraday trail, no consistency, three sizes</h2>
+<p>Rapid is for traders who want the simplest payout path: no consistency rule on the funded side, intraday trail (you know exactly when the high-water mark moves), and three account sizes to scale into.</p>
+
+<table>
+  <thead>
+    <tr><th>Account</th><th>Starting Balance</th><th>Profit Target</th><th>Trailing Drawdown</th><th>Daily Loss Limit</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="acct">Rapid 50K</td><td class="num">$50,000</td><td class="num">$3,000</td><td class="num">$2,000</td><td class="num">None</td></tr>
+    <tr><td class="acct">Rapid 100K</td><td class="num">$100,000</td><td class="num">$6,000</td><td class="num">$4,000</td><td class="num">None</td></tr>
+    <tr><td class="acct">Rapid 150K</td><td class="num">$150,000</td><td class="num">$9,000</td><td class="num">$6,000</td><td class="num">None</td></tr>
+  </tbody>
+</table>
+
+<p class="key-fact"><strong>Trade-off:</strong> Rapid's intraday trail means every favorable tick on an open position pushes the trail up — same trap as Topstep's Combine. You get freedom from the consistency rule, but you pay for it by needing to take profits cleanly without giving back unrealized gains.</p>
+
+<h2 id="pro">Pro — instant funding with a payout cap</h2>
+<p>Pro skips the evaluation entirely: pay the (higher) fee, get funded immediately. The trade-off is a <strong>$100,000 total payout cap across all your Pro accounts combined</strong> — once you've withdrawn that lifetime amount from Pro, you'd need a fresh plan to keep going.</p>
+<p>Pro uses EOD trailing drawdown across all sizes. Exact Pro target and drawdown numbers vary by size and are sometimes adjusted — confirm on MFFU's current Pro page before purchase.</p>
+
+<h2 id="trail">How the MFFU trailing drawdown works</h2>
+<p>The <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/trailing-drawdown-explained-2026/?utm_source=landing&amp;utm_medium=mffu&amp;utm_campaign=inline-concept">trailing drawdown</a> is a moving floor under your balance that starts at <em>Starting Balance &minus; Trailing Drawdown</em> and follows your high-water mark (HWM) upward, never down. Hit it and the account is breached. The big difference between MFFU plans is <strong>what counts as the high-water mark</strong>:</p>
+
+<h3>EOD trail (Core + Pro)</h3>
+<p>The HWM is calculated <strong>once at session close</strong> based on your closing balance. Intraday spikes — a winner that runs $1,000 then gives it all back — don't move the trail. You still can't go below the current trail mid-session (it's enforced in real time), but the trail itself only updates daily.</p>
+
+<h3>Intraday trail (Rapid)</h3>
+<p>The HWM updates <strong>tick-by-tick on unrealized P&amp;L</strong>. If you let a winner run +$1,500 on Rapid 100K then it pulls back to +$200, the trail still moved up by $1,500 — so you're now $1,500 closer to the lock point but only realized $200. This is the same trap that catches Topstep Combine traders.</p>
+
+<div class="key-fact">Practical takeaway: on Core or Pro you can let winners breathe — the trail won't punish intraday pullbacks. On Rapid, take profits cleanly or use trailing stops, because every unrealized tick is a tick of trail movement.</div>
+
+<p class="key-fact"><strong>Deep dive →</strong> <a href="/blog/mffu-vs-tradeify-2026/">MFFU vs Tradeify 2026: bundle vs isolate</a> — both firms share the SB+$100 lock floor, but MFFU couples trail type AND consistency together per plan (pick Core = EOD + 40%, pick Rapid = intraday + no rule) while Tradeify keeps EOD trail uniform across every program and forks only on the consistency archetype (Growth = eval-free / funded 35%, Select = eval 40% / funded-free, Lightning = progressive 20→25→30%). Worked examples of which signup-fork shape rewards your trading style — and the platform-support trap (Tradeify has no NinjaTrader / TradingView).</p>
+
+<h2 id="lock">When the trail locks (at SB + $100)</h2>
+<p>Once your balance reaches <strong>Starting Balance + $100</strong>, the trailing drawdown stops following your HWM and becomes a fixed floor at <em>Starting Balance + $100 &minus; Trailing Drawdown</em>. This is the <em>same lock pattern as Apex 4.0</em> — and noticeably more generous than Topstep, which locks at exactly the Starting Balance with no buffer.</p>
+
+<p>On a 100K MFFU Rapid that's:</p>
+<ul>
+  <li>Trail freezes once balance reaches <strong>$100,100</strong></li>
+  <li>Fixed loss-limit floor afterward: <strong>$96,100</strong></li>
+  <li>Buffer to that floor: <strong>$4,000</strong></li>
+</ul>
+
+<p>The $100 isn't huge, but it's not nothing — it means you only need to clear breakeven by $100 to permanently restore your full drawdown buffer. On Core 50K that's $50,100 to lock at a $48,600 floor.</p>
+
+<p class="key-fact"><strong>Deep dive →</strong> <a href="/blog/apex-vs-mffu-2026/">Apex vs MyFundedFutures 2026: the SB+$100 lock head-to-head</a> — both firms freeze the trail at Starting Balance + $100, but the rest of the rule stack (consistency %, DLL, payout cadence, plan tiers) diverges sharply. Worked examples of where MFFU's no-DLL Core feels freer, where Apex 4.0's 30% consistency bites first, and which firm to pick if you only had one shot.</p>
+
+<h2 id="consistency">The 40% consistency rule (Core only)</h2>
+<p>MFFU Core uses a <strong>40% <a href="https://w1337-cyber.github.io/aurafy-growth-assets/blog/consistency-rule-explained-2026/?utm_source=landing&amp;utm_medium=mffu&amp;utm_campaign=inline-concept">consistency rule</a></strong> on payouts: no single day's net profit can be more than 40% of your total profit on the payout. If your "best day" exceeds 40% of the total, you can't withdraw until enough additional trading days re-balance the ratio.</p>
+
+<p>The maximum profit you can take on a single day without breaking the rule:</p>
+
+<p class="key-fact" style="font-family:var(--mono);font-size:0.95rem"><strong>Max day P&amp;L = 40% &times; Total Profit &divide; (1 &minus; 40%)</strong> &nbsp;&nbsp;or equivalently&nbsp;&nbsp; <strong>0.667 &times; current Total</strong></p>
+
+<p>So on a $3,000 cumulative payable profit, the safe single-day ceiling is <strong>$2,000</strong>. MFFU Core is stricter than Topstep (50%) but more lenient than Apex (30%).</p>
+
+<p><strong>Important:</strong> Rapid and Pro do <em>not</em> have a consistency rule on funded payouts — that's a meaningful feature of those plans. If you're picking between Core and Rapid and you tend to have one big day per week, Rapid removes that friction entirely.</p>
+
+<h2 id="payouts">Payouts &amp; profit split</h2>
+<ul>
+  <li><strong>Profit split:</strong> 80% to start, scales up to 90% (MFFU's standard split as of 2026).</li>
+  <li><strong>Payout cadence:</strong> Every 5 days, with the first payout available after a 48-hour holding window.</li>
+  <li><strong>Platforms:</strong> TradingView, NinjaTrader, Tradovate, Rithmic (covers nearly every futures workflow).</li>
+  <li><strong>Activation fee:</strong> None — the eval fee covers funding, no separate activation charge.</li>
+</ul>
+
+<h2 id="tools">Free calculators we built for this</h2>
+<p>No login, no email — just punch in your numbers:</p>
+<div class="tool-row">
+  <div class="tool-card">
+    <h4>Trailing Drawdown Calculator</h4>
+    <p>See where your MFFU drawdown line is right now, headroom remaining, and how far you are from the SB+$100 lock — handles both intraday (Rapid) and EOD (Core/Pro) trail mechanics.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/trailing-drawdown-calculator/?firm=apex">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Consistency-Rule Calculator</h4>
+    <p>Check your 40% MFFU Core consistency ratio in seconds. Tells you the largest day P&amp;L allowed and the extra profit needed to safely cash a big day.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/consistency-rule-calculator/?firm=mffu">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Position Size Calculator</h4>
+    <p>MFFU Core and Rapid presets built in (SB+$100 lock floor; Core has no DLL backstop). Punch in your stop in ticks and risk per trade — get max contracts, % of account, and how many losses in a row blow the account.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/position-size-calculator/">Open calculator &rarr;</a>
+  </div>
+  <div class="tool-card">
+    <h4>Futures P&amp;L Calculator</h4>
+    <p>30+ futures contracts preloaded. Entry / exit / stop → ticks moved, gross + net P&amp;L, $ risk, R-multiple. Cross-check your MFFU statement after the trade.</p>
+    <a href="https://w1337-cyber.github.io/aurafy-growth-assets/tools/futures-pnl-calculator/">Open calculator &rarr;</a>
+  </div>
+</div>
+
+<div class="cta">
+  <h3>Tired of plugging numbers into a calculator after every trade?</h3>
+  <p>Aurafy is a futures trading journal built for prop-firm traders. It auto-tracks your trailing drawdown, lock distance, and consistency ratio in real time on MFFU and other major firms — plus screen-records your sessions so you can <a href="../../blog/trade-replay-vs-screen-recording/">replay your mistakes</a>.</p>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:14px">Free tier: last 30 days of trades, 1 account, 3 playbooks, no credit card. First 50 founders lock in <strong>$19/mo for life</strong>.</p>
+  <a class="btn" href="https://aurafy.dev?utm_source=tools&amp;utm_medium=mffu-landing&amp;utm_campaign=prop-firm-pages">See Aurafy</a>
+  <a class="btn ghost" href="https://app.aurafy.dev?utm_source=tools&amp;utm_medium=mffu-landing&amp;utm_campaign=prop-firm-pages">Start free</a>
+</div>
+
+<h2 id="faq">FAQ</h2>
+
+<details>
+  <summary>Does MFFU have a daily loss limit?</summary>
+  <p>No. As of 2026, no MFFU plan (Core, Rapid, or Pro) has a daily loss limit. The trailing drawdown is your only intraday floor — that's a significant difference from Topstep and Apex EOD accounts, both of which add a DLL on top of the trail.</p>
+</details>
+<details>
+  <summary>What's the difference between Core and Rapid?</summary>
+  <p>Core is EOD-trail with a 40% consistency rule and only one size (50K). Rapid is intraday-trail with no consistency rule and three sizes (50K/100K/150K). If you can take profits cleanly on intraday positions, Rapid gives you more freedom; if you let winners breathe, Core's EOD trail is kinder.</p>
+</details>
+<details>
+  <summary>What does the $100K payout cap on Pro mean?</summary>
+  <p>The total lifetime payouts you can take across all your MFFU Pro accounts combined is capped at $100,000. Once you've withdrawn that much from Pro, you'd need a different plan (Core or Rapid) to continue. Core and Rapid have no equivalent cap.</p>
+</details>
+<details>
+  <summary>When does the MFFU trail lock?</summary>
+  <p>Once your balance reaches Starting Balance + $100, the trail freezes and becomes a static floor at Starting Balance + $100 minus your trailing drawdown. This is the same lock pattern as Apex 4.0 — and noticeably more generous than Topstep, which locks at exactly the Starting Balance.</p>
+</details>
+<details>
+  <summary>How fast can I get paid?</summary>
+  <p>MFFU pays out every 5 days, with the first payout available 48 hours after you hit the eligibility threshold. The split starts at 80% and scales to 90% as you progress.</p>
+</details>
+<details>
+  <summary>How does MFFU compare to Apex or Topstep?</summary>
+  <p>MFFU locks at SB+$100 (same as <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/apex-trader-funding/">Apex</a>, more generous than <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/topstep/">Topstep</a>'s SB exactly). MFFU has no DLL on any plan (Apex EOD has one; Topstep always does). MFFU's consistency rule only applies to Core at 40% (Apex 30%, Topstep 50%). MFFU is the only major firm with a true instant-funding plan (Pro).</p>
+</details>
+<details>
+  <summary>How does MFFU compare to TPT, Tradeify, Bulenox, or Earn2Trade?</summary>
+  <p>Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/take-profit-trader/">TPT</a>: opposite lock family (TPT locks at SB exact, no buffer), and TPT's trail shifts mechanic by phase while MFFU's trail type is fixed by the plan you choose at signup (Core EOD / Rapid intraday / Pro EOD). Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/tradeify/">Tradeify</a>: same SB+$100 lock family, but Tradeify isolates consistency-rule scope per program (Growth funded-35% / Select eval-40%) while MFFU bundles trail + consistency together in the plan-pick &mdash; one decision locks both. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/bulenox/">Bulenox</a>: same SB+$100 lock family and same 40% consistency threshold (Bulenox Master + Funded), but Bulenox forces a permanent Option 1 vs Option 2 trail-choice signup lock with no equivalent fork in MFFU's plan system. Compared to <a href="https://w1337-cyber.github.io/aurafy-growth-assets/prop-firms/earn2trade/">Earn2Trade</a>: opposite lock family (Earn2Trade locks at SB exact), and Earn2Trade keeps passers on LiveSim by default while MFFU funded accounts are live exchange-routed from day one.</p>
+</details>
+
+<footer>
+  <p>MyFundedFutures rules reference · Updated June 2026 · Built by <a href="https://aurafy.dev?utm_source=tools&amp;utm_medium=mffu-landing&amp;utm_campaign=footer">Aurafy</a> — the futures trading journal made for prop-firm traders.<br />
+  This page is independently produced. Aurafy is not affiliated with or endorsed by MyFundedFutures.</p>
+</footer>
+
+</div>
+</body>
+</html>
